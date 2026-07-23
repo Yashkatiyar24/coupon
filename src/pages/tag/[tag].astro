@@ -1,0 +1,56 @@
+---
+import Base from '../../layouts/Base.astro';
+import StoreLogo from '../../components/StoreLogo.astro';
+import { brands, catName, initial } from '../../lib/catalog.js';
+import { TAGS, discountBadge } from '../../lib/content.js';
+
+export function getStaticPaths() {
+  return Object.entries(TAGS)
+    .map(([tag, def]) => {
+      const matches = brands
+        .map((b) => ({ brand: b, offers: b.offers.filter(def.test) }))
+        .filter((m) => m.offers.length);
+      return { params: { tag }, props: { tag, name: def.name, matches } };
+    })
+    .filter((p) => p.props.matches.length); // only tags with real content
+}
+
+const { tag, name, matches } = Astro.props;
+const total = matches.reduce((n, m) => n + m.offers.length, 0);
+---
+<Base
+  title={`${name} Coupon Codes & Deals (July 2026) — CouponHub`}
+  description={`${total} verified ${name.toLowerCase()} offers from ${matches.length} stores — coupon codes and deals updated for July 2026.`}
+  canonical={`/tag/${tag}`}
+>
+  <div class="storehead">
+    <div class="wrap">
+      <div class="in">
+        <div>
+          <p class="crumb"><a href="/">Home</a> / {name}</p>
+          <h1>{name} Coupons &amp; Deals</h1>
+          <span class="vbadge">✔ {total} verified offers · {matches.length} stores</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="offergrid" style="margin-top:1.6rem">
+      {matches.flatMap(({ brand, offers }) =>
+        offers.map((o) => (
+          <article class="ocard">
+            <div class="top">
+              <StoreLogo brand={brand} />
+              <span class={`typetag ${o.code ? 'code' : 'deal'}`}>{o.code ? 'Code' : 'Deal'}</span>
+            </div>
+            <h3 class="headline">{discountBadge(o).toLowerCase().replace(/^./, (c) => c.toUpperCase())} at {brand.brand}</h3>
+            <p class="desc">{o.title}</p>
+            <p class="meta"><span class="ok">✔ Verified</span> · {catName(brand.category)}</p>
+            <a class="pillbtn" href={`/${brand.slug}-coupon-code`}>See offer</a>
+          </article>
+        ))
+      )}
+    </div>
+  </div>
+</Base>

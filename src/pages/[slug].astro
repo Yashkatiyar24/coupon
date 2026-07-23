@@ -1,0 +1,154 @@
+---
+import Base from '../layouts/Base.astro';
+import StoreLogo from '../components/StoreLogo.astro';
+import { brands, categories, catName, initial, logoUrl } from '../lib/catalog.js';
+import {
+  PATTERNS, pageUrl, title, metaDescription, h1, intro, faqs, related,
+  discountBadge, prettyDate, TAGS, brandTags,
+} from '../lib/content.js';
+
+export function getStaticPaths() {
+  const paths = [];
+  for (const brand of brands) {
+    for (const pattern of PATTERNS) {
+      paths.push({
+        params: { slug: `${brand.slug}-${pattern.suffix}` },
+        props: { brand, pattern },
+      });
+    }
+  }
+  return paths;
+}
+
+const { brand, pattern } = Astro.props;
+const rel = related(brand, brands);
+const questions = faqs(brand, pattern);
+const catLabel = catName(brand.category);
+const mask = (code) => code.slice(0, 2) + '••••';
+const tags = brandTags(brand);
+
+const jsonld = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'ItemList',
+      name: `${brand.brand} offers`,
+      itemListElement: brand.offers.map((o, i) => ({
+        '@type': 'Offer',
+        position: i + 1,
+        name: o.title,
+        ...(o.code ? { priceSpecification: { '@type': 'PriceSpecification' } } : {}),
+        category: brand.category,
+        seller: { '@type': 'Organization', name: brand.brand },
+        url: brand.affiliateUrl,
+        ...(o.expires ? { validThrough: o.expires } : {}),
+      })),
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: questions.map((f) => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: { '@type': 'Answer', text: f.a },
+      })),
+    },
+  ],
+};
+---
+<Base
+  title={title(brand, pattern)}
+  description={metaDescription(brand, pattern)}
+  canonical={pageUrl(brand, pattern)}
+  jsonld={jsonld}
+  image={logoUrl(brand)}
+>
+  <div class="storehead">
+    <div class="wrap">
+      <div class="in">
+        <StoreLogo brand={brand} />
+        <div>
+          <p class="crumb"><a href="/">Home</a> / <a href={`/category/${brand.category}`}>{catLabel}</a> / {brand.brand}</p>
+          <h1>{h1(brand, pattern)}</h1>
+          <span class="vbadge">✔ {brand.offers.length} verified offer{brand.offers.length === 1 ? '' : 's'} · July 2026</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="layout">
+      <main>
+        <p class="intro">{intro(brand, pattern)}</p>
+
+        <div class="offerrows">
+          {brand.offers.map((o) => (
+            <article class="orow">
+              <div>
+                <span class={`typetag ${o.code ? 'code' : 'deal'}`}>{o.code ? 'Code' : 'Deal'} · {discountBadge(o)}</span>
+                <h3 class="headline" style="margin-top:.5rem">{o.title}</h3>
+                <p class="meta">
+                  <span class="ok">✔ Verified</span>
+                  {o.expires && <>· Valid till {prettyDate(o.expires)}</>}
+                </p>
+              </div>
+              <div class="act">
+                {o.code
+                  ? <a class="peel" data-aff data-code={o.code} data-peek={mask(o.code)} href={`/go/${brand.slug}`} target="_blank" rel="nofollow sponsored">Show Code</a>
+                  : <a class="pillbtn" data-aff href={`/go/${brand.slug}`} target="_blank" rel="nofollow sponsored">Get Deal</a>}
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <div class="shead"><h2>{brand.brand} FAQ</h2></div>
+        <div class="faq">
+          {questions.map((f, i) => (
+            <details open={i === 0}>
+              <summary>{f.q}</summary>
+              <p>{f.a}</p>
+            </details>
+          ))}
+        </div>
+
+        <p class="also">More ways to save at {brand.brand}: {PATTERNS.map((p, i) => (
+          <>{i > 0 && ' · '}<a href={pageUrl(brand, p)}>{p.label.toLowerCase()}</a></>
+        ))}</p>
+      </main>
+
+      <aside class="side">
+        <div class="panel">
+          <h3>About {brand.brand}</h3>
+          <p>{brand.description}</p>
+        </div>
+        {rel.length > 0 && (
+          <div class="panel">
+            <h3>Popular {catLabel} brands</h3>
+            <ul class="sidelist">
+              {rel.map((b) => (
+                <li><a href={`/${b.slug}-coupon-code`}>{b.brand} <span class="n">{b.offers.length}</span></a></li>
+              ))}
+            </ul>
+          </div>
+        )}
+        {tags.length > 0 && (
+          <div class="panel">
+            <h3>Popular searches</h3>
+            <ul class="sidelist">
+              {tags.map((t) => (
+                <li><a href={`/tag/${t}`}>{TAGS[t].name} codes</a></li>
+              ))}
+            </ul>
+          </div>
+        )}
+        <div class="panel">
+          <h3>Browse categories</h3>
+          <ul class="sidelist">
+            {categories.map((c) => (
+              <li><a href={`/category/${c.slug}`}>{c.name} <span class="n">{c.count}</span></a></li>
+            ))}
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</Base>

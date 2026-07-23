@@ -1,0 +1,91 @@
+---
+import Base from '../layouts/Base.astro';
+import StoreLogo from '../components/StoreLogo.astro';
+import { brands, categories, catBrands, initial, totalOffers } from '../lib/catalog.js';
+import { discountBadge } from '../lib/content.js';
+
+// Top offers = popularity proxy (offer count desc) until click data exists
+const top = [...brands].filter((b) => b.offers.length)
+  .sort((a, b) => b.offers.length - a.offers.length || a.brand.localeCompare(b.brand))
+  .slice(0, 8);
+const popular = [...brands].sort((a, b) => b.offers.length - a.offers.length).slice(0, 12);
+const catName = (slug) => categories.find((c) => c.slug === slug)?.name ?? slug;
+---
+<Base
+  title="Coupon Codes, Promo Codes & Deals (July 2026) — CouponHub"
+  description="Verified coupon codes, promo codes, and discounts across fashion, electronics, home, beauty, health, and travel. Save at 30+ top US stores, updated for July 2026."
+>
+  <section class="hero">
+    <div class="wrap">
+      <h1>Never pay full price <em>again</em>.</h1>
+      <p class="sub">{totalOffers} verified codes &amp; deals from {brands.length} stores across {categories.length} categories — refreshed automatically, all day.</p>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <div class="shead"><h2>Today's Top Offers</h2></div>
+    <div class="offergrid">
+      {top.map((b) => {
+        const o = b.offers[0];
+        return (
+          <article class="ocard">
+            <div class="top">
+              <StoreLogo brand={b} />
+              <span class={`typetag ${o.code ? 'code' : 'deal'}`}>{o.code ? 'Code' : 'Deal'}</span>
+            </div>
+            <h3 class="headline">{discountBadge(o).toLowerCase().replace(/^./, (c) => c.toUpperCase())} at {b.brand}</h3>
+            <p class="desc">{o.title}</p>
+            <p class="meta"><span class="ok">✔ Verified</span> · {catName(b.category)}</p>
+            <a class="pillbtn" href={`/${b.slug}-coupon-code`}>See offer</a>
+          </article>
+        );
+      })}
+    </div>
+
+    <div class="shead"><h2>Popular Stores</h2></div>
+    <ul class="storegrid" data-store-grid>
+      {popular.map((b) => (
+        <li>
+          <a class="storec" href={`/${b.slug}-coupon-code`} data-name={b.brand.toLowerCase()}>
+            <StoreLogo brand={b} />
+            <span class="nm">{b.brand}</span>
+            <span class="ct">{b.offers.length} offer{b.offers.length === 1 ? '' : 's'}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    {categories.map((cat) => (
+      <>
+        <div class="shead">
+          <h2>{cat.name}</h2>
+          <a href={`/category/${cat.slug}`}>View all →</a>
+        </div>
+        <ul class="storegrid">
+          {catBrands(cat.slug).map((b) => (
+            <li>
+              <a class="storec" href={`/${b.slug}-coupon-code`} data-name={b.brand.toLowerCase()}>
+                <StoreLogo brand={b} />
+                <span class="nm">{b.brand}</span>
+                <span class="ct">{b.offers.length} offer{b.offers.length === 1 ? '' : 's'}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </>
+    ))}
+  </div>
+
+  <script>
+    // Header search lands here as /?q=…: prefill the box and filter store tiles.
+    const q = new URLSearchParams(location.search).get('q')?.trim().toLowerCase() ?? '';
+    const input = document.querySelector('.hsearch input');
+    const apply = (term) => {
+      document.querySelectorAll('[data-name]').forEach((a) => {
+        a.closest('li').style.display = !term || a.dataset.name.includes(term) ? '' : 'none';
+      });
+    };
+    if (q && input) { input.value = q; apply(q); }
+    input?.addEventListener('input', () => apply(input.value.trim().toLowerCase()));
+  </script>
+</Base>

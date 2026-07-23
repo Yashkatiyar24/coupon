@@ -1,0 +1,12 @@
+# Cloudflare Pages config. Build settings for the dashboard / CI:
+#   Build command:       npm run build
+#   Build output dir:    dist
+#   Node version:        20
+name = "couponhub"
+pages_build_output_dir = "dist"
+
+# Click analytics for the /go/[slug] redirect function (free tier).
+# Query: Cloudflare dashboard → Analytics Engine → coupon_clicks.
+[[analytics_engine_datasets]]
+binding = "CLICKS"
+dataset = "coupon_clicks"

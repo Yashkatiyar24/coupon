@@ -1,0 +1,43 @@
+---
+import Base from '../layouts/Base.astro';
+import { brands, categories } from '../lib/catalog.js';
+---
+<Base
+  title="About CouponHub — How We Work & How We Make Money"
+  description="What CouponHub is, how offers are sourced and verified, and how affiliate links fund the site."
+  canonical="/about"
+>
+  <div class="wrap" style="max-width:760px;padding:2rem 1.1rem">
+    <h1>About CouponHub</h1>
+    <p class="intro">
+      CouponHub lists coupon codes and deals from {brands.length} US stores across
+      {categories.length} categories. Offers are pulled automatically from the
+      affiliate networks each store partners with, refreshed several times a day,
+      and expired codes are removed on every sync.
+    </p>
+
+    <h2>Affiliate disclosure</h2>
+    <p>
+      When you click a coupon or deal on this site and make a purchase, we may earn
+      a commission from the store through affiliate networks such as Impact,
+      Commission Junction, Awin, and Rakuten. This is how the site is funded. It
+      never changes the price you pay, and it doesn't influence which offers we
+      show — offers come from the stores' own published promotions.
+    </p>
+
+    <h2>How offers are verified</h2>
+    <p>
+      Offers come directly from each store's affiliate program feed — the same
+      promotions the store publishes itself — rather than user submissions, so
+      codes are valid when listed. Expiry dates are honored automatically: an
+      expired offer is dropped from the site at the next rebuild.
+    </p>
+
+    <h2>Contact</h2>
+    <p>
+      Questions, corrections, or store removal requests:
+      <a href="mailto:contact@example.com">contact@example.com</a>.
+      <!-- TODO: replace with your real contact address before applying to networks -->
+    </p>
+  </div>
+</Base>

@@ -1,0 +1,703 @@
+{
+  "_note": "Feed-driven catalog. `categories` defines the taxonomy (slug + display name + short nav label); `brands` reference a category slug. Add any category here and the whole site (nav, homepage, category pages, sidebars) picks it up automatically. The crawler (scripts/crawler/) refreshes offers, rewrites affiliate URLs, and auto-adds merchants/categories on every sync. See README.",
+  "categories": [
+    {
+      "slug": "fashion",
+      "name": "Fashion & Apparel",
+      "short": "Fashion",
+      "icon": "👗"
+    },
+    {
+      "slug": "electronics",
+      "name": "Electronics & Tech",
+      "short": "Electronics",
+      "icon": "💻"
+    },
+    {
+      "slug": "home-kitchen",
+      "name": "Home & Kitchen",
+      "short": "Home",
+      "icon": "🏠"
+    },
+    {
+      "slug": "beauty",
+      "name": "Beauty & Personal Care",
+      "short": "Beauty",
+      "icon": "💄"
+    },
+    {
+      "slug": "health",
+      "name": "Health & Wellness",
+      "short": "Health",
+      "icon": "💊"
+    },
+    {
+      "slug": "travel",
+      "name": "Travel",
+      "short": "Travel",
+      "icon": "✈️"
+    }
+  ],
+  "brands": [
+    {
+      "brand": "Nike",
+      "slug": "nike",
+      "category": "fashion",
+      "affiliateUrl": "https://www.nike.com/?aff_id=TODO",
+      "description": "Athletic footwear, apparel, and gear for every sport and lifestyle.",
+      "offers": [
+        {
+          "code": "NIKE20",
+          "title": "20% off select styles",
+          "type": "code",
+          "expires": "2026-12-31"
+        },
+        {
+          "code": null,
+          "title": "Free shipping for members",
+          "type": "deal",
+          "expires": "2026-12-31"
+        }
+      ],
+      "domain": "nike.com"
+    },
+    {
+      "brand": "Adidas",
+      "slug": "adidas",
+      "category": "fashion",
+      "affiliateUrl": "https://www.adidas.com/us/?aff_id=TODO",
+      "description": "Sportswear, sneakers, and activewear from the three-stripes brand.",
+      "offers": [
+        {
+          "code": "ADI25",
+          "title": "25% off full-price items",
+          "type": "code",
+          "expires": "2026-12-31"
+        }
+      ],
+      "domain": "adidas.com"
+    },
+    {
+      "brand": "Nordstrom",
+      "slug": "nordstrom",
+      "category": "fashion",
+      "affiliateUrl": "https://www.nordstrom.com/?aff_id=TODO",
+      "description": "Designer and contemporary fashion, shoes, and beauty with free returns.",
+      "offers": [
+        {
+          "code": null,
+          "title": "Free shipping & free returns",
+          "type": "deal",
+          "expires": "2026-12-31"
+        },
+        {
+          "code": "NORD15",
+          "title": "15% off select beauty",
+          "type": "code",
+          "expires": "2026-12-31"
+        }
+      ],
+      "domain": "nordstrom.com"
+    },
+    {
+      "brand": "Gap",
+      "slug": "gap",
+      "category": "fashion",
+      "affiliateUrl": "https://www.gap.com/?aff_id=TODO",
+      "description": "Casual American wardrobe staples for the whole family.",
+      "offers": [
+        {
+          "code": "GAP40",
+          "title": "40% off your purchase",
+          "type": "code",
+          "expires": "2026-12-31"
+        },
+        {
+          "code": null,
+          "title": "Free shipping over $50",
+          "type": "deal",
+          "expires": "2026-12-31"
+        }
+      ],
+      "domain": "gap.com"
+    },
+    {
+      "brand": "Levi's",
+      "slug": "levis",
+      "category": "fashion",
+      "affiliateUrl": "https://www.levi.com/US/en_US/?aff_id=TODO",
+      "description": "Iconic denim jeans, jackets, and apparel since 1853.",
+      "offers": [
+        {
+          "code": "LEVIS30",
+          "title": "30% off sitewide",
+          "type": "code",
+          "expires": "2026-12-31"
+        }
+      ],
+      "domain": "levi.com"
+    },
+    {
+      "brand": "Lululemon",
+      "slug": "lululemon",
+      "category": "fashion",
+      "affiliateUrl": "https://shop.lululemon.com/?aff_id=TODO",
+      "description": "Technical athletic apparel for yoga, running, and training.",
+      "offers": [
+        {
+          "code": null,
+          "title": "Up to 50% off 'We Made Too Much'",
+          "type": "deal",
+          "expires": "2026-12-31"
+        }
+      ],
+      "domain": "lululemon.com"
+    },
+    {
+      "brand": "Best Buy",
+      "slug": "best-buy",
+      "category": "electronics",
+      "affiliateUrl": "https://www.bestbuy.com/?aff_id=TODO",
+      "description": "Electronics superstore for laptops, TVs, phones, and appliances.",
+      "offers": [
+        {
+          "code": "SAVE10",
+          "title": "$10 off orders over $100",
+          "type": "code",
+          "expires": "2026-12-31"
+        },
+        {
+          "code": null,
+          "title": "Deal of the Day discounts",
+          "type": "deal",
+          "expires": "2026-12-31"
+        }
+      ],
+      "domain": "bestbuy.com"
+    },
+    {
+      "brand": "Dell",
+      "slug": "dell",
+      "category": "electronics",
+      "affiliateUrl": "https://www.dell.com/en-us/?aff_id=TODO",
+      "description": "PCs, laptops, monitors, and accessories for home and business.",
+      "offers": [
+        {
+          "code": "DELL10",
+          "title": "Extra 10% off select PCs",
+          "type": "code",
+          "expires": "2026-12-31"
+        },
+        {
+          "code": null,
+          "title": "Free shipping sitewide",
+          "type": "deal",
+          "expires": "2026-12-31"
+        }
+      ],
+      "domain": "dell.com"
+    },
+    {
+      "brand": "HP",
+      "slug": "hp",
+      "category": "electronics",
+      "affiliateUrl": "https://www.hp.com/us-en/?aff_id=TODO",
+      "description": "Laptops, desktops, printers, and ink direct from HP.",
+      "offers": [
+        {
+          "code": "HP15",
+          "title": "15% off select laptops",
+          "type": "code",
+          "expires": "2026-12-31"
+        }
+      ],
+      "domain": "hp.com"
+    },
+    {
+      "brand": "Lenovo",
+      "slug": "lenovo",
+      "category": "electronics",
+      "affiliateUrl": "https://www.lenovo.com/us/en/?aff_id=TODO",
+      "description": "ThinkPad, Yoga, and Legion laptops plus desktops and accessories.",
+      "offers": [
+        {
+          "code": "LENOVO12",
+          "title": "12% off ThinkPad laptops",
+          "type": "code",
+          "expires": "2026-12-31"
+        },
+        {
+          "code": null,
+          "title": "Free shipping on all orders",
+          "type": "deal",
+          "expires": "2026-12-31"
+        }
+      ],
+      "domain": "lenovo.com"
+    },
+    {
+      "brand": "Samsung",
+      "slug": "samsung",
+      "category": "electronics",
+      "affiliateUrl": "https://www.samsung.com/us/?aff_id=TODO",
+      "description": "Galaxy phones, TVs, appliances, and smart home tech.",
+      "offers": [
+        {
+          "code": "EDU10",
+          "title": "10% off with education discount",
+          "type": "code",
+          "expires": "2026-12-31"
+        }
+      ],
+      "domain": "samsung.com"
+    },
+    {
+      "brand": "Logitech",
+      "slug": "logitech",
+      "category": "electronics",
+      "affiliateUrl": "https://www.logitech.com/en-us/?aff_id=TODO",
+      "description": "Keyboards, mice, webcams, and peripherals for work and play.",
+      "offers": [
+        {
+          "code": "LOGI20",
+          "title": "20% off accessories",
+          "type": "code",
+          "expires": "2026-12-31"
+        }
+      ],
+      "domain": "logitech.com"
+    },
+    {
+      "brand": "Wayfair",
+      "slug": "wayfair",
+      "category": "home-kitchen",
+      "affiliateUrl": "https://www.wayfair.com/?aff_id=TODO",
+      "description": "Furniture, decor, and kitchenware for every room and budget.",
+      "offers": [
+        {
+          "code": "WAYFAIR10",
+          "title": "10% off your first order",
+          "type": "code",
+          "expires": "2026-12-31"
+        },
+        {
+          "code": null,
+          "title": "Free shipping over $35",
+          "type": "deal",
+          "expires": "2026-12-31"
+        }
+      ],
+      "domain": "wayfair.com"
+    },
+    {
+      "brand": "Williams Sonoma",
+      "slug": "williams-sonoma",
+      "category": "home-kitchen",
+      "affiliateUrl": "https://www.williams-sonoma.com/?aff_id=TODO",
+      "description": "Premium cookware, kitchen tools, and gourmet foods.",
+      "offers": [
+        {
+          "code": "WS15",
+          "title": "15% off one item",
+          "type": "code",
+          "expires": "2026-12-31"
+        }
+      ],
+      "domain": "williams-sonoma.com"
+    },
+    {
+      "brand": "Crate & Barrel",
+      "slug": "crate-and-barrel",
+      "category": "home-kitchen",
+      "affiliateUrl": "https://www.crateandbarrel.com/?aff_id=TODO",
+      "description": "Modern furniture, dinnerware, and home decor.",
+      "offers": [
+        {
+          "code": "CB20",
+          "title": "20% off full-price furniture",
+          "type": "code",
+          "expires": "2026-12-31"
+        },
+        {
+          "code": null,
+          "title": "Free design services",
+          "type": "deal",
+          "expires": "2026-12-31"
+        }
+      ],
+      "domain": "crateandbarrel.com"
+    },
+    {
+      "brand": "The Home Depot",
+      "slug": "home-depot",
+      "category": "home-kitchen",
+      "affiliateUrl": "https://www.homedepot.com/?aff_id=TODO",
+      "description": "Home improvement, tools, appliances, and garden supplies.",
+      "offers": [
+        {
+          "code": null,
+          "title": "Up to 40% off select appliances",
+          "type": "deal",
+          "expires": "2026-12-31"
+        }
+      ],
+      "domain": "homedepot.com"
+    },
+    {
+      "brand": "Lowe's",
+      "slug": "lowes",
+      "category": "home-kitchen",
+      "affiliateUrl": "https://www.lowes.com/?aff_id=TODO",
+      "description": "Appliances, tools, and home improvement essentials.",
+      "offers": [
+        {
+          "code": "LOWES10",
+          "title": "10% off select major appliances",
+          "type": "code",
+          "expires": "2026-12-31"
+        }
+      ],
+      "domain": "lowes.com"
+    },
+    {
+      "brand": "Ninja Kitchen",
+      "slug": "ninja-kitchen",
+      "category": "home-kitchen",
+      "affiliateUrl": "https://www.ninjakitchen.com/?aff_id=TODO",
+      "description": "Blenders, air fryers, and kitchen appliances by Ninja.",
+      "offers": [
+        {
+          "code": "NINJA20",
+          "title": "20% off sitewide",
+          "type": "code",
+          "expires": "2026-12-31"
+        },
+        {
+          "code": null,
+          "title": "Free shipping over $70",
+          "type": "deal",
+          "expires": "2026-12-31"
+        }
+      ],
+      "domain": "ninjakitchen.com"
+    },
+    {
+      "brand": "Sephora",
+      "slug": "sephora",
+      "category": "beauty",
+      "affiliateUrl": "https://www.sephora.com/?aff_id=TODO",
+      "description": "Beauty retailer carrying thousands of makeup, skincare, and fragrance brands.",
+      "offers": [
+        {
+          "code": "SAVE15",
+          "title": "15% off your first order",
+          "type": "code",
+          "expires": "2026-12-31"
+        },
+        {
+          "code": null,
+          "title": "Free shipping on orders over $50",
+          "type": "deal",
+          "expires": "2026-12-31"
+        }
+      ],
+      "domain": "sephora.com"
+    },
+    {
+      "brand": "Ulta Beauty",
+      "slug": "ulta-beauty",
+      "category": "beauty",
+      "affiliateUrl": "https://www.ulta.com/?aff_id=TODO",
+      "description": "Beauty superstore with prestige and drugstore makeup, skincare, and hair.",
+      "offers": [
+        {
+          "code": "ULTA20",
+          "title": "20% off one item",
+          "type": "code",
+          "expires": "2026-12-31"
+        }
+      ],
+      "domain": "ulta.com"
+    },
+    {
+      "brand": "Glossier",
+      "slug": "glossier",
+      "category": "beauty",
+      "affiliateUrl": "https://www.glossier.com/?aff_id=TODO",
+      "description": "Minimalist skincare and makeup built on a skin-first philosophy.",
+      "offers": [
+        {
+          "code": "GLOSSY10",
+          "title": "10% off for new customers",
+          "type": "code",
+          "expires": "2026-12-31"
+        },
+        {
+          "code": null,
+          "title": "Free shipping over $30",
+          "type": "deal",
+          "expires": "2026-12-31"
+        }
+      ],
+      "domain": "glossier.com"
+    },
+    {
+      "brand": "The Ordinary",
+      "slug": "the-ordinary",
+      "category": "beauty",
+      "affiliateUrl": "https://theordinary.com/?aff_id=TODO",
+      "description": "Affordable, ingredient-focused serums and treatments from Deciem.",
+      "offers": [
+        {
+          "code": null,
+          "title": "Free shipping over $25",
+          "type": "deal",
+          "expires": "2026-12-31"
+        }
+      ],
+      "domain": "theordinary.com"
+    },
+    {
+      "brand": "CeraVe",
+      "slug": "cerave",
+      "category": "beauty",
+      "affiliateUrl": "https://www.cerave.com/?aff_id=TODO",
+      "description": "Dermatologist-developed skincare with ceramides and hyaluronic acid.",
+      "offers": [
+        {
+          "code": null,
+          "title": "Buy one get one 50% off cleansers",
+          "type": "deal",
+          "expires": "2026-12-31"
+        }
+      ],
+      "domain": "cerave.com"
+    },
+    {
+      "brand": "Charlotte Tilbury",
+      "slug": "charlotte-tilbury",
+      "category": "beauty",
+      "affiliateUrl": "https://www.charlottetilbury.com/us/?aff_id=TODO",
+      "description": "Luxury makeup and skincare from celebrity makeup artist Charlotte Tilbury.",
+      "offers": [
+        {
+          "code": "PILLOW15",
+          "title": "15% off Pillow Talk collection",
+          "type": "code",
+          "expires": "2026-12-31"
+        },
+        {
+          "code": null,
+          "title": "Free gift with $75+ purchase",
+          "type": "deal",
+          "expires": "2026-12-31"
+        }
+      ],
+      "domain": "charlottetilbury.com"
+    },
+    {
+      "brand": "iHerb",
+      "slug": "iherb",
+      "category": "health",
+      "affiliateUrl": "https://www.iherb.com/?aff_id=TODO",
+      "description": "Vitamins, supplements, and natural health products shipped worldwide.",
+      "offers": [
+        {
+          "code": "IHERB5",
+          "title": "5% off your entire order",
+          "type": "code",
+          "expires": "2026-12-31"
+        },
+        {
+          "code": null,
+          "title": "Free shipping over $20",
+          "type": "deal",
+          "expires": "2026-12-31"
+        }
+      ],
+      "domain": "iherb.com"
+    },
+    {
+      "brand": "Vitacost",
+      "slug": "vitacost",
+      "category": "health",
+      "affiliateUrl": "https://www.vitacost.com/?aff_id=TODO",
+      "description": "Discount vitamins, supplements, and healthy groceries.",
+      "offers": [
+        {
+          "code": "VITA15",
+          "title": "15% off orders over $75",
+          "type": "code",
+          "expires": "2026-12-31"
+        }
+      ],
+      "domain": "vitacost.com"
+    },
+    {
+      "brand": "GNC",
+      "slug": "gnc",
+      "category": "health",
+      "affiliateUrl": "https://www.gnc.com/?aff_id=TODO",
+      "description": "Protein, supplements, and wellness products for active lifestyles.",
+      "offers": [
+        {
+          "code": "GNC20",
+          "title": "20% off orders over $49",
+          "type": "code",
+          "expires": "2026-12-31"
+        }
+      ],
+      "domain": "gnc.com"
+    },
+    {
+      "brand": "Ritual",
+      "slug": "ritual",
+      "category": "health",
+      "affiliateUrl": "https://ritual.com/?aff_id=TODO",
+      "description": "Traceable multivitamins and protein with a clean-label promise.",
+      "offers": [
+        {
+          "code": "RITUAL30",
+          "title": "30% off your first month",
+          "type": "code",
+          "expires": "2026-12-31"
+        }
+      ],
+      "domain": "ritual.com"
+    },
+    {
+      "brand": "Vital Proteins",
+      "slug": "vital-proteins",
+      "category": "health",
+      "affiliateUrl": "https://www.vitalproteins.com/?aff_id=TODO",
+      "description": "Collagen peptides, powders, and wellness supplements.",
+      "offers": [
+        {
+          "code": "VP25",
+          "title": "25% off your first order",
+          "type": "code",
+          "expires": "2026-12-31"
+        }
+      ],
+      "domain": "vitalproteins.com"
+    },
+    {
+      "brand": "Thorne",
+      "slug": "thorne",
+      "category": "health",
+      "affiliateUrl": "https://www.thorne.com/?aff_id=TODO",
+      "description": "Science-backed supplements trusted by practitioners and athletes.",
+      "offers": [
+        {
+          "code": "THORNE10",
+          "title": "10% off your first purchase",
+          "type": "code",
+          "expires": "2026-12-31"
+        }
+      ],
+      "domain": "thorne.com"
+    },
+    {
+      "brand": "Expedia",
+      "slug": "expedia",
+      "category": "travel",
+      "affiliateUrl": "https://www.expedia.com/?aff_id=TODO",
+      "description": "Book flights, hotels, cars, and vacation packages in one place.",
+      "offers": [
+        {
+          "code": "EXP8",
+          "title": "8% off select hotels",
+          "type": "code",
+          "expires": "2026-12-31"
+        },
+        {
+          "code": null,
+          "title": "Member Prices — save 10%+ on hotels",
+          "type": "deal",
+          "expires": "2026-12-31"
+        }
+      ],
+      "domain": "expedia.com"
+    },
+    {
+      "brand": "Booking.com",
+      "slug": "booking",
+      "category": "travel",
+      "affiliateUrl": "https://www.booking.com/?aff_id=TODO",
+      "description": "Hotels, homes, and stays with free cancellation on many bookings.",
+      "offers": [
+        {
+          "code": null,
+          "title": "Genius members save up to 15%",
+          "type": "deal",
+          "expires": "2026-12-31"
+        }
+      ],
+      "domain": "booking.com"
+    },
+    {
+      "brand": "Hotels.com",
+      "slug": "hotels-com",
+      "category": "travel",
+      "affiliateUrl": "https://www.hotels.com/?aff_id=TODO",
+      "description": "Hotel bookings with member deals and reward nights.",
+      "offers": [
+        {
+          "code": "HOTELS10",
+          "title": "10% off select hotels",
+          "type": "code",
+          "expires": "2026-12-31"
+        }
+      ],
+      "domain": "hotels.com"
+    },
+    {
+      "brand": "Priceline",
+      "slug": "priceline",
+      "category": "travel",
+      "affiliateUrl": "https://www.priceline.com/?aff_id=TODO",
+      "description": "Discount hotels, flights, and rental cars with Express Deals.",
+      "offers": [
+        {
+          "code": "PRICE12",
+          "title": "$12 off $150+ hotel bookings",
+          "type": "code",
+          "expires": "2026-12-31"
+        }
+      ],
+      "domain": "priceline.com"
+    },
+    {
+      "brand": "Viator",
+      "slug": "viator",
+      "category": "travel",
+      "affiliateUrl": "https://www.viator.com/?aff_id=TODO",
+      "description": "Tours, activities, and experiences in destinations worldwide.",
+      "offers": [
+        {
+          "code": "VIATOR10",
+          "title": "10% off tours & activities",
+          "type": "code",
+          "expires": "2026-12-31"
+        }
+      ],
+      "domain": "viator.com"
+    },
+    {
+      "brand": "Tripadvisor",
+      "slug": "tripadvisor",
+      "category": "travel",
+      "affiliateUrl": "https://www.tripadvisor.com/?aff_id=TODO",
+      "description": "Compare prices on hotels, flights, and things to do.",
+      "offers": [
+        {
+          "code": null,
+          "title": "Free cancellation on many bookings",
+          "type": "deal",
+          "expires": "2026-12-31"
+        }
+      ],
+      "domain": "tripadvisor.com"
+    }
+  ]
+}

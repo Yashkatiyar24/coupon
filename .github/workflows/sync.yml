@@ -1,0 +1,67 @@
+name: Crawl, build & deploy
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'   # every 6h: crawl feeds → rebuild → deploy
+    - cron: '30 5 * * 1'    # weekly (Mon 05:30 UTC): link health audit
+  workflow_dispatch: {}     # manual trigger
+  push:
+    branches: [main]        # content/code edits deploy immediately
+
+jobs:
+  sync:
+    if: github.event.schedule != '30 5 * * 1'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20, cache: npm }
+      - run: npm ci
+
+      # pipeline self-test gates the run — a broken pipeline never publishes
+      - run: npm run crawl:test
+
+      # crawl all enabled sources (each skips cleanly without credentials)
+      - run: npm run crawl
+        env:
+          IMPACT_ACCOUNT_SID: ${{ secrets.IMPACT_ACCOUNT_SID }}
+          IMPACT_AUTH_TOKEN: ${{ secrets.IMPACT_AUTH_TOKEN }}
+          IMPACT_PARTNER_ID: ${{ secrets.IMPACT_PARTNER_ID }}
+          CJ_API_TOKEN: ${{ secrets.CJ_API_TOKEN }}
+          CJ_WEBSITE_ID: ${{ secrets.CJ_WEBSITE_ID }}
+          CJ_PID: ${{ secrets.CJ_PID }}
+          AWIN_API_TOKEN: ${{ secrets.AWIN_API_TOKEN }}
+          AWIN_PUBLISHER_ID: ${{ secrets.AWIN_PUBLISHER_ID }}
+          AWIN_AFF_ID: ${{ secrets.AWIN_AFF_ID }}
+          RAKUTEN_SITE_ID: ${{ secrets.RAKUTEN_SITE_ID }}
+          SHAREASALE_AFF_ID: ${{ secrets.SHAREASALE_AFF_ID }}
+          AMAZON_TAG: ${{ secrets.AMAZON_TAG }}
+
+      - name: Commit refreshed data
+        run: |
+          git config user.name "crawler-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add src/data/deals.json
+          git commit -m "chore: crawler sync" || echo "no changes"
+          git push || echo "nothing to push"
+
+      - run: npm run build
+      - run: npm run check    # broken page/link → run fails, nothing deploys
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy dist --project-name=couponhub
+
+  link-audit:
+    if: github.event.schedule == '30 5 * * 1'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: node scripts/link-audit.mjs   # failure = GitHub emails you

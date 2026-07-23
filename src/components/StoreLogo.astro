@@ -1,0 +1,27 @@
+---
+// Merchant logo in a circle, falling back to the monogram if the logo 404s
+// or hasn't loaded. Sized by the parent's .circle styles.
+import { initial, logoUrl } from '../lib/catalog.js';
+const { brand } = Astro.props;
+const src = logoUrl(brand);
+---
+<span class="circle" aria-hidden="true">
+  {src && (
+    <img
+      src={src}
+      alt=""
+      width="128"
+      height="128"
+      loading="lazy"
+      decoding="async"
+      onerror="this.remove()"
+    />
+  )}
+  <b class="mg">{initial(brand)}</b>
+</span>
+
+<style is:global>
+  .circle { position: relative; overflow: hidden; }
+  .circle img { position: absolute; inset: 0; margin: auto; width: 58%; height: 58%; object-fit: contain; background: #fff; border-radius: 4px; z-index: 1; }
+  .circle .mg { font-weight: 800; }
+</style>

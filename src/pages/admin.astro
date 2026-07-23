@@ -1,0 +1,188 @@
+---
+// Zero-backend admin portal: form-based catalog editing in the browser.
+// Writes nothing itself — you Download deals.json and commit it; CI tests,
+// rebuilds, and deploys. Crawler logs live in GitHub Actions; click analytics
+// in Cloudflare (Analytics Engine → coupon_clicks). Noindex, not in sitemap.
+import Base from '../layouts/Base.astro';
+import data from '../data/deals.json';
+const json = JSON.stringify(data);
+---
+<Base title="Admin — CouponHub" description="Internal catalog admin." noindex>
+  <script type="application/json" id="catalog-data" set:html={json} />
+  <div class="wrap" style="padding:1.6rem 1.1rem">
+    <div class="shead" style="margin-top:0">
+      <h1 style="margin:0;font-size:1.5rem">Catalog <span style="color:var(--purple)">Admin</span></h1>
+      <span id="status" class="vbadge">✔ loaded</span>
+    </div>
+    <p class="intro">
+      Edit below, then <b>Download deals.json</b> and commit it as <code>src/data/deals.json</code> —
+      CI validates, rebuilds, and deploys. Crawler runs &amp; logs: GitHub → Actions.
+      Click stats: Cloudflare → Analytics Engine.
+    </p>
+
+    <p style="display:flex;gap:.6rem;flex-wrap:wrap">
+      <button class="pillbtn" id="dl" type="button">Download deals.json</button>
+      <button class="pillbtn" id="add-merchant" type="button" style="background:var(--ink)">+ Merchant</button>
+      <button class="pillbtn" id="add-cat" type="button" style="background:var(--ink)">+ Category</button>
+      <input id="filter" type="search" placeholder="Filter merchants…" style="flex:1;min-width:180px;border:1px solid var(--line);border-radius:8px;padding:.55rem .8rem;font-size:.9rem" />
+    </p>
+
+    <div class="panel" style="margin-top:1rem;overflow-x:auto">
+      <table id="tbl" style="width:100%;border-collapse:collapse;font-size:.92rem">
+        <thead>
+          <tr style="text-align:left;color:var(--muted);text-transform:uppercase;font-size:.72rem;letter-spacing:.06em">
+            <th style="padding:.5rem">Merchant</th><th>Category</th><th>Offers</th><th>Affiliate URL</th><th></th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <dialog id="dlg" style="border:1px solid var(--line);border-radius:14px;padding:1.4rem;max-width:640px;width:92vw">
+    <form method="dialog" id="dlg-form" style="display:grid;gap:.7rem">
+      <h2 id="dlg-title" style="margin:0 0 .4rem;font-size:1.2rem">Edit merchant</h2>
+      <label>Name <input name="brand" required style="width:100%" /></label>
+      <label>Slug <input name="slug" required pattern="[a-z0-9-]+" style="width:100%" /></label>
+      <label>Category <select name="category" style="width:100%"></select></label>
+      <label>Affiliate URL <input name="affiliateUrl" type="url" required style="width:100%" /></label>
+      <label>Description <textarea name="description" rows="2" style="width:100%"></textarea></label>
+      <fieldset style="border:1px solid var(--line);border-radius:10px">
+        <legend style="font-weight:700;font-size:.85rem">Offers</legend>
+        <div id="offers"></div>
+        <button type="button" id="add-offer" class="pillbtn" style="background:var(--ink);font-size:.72rem;padding:.4rem .7rem">+ Offer</button>
+      </fieldset>
+      <p style="display:flex;gap:.6rem;justify-content:flex-end;margin:0">
+        <button type="button" id="dlg-cancel" class="pillbtn" style="background:var(--faint)">Cancel</button>
+        <button type="submit" class="pillbtn" value="save">Save</button>
+      </p>
+    </form>
+  </dialog>
+
+  <style is:global>
+    #dlg label { font-size:.82rem; font-weight:700; color:var(--muted); }
+    #dlg input, #dlg select, #dlg textarea { display:block; margin-top:.25rem; border:1px solid var(--line); border-radius:8px; padding:.5rem .7rem; font:inherit; font-size:.92rem; }
+    #dlg .offer-row { display:grid; grid-template-columns:110px 1fr 130px auto; gap:.5rem; align-items:center; margin:.5rem 0; }
+    #tbl td { padding:.55rem .5rem; border-top:1px solid var(--line); }
+    #tbl .rowbtn { background:none; border:1px solid var(--line); border-radius:6px; padding:.25rem .6rem; cursor:pointer; font-size:.78rem; font-weight:700; color:var(--ink); }
+    #tbl .rowbtn.del { color:#c0262b; }
+    #tbl .rowbtn:hover { border-color:var(--purple); color:var(--purple); }
+  </style>
+
+  <script>
+    const data = JSON.parse(document.getElementById('catalog-data').textContent);
+    const $ = (s) => document.querySelector(s);
+    const status = $('#status');
+    const ok = (m) => { status.textContent = '✔ ' + m; status.style.background = ''; status.style.color = ''; };
+    const slugify = (s) => s.toLowerCase().replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    let editing = null; // brand object being edited, or null for new
+
+    function render() {
+      const term = $('#filter').value?.trim().toLowerCase() ?? '';
+      const tb = $('#tbl tbody');
+      tb.innerHTML = '';
+      for (const b of data.brands) {
+        if (term && !b.brand.toLowerCase().includes(term) && !b.slug.includes(term)) continue;
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><b>${b.brand}</b><br><span style="color:var(--faint);font-size:.78rem">${b.slug}</span></td>
+          <td>${b.category}</td>
+          <td>${b.offers.length}</td>
+          <td style="max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--muted)">${b.affiliateUrl}</td>
+          <td style="white-space:nowrap"><button class="rowbtn" data-e="${b.slug}">Edit</button>
+          <button class="rowbtn del" data-d="${b.slug}">Delete</button></td>`;
+        tb.appendChild(tr);
+      }
+      ok(`${data.brands.length} merchants, ${data.categories.length} categories`);
+    }
+
+    function offerRow(o = { code: '', title: '', expires: '' }) {
+      const div = document.createElement('div');
+      div.className = 'offer-row';
+      div.innerHTML = `
+        <input placeholder="CODE (blank = deal)" value="${o.code ?? ''}" data-f="code" />
+        <input placeholder="Offer title" required value="${o.title ?? ''}" data-f="title" />
+        <input type="date" value="${o.expires ?? ''}" data-f="expires" />
+        <button type="button" class="rowbtn del">✕</button>`;
+      div.querySelector('.del').onclick = () => div.remove();
+      return div;
+    }
+
+    function openDialog(brand) {
+      editing = brand;
+      const f = $('#dlg-form');
+      $('#dlg-title').textContent = brand ? `Edit ${brand.brand}` : 'New merchant';
+      f.elements.brand.value = brand?.brand ?? '';
+      f.elements.slug.value = brand?.slug ?? '';
+      f.elements.affiliateUrl.value = brand?.affiliateUrl ?? 'https://';
+      f.elements.description.value = brand?.description ?? '';
+      f.elements.category.innerHTML = data.categories
+        .map((c) => `<option value="${c.slug}" ${brand?.category === c.slug ? 'selected' : ''}>${c.name}</option>`).join('');
+      const box = $('#offers');
+      box.innerHTML = '';
+      (brand?.offers ?? []).forEach((o) => box.appendChild(offerRow(o)));
+      $('#dlg').showModal();
+    }
+
+    $('#tbl').addEventListener('click', (e) => {
+      const eSlug = e.target.dataset?.e, dSlug = e.target.dataset?.d;
+      if (eSlug) openDialog(data.brands.find((b) => b.slug === eSlug));
+      if (dSlug && confirm(`Delete ${dSlug} and its pages?`)) {
+        data.brands = data.brands.filter((b) => b.slug !== dSlug);
+        render();
+      }
+    });
+
+    $('#add-merchant').onclick = () => openDialog(null);
+    $('#add-offer').onclick = () => $('#offers').appendChild(offerRow());
+    $('#dlg-cancel').onclick = () => $('#dlg').close();
+    $('#filter').oninput = render;
+
+    // auto-slug for new merchants
+    $('#dlg-form').elements.brand.addEventListener('input', (e) => {
+      if (!editing) $('#dlg-form').elements.slug.value = slugify(e.target.value);
+    });
+
+    $('#dlg-form').addEventListener('submit', () => {
+      const f = $('#dlg-form');
+      const offers = [...$('#offers').children].map((row) => {
+        const g = (k) => row.querySelector(`[data-f="${k}"]`).value.trim();
+        const code = g('code') || null;
+        return { code, title: g('title'), type: code ? 'code' : 'deal', expires: g('expires') || null };
+      }).filter((o) => o.title);
+      const b = {
+        brand: f.elements.brand.value.trim(),
+        slug: f.elements.slug.value.trim(),
+        category: f.elements.category.value,
+        affiliateUrl: f.elements.affiliateUrl.value.trim(),
+        description: f.elements.description.value.trim() || `Deals and coupon codes for ${f.elements.brand.value.trim()}.`,
+        offers,
+      };
+      if (editing) Object.assign(editing, b);
+      else if (data.brands.some((x) => x.slug === b.slug)) return alert(`Slug "${b.slug}" already exists.`);
+      else data.brands.push(b);
+      render();
+    });
+
+    $('#add-cat').onclick = () => {
+      const name = prompt('Category display name (e.g. "Pet Supplies"):')?.trim();
+      if (!name) return;
+      const slug = slugify(name);
+      if (data.categories.some((c) => c.slug === slug)) return alert('Category exists.');
+      data.categories.push({ slug, name, short: name.split(/ [&,]| and /)[0] });
+      render();
+    };
+
+    $('#dl').onclick = () => {
+      const a = Object.assign(document.createElement('a'), {
+        href: URL.createObjectURL(new Blob([JSON.stringify(data, null, 2) + '\n'], { type: 'application/json' })),
+        download: 'deals.json',
+      });
+      a.click();
+      URL.revokeObjectURL(a.href);
+      ok('downloaded — commit as src/data/deals.json');
+    };
+
+    render();
+  </script>
+</Base>

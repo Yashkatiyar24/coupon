@@ -1,0 +1,16 @@
+---
+import Base from '../layouts/Base.astro';
+import { categories } from '../lib/catalog.js';
+---
+<Base title="Page Not Found — CouponHub" description="That page doesn't exist. Browse coupon categories instead." noindex>
+  <div class="wrap" style="max-width:760px;padding:3rem 1.1rem;text-align:center">
+    <h1 style="font-size:3rem;margin-bottom:.5rem">404</h1>
+    <p class="intro">That page doesn't exist — the offer may have expired and been removed.</p>
+    <p><a class="pillbtn" href="/">Browse all coupons</a></p>
+    <div class="chiprow" style="justify-content:center;margin-top:1.5rem">
+      {categories.map((c) => (
+        <a class="chip" href={`/category/${c.slug}`}>{c.icon} {c.short}</a>
+      ))}
+    </div>
+  </div>
+</Base>

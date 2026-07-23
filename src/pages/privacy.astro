@@ -1,0 +1,51 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base
+  title="Privacy Policy — CouponHub"
+  description="CouponHub's privacy policy: no accounts, no personal data collection, affiliate link and analytics practices."
+  canonical="/privacy"
+>
+  <div class="wrap" style="max-width:760px;padding:2rem 1.1rem">
+    <h1>Privacy Policy</h1>
+    <p class="intro">Last updated: July 2026</p>
+
+    <h2>What we collect</h2>
+    <p>
+      CouponHub has no user accounts, no sign-up, and no forms. We do not collect,
+      store, or sell personal information. The site is a set of static pages
+      served from a CDN.
+    </p>
+
+    <h2>Outbound clicks</h2>
+    <p>
+      When you click "Show Code" or "Get Deal", you pass through a redirect on our
+      domain (<code>/go/…</code>) to the store's site. We count these clicks in
+      aggregate (store name, referring page, browser user-agent) to see which
+      offers are useful. No cookies are set and no personal identifiers are stored
+      by us.
+    </p>
+
+    <h2>Affiliate links</h2>
+    <p>
+      Outbound links carry our affiliate tracking IDs. The destination store and
+      its affiliate network (Impact, Commission Junction, Awin, Rakuten, or
+      similar) may set cookies on their own domains to attribute purchases; their
+      privacy policies govern that data. See our
+      <a href="/about">affiliate disclosure</a>.
+    </p>
+
+    <h2>Hosting</h2>
+    <p>
+      The site is served by Cloudflare, which processes standard server logs
+      (IP address, request URL) to deliver and secure the site, per
+      <a href="https://www.cloudflare.com/privacypolicy/" rel="noopener">Cloudflare's privacy policy</a>.
+    </p>
+
+    <h2>Contact</h2>
+    <p>
+      Privacy questions: <a href="mailto:contact@example.com">contact@example.com</a>.
+      <!-- TODO: replace with your real contact address -->
+    </p>
+  </div>
+</Base>

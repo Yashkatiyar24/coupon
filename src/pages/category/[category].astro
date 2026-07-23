@@ -1,0 +1,63 @@
+---
+import Base from '../../layouts/Base.astro';
+import StoreLogo from '../../components/StoreLogo.astro';
+import { categories, catBrands, catName, initial } from '../../lib/catalog.js';
+
+export function getStaticPaths() {
+  return categories.map((c) => ({
+    params: { category: c.slug },
+    props: { slug: c.slug },
+  }));
+}
+
+const { slug } = Astro.props;
+const label = catName(slug);
+const list = [...catBrands(slug)].sort((a, b) => a.brand.localeCompare(b.brand));
+const totalOffers = list.reduce((n, b) => n + b.offers.length, 0);
+---
+<Base
+  title={`${label} Coupon Codes & Deals (July 2026) — CouponHub`}
+  description={`The best ${label.toLowerCase()} coupon codes and discounts for July 2026 from ${list.length} top stores. Save before you check out.`}
+>
+  <div class="storehead">
+    <div class="wrap">
+      <div class="in">
+        <div>
+          <p class="crumb"><a href="/">Home</a> / {label}</p>
+          <h1>{label} Coupons &amp; Deals</h1>
+          <span class="vbadge">✔ {totalOffers} verified offers · {list.length} stores</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="layout">
+      <main>
+        <p class="intro">Verified {label.toLowerCase()} promo codes and discounts for July 2026. Pick a store to see today's offers.</p>
+        <ul class="storegrid">
+          {list.map((b) => (
+            <li>
+              <a class="storec" href={`/${b.slug}-coupon-code`}>
+                <StoreLogo brand={b} />
+                <span class="nm">{b.brand}</span>
+                <span class="ct">{b.offers.length} offer{b.offers.length === 1 ? '' : 's'}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </main>
+
+      <aside class="side">
+        <div class="panel">
+          <h3>Browse categories</h3>
+          <ul class="sidelist">
+            {categories.map((c) => (
+              <li><a href={`/category/${c.slug}`}>{c.name} <span class="n">{c.count}</span></a></li>
+            ))}
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</Base>

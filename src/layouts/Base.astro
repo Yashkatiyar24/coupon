@@ -1,0 +1,229 @@
+---
+import { categories } from '../lib/catalog.js';
+const { title, description, canonical, jsonld, noindex, image } = Astro.props;
+const site = Astro.site?.href.replace(/\/$/, '') ?? '';
+const canonicalUrl = canonical ? site + canonical : site + Astro.url.pathname;
+const favicon = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%236b21c8'/%3E%3Ctext x='16' y='23' font-family='Arial,sans-serif' font-weight='bold' font-size='19' fill='%23fff' text-anchor='middle'%3E%C2%A2%3C/text%3E%3C/svg%3E";
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <link rel="icon" href={favicon} />
+    <meta name="theme-color" content="#ffffff" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    {image && <meta property="og:image" content={image} />}
+    {jsonld && <script type="application/ld+json" set:html={JSON.stringify(jsonld)} />}
+    <style is:global>
+      :root {
+        --purple: #6b21c8;
+        --purple-dk: #55189f;
+        --lav: #f4eefc;         /* lavender tint */
+        --lav-2: #e9defa;
+        --ink: #211a35;         /* purple-black */
+        --muted: #67607a;
+        --faint: #948ca6;
+        --bg: #f8f7fa;
+        --surface: #ffffff;
+        --line: #e9e5f1;
+        --green: #0e8a4c;
+        --green-bg: #e6f6ee;
+        --pink: #d9365e;        /* sale/deal accent */
+        --pink-bg: #fdeaef;
+        --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+        --shadow: 0 1px 2px rgba(33,26,53,.04), 0 8px 24px -10px rgba(33,26,53,.14);
+        --shadow-lift: 0 2px 4px rgba(33,26,53,.06), 0 18px 40px -14px rgba(33,26,53,.22);
+        --r: 16px;
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; overflow-x: clip; }
+      body { margin: 0; font-family: var(--sans); font-size: 16px; line-height: 1.6; color: var(--ink); background: var(--bg); -webkit-font-smoothing: antialiased; }
+      ::selection { background: var(--purple); color: #fff; }
+      a { color: var(--purple); text-underline-offset: 2px; }
+      h1, h2, h3 { line-height: 1.15; letter-spacing: -.02em; font-weight: 800; }
+      img { max-width: 100%; }
+      .wrap { max-width: 1140px; margin: 0 auto; padding: 0 1.2rem; }
+
+      /* ---------- header ---------- */
+      .topbar { background: var(--surface); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 30; }
+      .topbar .bar { display: flex; align-items: center; gap: 1.2rem; height: 66px; }
+      .logo { display: inline-flex; align-items: baseline; font-weight: 800; font-size: 1.3rem; color: var(--ink); text-decoration: none; letter-spacing: -.03em; white-space: nowrap; }
+      .logo b { color: var(--purple); }
+      .logo .dot { color: var(--pink); }
+      .hsearch { flex: 1; max-width: 460px; display: flex; align-items: center; background: var(--bg); border: 1.5px solid var(--line); border-radius: 999px; padding: 0 .4rem 0 1.1rem; transition: border-color .15s, background .15s; }
+      .hsearch:focus-within { border-color: var(--purple); background: #fff; }
+      .hsearch input { flex: 1; border: 0; background: none; padding: .6rem 0; font-size: .95rem; color: var(--ink); outline: none; min-width: 0; }
+      .hsearch button { border: 0; background: var(--purple); color: #fff; font-weight: 700; font-size: .82rem; padding: .45rem 1rem; border-radius: 999px; cursor: pointer; }
+      .hsearch button:hover { background: var(--purple-dk); }
+      .mainnav { display: flex; gap: 1.3rem; margin-left: auto; font-size: .9rem; font-weight: 600; }
+      .mainnav a { color: var(--ink); text-decoration: none; }
+      .mainnav a:hover { color: var(--purple); }
+      @media (max-width: 860px) { .mainnav { display: none; } }
+      @media (max-width: 560px) { .hsearch button { display: none; } }
+
+      /* category chip row under header */
+      .chiprow { display: flex; gap: .5rem; overflow-x: auto; padding: .6rem 0 .8rem; scrollbar-width: none; }
+      .chiprow::-webkit-scrollbar { display: none; }
+      .chip { flex: 0 0 auto; background: var(--surface); border: 1.5px solid var(--line); color: var(--ink); text-decoration: none; font-size: .84rem; font-weight: 600; padding: .38rem .95rem; border-radius: 999px; transition: all .15s; }
+      .chip:hover { border-color: var(--purple); color: var(--purple); background: var(--lav); }
+
+      /* ---------- hero ---------- */
+      .hero { background: linear-gradient(160deg, var(--lav) 0%, #fdf3f6 55%, var(--bg) 100%); border-bottom: 1px solid var(--line); }
+      .hero .wrap { padding: 2.8rem 1.2rem 2.4rem; text-align: center; }
+      .hero h1 { font-size: clamp(1.9rem, 4.5vw, 3rem); margin: 0 auto .6rem; max-width: 720px; }
+      .hero h1 em { font-style: normal; color: var(--purple); }
+      .hero .sub { color: var(--muted); font-size: 1.08rem; margin: 0 auto; max-width: 560px; }
+
+      /* ---------- sections ---------- */
+      .shead { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin: 2.4rem 0 1.1rem; }
+      .shead h2 { font-size: 1.45rem; margin: 0; }
+      .shead a { font-size: .86rem; font-weight: 700; text-decoration: none; white-space: nowrap; }
+
+      /* ---------- offer card grid (RMN-style vertical cards) ---------- */
+      .offergrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem; }
+      .ocard { display: flex; flex-direction: column; gap: .55rem; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 1.15rem 1.15rem 1.05rem; box-shadow: var(--shadow); transition: transform .16s, box-shadow .16s; position: relative; }
+      .ocard:hover { transform: translateY(-3px); box-shadow: var(--shadow-lift); }
+      .ocard .top { display: flex; align-items: center; justify-content: space-between; gap: .6rem; }
+      .circle { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; background: var(--lav); border: 1px solid var(--lav-2); color: var(--purple); font-weight: 800; font-size: 1.25rem; flex: 0 0 auto; }
+      .typetag { font-size: .66rem; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; padding: .18rem .55rem; border-radius: 999px; }
+      .typetag.code { background: var(--lav); color: var(--purple); }
+      .typetag.deal { background: var(--pink-bg); color: var(--pink); }
+      .ocard .headline { font-size: 1.18rem; font-weight: 800; margin: 0; line-height: 1.25; }
+      .ocard .desc { font-size: .88rem; color: var(--muted); margin: 0; flex: 1; }
+      .ocard .meta { font-size: .78rem; color: var(--faint); display: flex; gap: .6rem; align-items: center; margin: 0; }
+      .ocard .meta .ok { color: var(--green); font-weight: 700; }
+
+      /* ---------- pill CTA + peeled "Show Code" ---------- */
+      .pillbtn { display: inline-flex; align-items: center; justify-content: center; background: var(--purple); color: #fff; text-decoration: none; font-weight: 700; font-size: .92rem; padding: .68rem 1.5rem; border-radius: 999px; white-space: nowrap; transition: background .15s, transform .15s; border: 0; cursor: pointer; }
+      .pillbtn:hover { background: var(--purple-dk); color: #fff; transform: translateY(-1px); }
+      .peel { position: relative; display: inline-flex; align-items: center; justify-content: center; background: var(--purple); color: #fff; text-decoration: none; font-weight: 700; font-size: .92rem; padding: .68rem 1.5rem; border-radius: 999px; white-space: nowrap; overflow: hidden; transition: background .15s; }
+      .peel:hover { background: var(--purple-dk); color: #fff; }
+      .peel::after { /* folded corner reveals code peek */
+        content: attr(data-peek);
+        position: absolute; top: 0; right: 0; bottom: 0;
+        display: grid; place-items: center;
+        width: 34%; min-width: 58px;
+        background: #fff; color: var(--ink);
+        font-family: var(--mono); font-size: .74rem; font-weight: 700; letter-spacing: .04em;
+        border: 1.5px dashed var(--lav-2); border-radius: 0 999px 999px 0;
+        clip-path: polygon(14px 0, 100% 0, 100% 100%, 0 100%, 0 14px);
+        box-shadow: -6px 0 10px -6px rgba(33,26,53,.35);
+      }
+      .peel.shown::after { color: var(--green); width: 100%; min-width: 0; clip-path: none; border-radius: 999px; font-size: .88rem; }
+
+      /* ---------- store circles ---------- */
+      .storegrid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(108px, 1fr)); gap: 1rem; }
+      .storec { display: flex; flex-direction: column; align-items: center; gap: .5rem; text-decoration: none; color: var(--ink); text-align: center; }
+      .storec .circle { width: 72px; height: 72px; font-size: 1.7rem; background: var(--surface); border: 1.5px solid var(--line); box-shadow: var(--shadow); transition: all .16s; }
+      .storec:hover .circle { border-color: var(--purple); transform: translateY(-3px); box-shadow: var(--shadow-lift); }
+      .storec .nm { font-size: .84rem; font-weight: 700; line-height: 1.2; }
+      .storec .ct { font-size: .72rem; color: var(--faint); }
+
+      /* ---------- store page head ---------- */
+      .storehead { background: var(--surface); border-bottom: 1px solid var(--line); }
+      .storehead .in { display: flex; align-items: center; gap: 1.3rem; padding: 1.8rem 0; flex-wrap: wrap; }
+      .storehead .circle { width: 84px; height: 84px; font-size: 2.1rem; border: 1.5px solid var(--lav-2); }
+      .storehead h1 { font-size: clamp(1.5rem, 3.4vw, 2.2rem); margin: 0 0 .3rem; }
+      .crumb { font-size: .78rem; color: var(--faint); margin: 0 0 .35rem; }
+      .crumb a { color: var(--muted); text-decoration: none; }
+      .crumb a:hover { color: var(--purple); }
+      .vbadge { display: inline-flex; align-items: center; gap: .4rem; font-size: .78rem; font-weight: 700; color: var(--green); background: var(--green-bg); padding: .32rem .8rem; border-radius: 999px; }
+
+      /* ---------- offer rows (store page) ---------- */
+      .offerrows { display: grid; gap: .9rem; }
+      .orow { display: grid; grid-template-columns: 1fr auto; gap: 1rem; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 1.15rem 1.3rem; box-shadow: var(--shadow); transition: box-shadow .16s; }
+      .orow:hover { box-shadow: var(--shadow-lift); }
+      .orow .headline { font-size: 1.12rem; font-weight: 800; margin: 0 0 .25rem; }
+      .orow .meta { font-size: .8rem; color: var(--faint); display: flex; gap: .6rem; flex-wrap: wrap; margin: 0; }
+      .orow .meta .ok { color: var(--green); font-weight: 700; }
+      @media (max-width: 560px) { .orow { grid-template-columns: 1fr; } .orow .act { justify-self: stretch; } .orow .act .peel, .orow .act .pillbtn { width: 100%; } }
+
+      /* ---------- layout + panels ---------- */
+      .layout { display: grid; grid-template-columns: 1fr 300px; gap: 1.6rem; align-items: start; margin: 1.6rem 0; }
+      @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } .side { order: 2; } }
+      .side { display: grid; gap: 1rem; position: sticky; top: 82px; }
+      @media (max-width: 900px) { .side { position: static; } }
+      .panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 1.15rem 1.2rem; box-shadow: var(--shadow); }
+      .panel h3 { font-size: .78rem; margin: 0 0 .7rem; text-transform: uppercase; letter-spacing: .1em; color: var(--faint); font-weight: 800; }
+      .panel p { margin: 0; font-size: .9rem; color: var(--muted); }
+      .sidelist { list-style: none; margin: 0; padding: 0; display: grid; gap: .55rem; }
+      .sidelist a { text-decoration: none; color: var(--ink); font-weight: 600; font-size: .92rem; display: flex; justify-content: space-between; gap: .5rem; }
+      .sidelist a:hover { color: var(--purple); }
+      .sidelist .n { color: var(--faint); font-weight: 500; }
+      .intro { color: var(--muted); font-size: .98rem; }
+
+      /* ---------- FAQ ---------- */
+      .faq { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: .4rem 1.2rem; box-shadow: var(--shadow); }
+      .faq details { border-bottom: 1px solid var(--line); }
+      .faq details:last-child { border-bottom: 0; }
+      .faq summary { list-style: none; cursor: pointer; padding: 1rem .1rem; font-weight: 700; font-size: 1rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+      .faq summary::-webkit-details-marker { display: none; }
+      .faq summary::after { content: "+"; font-weight: 400; font-size: 1.4rem; color: var(--purple); transition: transform .2s; line-height: 1; }
+      .faq details[open] summary::after { transform: rotate(45deg); }
+      .faq details p { margin: 0 .1rem 1rem; color: var(--muted); font-size: .93rem; }
+
+      .also { font-size: .88rem; color: var(--muted); margin-top: 1.4rem; }
+      .also a { font-weight: 600; }
+
+      /* ---------- footer ---------- */
+      .foot { background: var(--surface); border-top: 1px solid var(--line); margin-top: 3rem; }
+      .foot .wrap { padding: 2.2rem 1.2rem; display: grid; gap: 1rem; }
+      .foot-links { display: flex; gap: 1.3rem; flex-wrap: wrap; font-size: .85rem; font-weight: 600; }
+      .foot-links a { color: var(--muted); text-decoration: none; }
+      .foot-links a:hover { color: var(--purple); }
+      .foot p { color: var(--faint); font-size: .8rem; max-width: 640px; margin: 0; }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="wrap">
+        <div class="bar">
+          <a class="logo" href="/">coupon<b>hub</b><span class="dot">.</span></a>
+          <form class="hsearch" role="search" action="/" method="get">
+            <input name="q" type="search" placeholder="Search stores & brands" aria-label="Search stores" autocomplete="off" />
+            <button type="submit">Search</button>
+          </form>
+          <nav class="mainnav" aria-label="Categories">
+            {categories.map((c) => <a href={`/category/${c.slug}`}>{c.short}</a>)}
+          </nav>
+        </div>
+        <nav class="chiprow" aria-label="Browse categories">
+          {categories.map((c) => <a class="chip" href={`/category/${c.slug}`}>{c.icon} {c.name}</a>)}
+        </nav>
+      </div>
+    </header>
+
+    <slot />
+
+    <footer class="foot">
+      <div class="wrap">
+        <a class="logo" href="/">coupon<b>hub</b><span class="dot">.</span></a>
+        <nav class="foot-links" aria-label="Footer">
+          {categories.map((c) => <a href={`/category/${c.slug}`}>{c.name}</a>)}
+          <a href="/about">About</a>
+          <a href="/privacy">Privacy</a>
+        </nav>
+        <p>CouponHub may earn a commission when you buy through links on this site — see our <a href="/about">affiliate disclosure</a>. Verify current terms on the retailer's site before purchase.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Peel button: click reveals full code + copies it (anchor still opens the store).
+      document.addEventListener('click', (e) => {
+        const p = e.target.closest('.peel[data-code]');
+        if (!p) return;
+        p.setAttribute('data-peek', p.dataset.code);
+        p.classList.add('shown');
+        navigator.clipboard?.writeText(p.dataset.code);
+      });
+    </script>
+  </body>
+</html>
