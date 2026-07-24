@@ -3,7 +3,7 @@ import { categories } from '../lib/catalog.js';
 const { title, description, canonical, jsonld, noindex, image } = Astro.props;
 const site = Astro.site?.href.replace(/\/$/, '') ?? '';
 const canonicalUrl = canonical ? site + canonical : site + Astro.url.pathname;
-const favicon = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%232563eb'/%3E%3Ctext x='16' y='23' font-family='Arial,sans-serif' font-weight='bold' font-size='19' fill='%23fff' text-anchor='middle'%3E%C2%A2%3C/text%3E%3C/svg%3E";
+const favicon = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23dc2626'/%3E%3Ctext x='16' y='23' font-family='Arial,sans-serif' font-weight='bold' font-size='19' fill='%23fff' text-anchor='middle'%3E%C2%A2%3C/text%3E%3C/svg%3E";
 ---
 <!doctype html>
 <html lang="en">
@@ -23,24 +23,24 @@ const favicon = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' vi
     {jsonld && <script type="application/ld+json" set:html={JSON.stringify(jsonld)} />}
     <style is:global>
       :root {
-        --accent: #2563eb;      /* standard blue CTA */
-        --accent-dk: #1d4ed8;
-        --tint: #eef4ff;        /* light blue tint */
-        --tint-2: #dbe7fe;
-        --ink: #1b2430;         /* neutral slate */
-        --muted: #5b6472;
-        --faint: #8a93a2;
-        --bg: #f6f7f9;
+        --accent: #dc2626;      /* red CTA */
+        --accent-dk: #b91c1c;
+        --tint: #fef2f2;        /* light red tint */
+        --tint-2: #fee2e2;
+        --ink: #1f1517;         /* warm near-black */
+        --muted: #6b5b5d;
+        --faint: #9c8d8f;
+        --bg: #f8f6f6;
         --surface: #ffffff;
-        --line: #e6e9ee;
+        --line: #eee6e6;
         --green: #0e8a4c;
         --green-bg: #e6f6ee;
         --warm: #b45309;        /* amber deal accent */
         --warm-bg: #fdf3e3;
         --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
         --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-        --shadow: 0 1px 2px rgba(27,36,48,.04), 0 8px 24px -10px rgba(27,36,48,.14);
-        --shadow-lift: 0 2px 4px rgba(27,36,48,.06), 0 18px 40px -14px rgba(27,36,48,.22);
+        --shadow: 0 1px 2px rgba(31,21,23,.04), 0 8px 24px -10px rgba(31,21,23,.14);
+        --shadow-lift: 0 2px 4px rgba(31,21,23,.06), 0 18px 40px -14px rgba(31,21,23,.22);
         --r: 16px;
       }
       * { box-sizing: border-box; }
@@ -75,8 +75,36 @@ const favicon = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' vi
       .chip { flex: 0 0 auto; background: var(--surface); border: 1.5px solid var(--line); color: var(--ink); text-decoration: none; font-size: .84rem; font-weight: 600; padding: .38rem .95rem; border-radius: 999px; transition: all .15s; }
       .chip:hover { border-color: var(--accent); color: var(--accent); background: var(--tint); }
 
+      /* ---------- hero slider ---------- */
+      .slider { position: relative; border-bottom: 1px solid var(--line); background: #1f1517; }
+      .slides { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-width: none; }
+      .slides::-webkit-scrollbar { display: none; }
+      .slide { flex: 0 0 100%; scroll-snap-align: start; position: relative; min-height: 360px; display: flex; align-items: flex-end; text-decoration: none; background-size: cover; background-position: center; background-color: #2a1e20; }
+      .slide::before { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(20,12,14,.82) 0%, rgba(20,12,14,.55) 45%, rgba(20,12,14,.15) 100%); }
+      .slide-in { position: relative; max-width: 1140px; width: 100%; margin: 0 auto; padding: 2.2rem 1.2rem 2.6rem; color: #fff; }
+      .slide-eyebrow { display: inline-flex; align-items: center; gap: .4rem; font-size: .72rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; background: var(--accent); color: #fff; padding: .3rem .7rem; border-radius: 999px; }
+      .slide-in h2 { font-size: clamp(1.8rem, 4.5vw, 3rem); margin: .8rem 0 .4rem; color: #fff; max-width: 620px; }
+      .slide-in p { font-size: 1.05rem; color: #f1e5e6; margin: 0 0 1.2rem; max-width: 520px; }
+      .slide-cta { display: inline-flex; align-items: center; gap: .5rem; background: #fff; color: var(--ink); font-weight: 800; font-size: .95rem; padding: .7rem 1.5rem; border-radius: 999px; }
+      .slide-logo { position: absolute; top: 1.4rem; right: 1.4rem; z-index: 1; background: #fff; border-radius: 12px; padding: .5rem .8rem; font-weight: 800; color: var(--ink); box-shadow: var(--shadow); }
+      .snav { position: absolute; top: 50%; transform: translateY(-50%); z-index: 2; width: 42px; height: 42px; border-radius: 50%; border: 0; background: rgba(255,255,255,.9); color: var(--ink); font-size: 1.4rem; cursor: pointer; display: grid; place-items: center; box-shadow: var(--shadow); }
+      .snav:hover { background: #fff; }
+      .snav.prev { left: 1rem; } .snav.next { right: 1rem; }
+      .dots { position: absolute; bottom: .9rem; left: 50%; transform: translateX(-50%); z-index: 2; display: flex; gap: .5rem; }
+      .dots button { width: 9px; height: 9px; border-radius: 50%; border: 0; background: rgba(255,255,255,.5); cursor: pointer; padding: 0; }
+      .dots button[aria-current="true"] { background: #fff; width: 22px; border-radius: 999px; }
+      @media (max-width: 640px) { .slide { min-height: 300px; } .snav { display: none; } }
+
+      /* deal image on offer cards */
+      .ocard.img-card { padding: 0; overflow: hidden; gap: 0; }
+      .ocard-img { position: relative; height: 148px; background-size: cover; background-position: center; background-color: var(--tint); }
+      .ocard-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+      .ocard-img .typetag { position: absolute; top: .6rem; right: .6rem; box-shadow: var(--shadow); }
+      .ocard-body { display: flex; flex-direction: column; gap: .5rem; padding: 0 1.15rem 1.1rem; }
+      .ocard-body .circle { margin-top: -30px; border: 3px solid #fff; background: #fff; position: relative; z-index: 1; box-shadow: var(--shadow); }
+
       /* ---------- hero ---------- */
-      .hero { background: linear-gradient(160deg, var(--tint) 0%, #fbfcfe 55%, var(--bg) 100%); border-bottom: 1px solid var(--line); }
+      .hero { background: linear-gradient(160deg, var(--tint) 0%, #fff7f6 55%, var(--bg) 100%); border-bottom: 1px solid var(--line); }
       .hero .wrap { padding: 2.8rem 1.2rem 2.4rem; text-align: center; }
       .hero h1 { font-size: clamp(1.9rem, 4.5vw, 3rem); margin: 0 auto .6rem; max-width: 720px; }
       .hero h1 em { font-style: normal; color: var(--accent); }
@@ -115,7 +143,7 @@ const favicon = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' vi
         font-family: var(--mono); font-size: .74rem; font-weight: 700; letter-spacing: .04em;
         border: 1.5px dashed var(--tint-2); border-radius: 0 999px 999px 0;
         clip-path: polygon(14px 0, 100% 0, 100% 100%, 0 100%, 0 14px);
-        box-shadow: -6px 0 10px -6px rgba(27,36,48,.35);
+        box-shadow: -6px 0 10px -6px rgba(31,21,23,.35);
       }
       .peel.shown::after { color: var(--green); width: 100%; min-width: 0; clip-path: none; border-radius: 999px; font-size: .88rem; }
 

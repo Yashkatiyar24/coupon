@@ -1,13 +1,15 @@
 ---
 import Base from '../layouts/Base.astro';
 import StoreLogo from '../components/StoreLogo.astro';
-import { brands, categories, catBrands, initial, totalOffers } from '../lib/catalog.js';
+import { brands, categories, catBrands, initial, totalOffers, dealImage } from '../lib/catalog.js';
 import { discountBadge } from '../lib/content.js';
 
+const cap = (s) => s.toLowerCase().replace(/^./, (c) => c.toUpperCase());
 // Top offers = popularity proxy (offer count desc) until click data exists
 const top = [...brands].filter((b) => b.offers.length)
   .sort((a, b) => b.offers.length - a.offers.length || a.brand.localeCompare(b.brand))
   .slice(0, 8);
+const featured = top.slice(0, 5); // slider
 const popular = [...brands].sort((a, b) => b.offers.length - a.offers.length).slice(0, 12);
 const catName = (slug) => categories.find((c) => c.slug === slug)?.name ?? slug;
 ---
@@ -15,10 +17,29 @@ const catName = (slug) => categories.find((c) => c.slug === slug)?.name ?? slug;
   title="Coupon Codes, Promo Codes & Deals (July 2026) — CouponHub"
   description="Verified coupon codes, promo codes, and discounts across fashion, electronics, home, beauty, health, and travel. Save at 30+ top US stores, updated for July 2026."
 >
-  <section class="hero">
-    <div class="wrap">
-      <h1>Never pay full price <em>again</em>.</h1>
-      <p class="sub">{totalOffers} verified codes &amp; deals from {brands.length} stores across {categories.length} categories — refreshed automatically, all day.</p>
+  <section class="slider" aria-label="Featured deals" aria-roledescription="carousel">
+    <div class="slides" id="slides">
+      {featured.map((b, i) => {
+        const o = b.offers[0];
+        return (
+          <a class="slide" href={`/${b.slug}-coupon-code`} data-slide style={`background-image:url(${dealImage(b, 1200, 500)})`} aria-label={`${cap(discountBadge(o))} at ${b.brand}`}>
+            <span class="slide-logo">{b.brand}</span>
+            <div class="slide-in">
+              <span class="slide-eyebrow">{catName(b.category)}</span>
+              <h2>{cap(discountBadge(o))} at {b.brand}</h2>
+              <p>{o.title}{o.code ? ` — use code ${o.code}` : ''}</p>
+              <span class="slide-cta">See offer →</span>
+            </div>
+          </a>
+        );
+      })}
+    </div>
+    <button class="snav prev" type="button" aria-label="Previous">‹</button>
+    <button class="snav next" type="button" aria-label="Next">›</button>
+    <div class="dots" id="dots" role="tablist">
+      {featured.map((_, i) => (
+        <button type="button" role="tab" aria-label={`Slide ${i + 1}`} aria-current={i === 0 ? 'true' : 'false'} data-dot={i}></button>
+      ))}
     </div>
   </section>
 
@@ -28,15 +49,18 @@ const catName = (slug) => categories.find((c) => c.slug === slug)?.name ?? slug;
       {top.map((b) => {
         const o = b.offers[0];
         return (
-          <article class="ocard">
-            <div class="top">
-              <StoreLogo brand={b} />
+          <article class="ocard img-card">
+            <div class="ocard-img">
+              <img src={dealImage(b)} alt="" width="640" height="360" loading="lazy" decoding="async" onerror="this.remove()" />
               <span class={`typetag ${o.code ? 'code' : 'deal'}`}>{o.code ? 'Code' : 'Deal'}</span>
             </div>
-            <h3 class="headline">{discountBadge(o).toLowerCase().replace(/^./, (c) => c.toUpperCase())} at {b.brand}</h3>
-            <p class="desc">{o.title}</p>
-            <p class="meta"><span class="ok">✔ Verified</span> · {catName(b.category)}</p>
-            <a class="pillbtn" href={`/${b.slug}-coupon-code`}>See offer</a>
+            <div class="ocard-body">
+              <StoreLogo brand={b} />
+              <h3 class="headline">{cap(discountBadge(o))} at {b.brand}</h3>
+              <p class="desc">{o.title}</p>
+              <p class="meta"><span class="ok">✔ Verified</span> · {catName(b.category)}</p>
+              <a class="pillbtn" href={`/${b.slug}-coupon-code`}>See offer</a>
+            </div>
           </article>
         );
       })}
@@ -87,5 +111,28 @@ const catName = (slug) => categories.find((c) => c.slug === slug)?.name ?? slug;
     };
     if (q && input) { input.value = q; apply(q); }
     input?.addEventListener('input', () => apply(input.value.trim().toLowerCase()));
+
+    // Hero slider: scroll-snap track + dots + prev/next + auto-advance (pauses on hover).
+    const track = document.getElementById('slides');
+    if (track) {
+      const slides = [...track.querySelectorAll('[data-slide]')];
+      const dots = [...document.querySelectorAll('[data-dot]')];
+      let idx = 0, timer;
+      const go = (i) => { idx = (i + slides.length) % slides.length; track.scrollTo({ left: idx * track.clientWidth, behavior: 'smooth' }); };
+      const sync = () => {
+        const i = Math.round(track.scrollLeft / track.clientWidth);
+        dots.forEach((d, n) => d.setAttribute('aria-current', n === i ? 'true' : 'false'));
+        idx = i;
+      };
+      track.addEventListener('scroll', () => window.requestAnimationFrame(sync), { passive: true });
+      dots.forEach((d, n) => d.addEventListener('click', () => go(n)));
+      document.querySelector('.snav.prev')?.addEventListener('click', () => go(idx - 1));
+      document.querySelector('.snav.next')?.addEventListener('click', () => go(idx + 1));
+      const start = () => { timer = setInterval(() => go(idx + 1), 5000); };
+      const stop = () => clearInterval(timer);
+      track.addEventListener('pointerenter', stop);
+      track.addEventListener('pointerleave', start);
+      start();
+    }
   </script>
 </Base>

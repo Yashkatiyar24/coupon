@@ -22,6 +22,21 @@ export const logoUrl = (b) =>
   b.domain ? `https://www.google.com/s2/favicons?domain=${b.domain}&sz=128` : null;
 
 export function catIcon(slug) { return defs.get(slug)?.icon || '🏷️'; }
+
+// Category-themed deal photo (free, no auth, deterministic per merchant so the
+// same store always shows the same image). Pages lazy-load these and hide on
+// error, so a miss never breaks a card.
+const CAT_KEYWORD = {
+  fashion: 'fashion,clothing', electronics: 'technology,gadgets',
+  'home-kitchen': 'kitchen,interior', beauty: 'cosmetics,skincare',
+  health: 'vitamins,fitness', travel: 'travel,landmark',
+};
+export function dealImage(brand, w = 640, h = 360) {
+  let n = 0;
+  for (const c of brand.slug) n = (n * 31 + c.charCodeAt(0)) >>> 0;
+  const kw = CAT_KEYWORD[brand.category] || 'shopping,retail';
+  return `https://loremflickr.com/${w}/${h}/${kw}?lock=${n % 1000}`;
+}
 export const catBrands = (slug) => brands.filter((b) => b.category === slug);
 
 export function catName(slug) { return defs.get(slug)?.name || titleCase(slug); }
