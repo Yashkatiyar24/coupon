@@ -3,7 +3,7 @@ import { brands, catName } from '../lib/catalog.js';
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
 export function GET(context) {
-  const site = (context.site?.href ?? 'https://couponsanddeals.pages.dev/').replace(/\/$/, '');
+  const site = (context.site?.href ?? 'https://www.couponanddeals.com/').replace(/\/$/, '');
   const items = brands.flatMap((b) =>
     b.offers.map((o) => `  <item>
     <title>${esc(`${b.brand}: ${o.title}`)}</title>

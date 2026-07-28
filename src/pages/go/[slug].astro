@@ -1,0 +1,28 @@
+---
+// Static /go/<slug> → merchant redirect pages. Work on any static host with
+// no server code. When the Cloudflare Pages Function (functions/go/[slug].js)
+// is deployed it takes precedence for these routes and adds click analytics;
+// these pages are the guaranteed fallback so outbound clicks never 404.
+import { brands } from '../../lib/catalog.js';
+
+export function getStaticPaths() {
+  return brands.map((b) => ({
+    params: { slug: b.slug },
+    props: { url: b.affiliateUrl, brand: b.brand },
+  }));
+}
+const { url, brand } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Redirecting to {brand}…</title>
+    <meta name="robots" content="noindex" />
+    <meta http-equiv="refresh" content={`0;url=${url}`} />
+    <script is:inline define:vars={{ url }}>location.replace(url);</script>
+  </head>
+  <body>
+    <p>Taking you to <a href={url}>{brand}</a>…</p>
+  </body>
+</html>

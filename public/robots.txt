@@ -3,5 +3,4 @@ Allow: /
 Disallow: /go/
 Disallow: /admin
 
-# TODO: update host to your real domain
-Sitemap: https://couponsanddeals.pages.dev/sitemap-index.xml
+Sitemap: https://www.couponanddeals.com/sitemap-index.xml
