@@ -4,4 +4,4 @@ Disallow: /go/
 Disallow: /admin
 
 # TODO: update host to your real domain
-Sitemap: https://example.com/sitemap-index.xml
+Sitemap: https://couponsanddeals.pages.dev/sitemap-index.xml

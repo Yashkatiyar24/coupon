@@ -3,7 +3,7 @@ import { brands, catName } from '../lib/catalog.js';
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
 export function GET(context) {
-  const site = (context.site?.href ?? 'https://example.com/').replace(/\/$/, '');
+  const site = (context.site?.href ?? 'https://couponsanddeals.pages.dev/').replace(/\/$/, '');
   const items = brands.flatMap((b) =>
     b.offers.map((o) => `  <item>
     <title>${esc(`${b.brand}: ${o.title}`)}</title>
@@ -17,7 +17,7 @@ export function GET(context) {
     `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
 <channel>
-  <title>CouponHub — Latest Coupons &amp; Deals</title>
+  <title>CouponsAndDeals — Latest Coupons &amp; Deals</title>
   <link>${site}/</link>
   <description>Verified coupon codes and deals across fashion, electronics, home, beauty, health, and travel.</description>
 ${items.join('\n')}

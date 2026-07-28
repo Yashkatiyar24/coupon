@@ -1,8 +1,8 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
-// TODO: change to your real domain before deploy (used for canonical URLs + sitemap.xml)
+// Used for canonical URLs + sitemap.xml; update if a custom domain is attached.
 export default defineConfig({
-  site: 'https://example.com',
+  site: 'https://couponsanddeals.pages.dev',
   integrations: [sitemap({ filter: (page) => !page.includes('/admin') })],
 });
