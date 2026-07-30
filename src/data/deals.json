@@ -5,37 +5,37 @@
       "slug": "fashion",
       "name": "Fashion & Apparel",
       "short": "Fashion",
-      "icon": "\ud83d\udc57"
+      "icon": "👗"
     },
     {
       "slug": "electronics",
       "name": "Electronics & Tech",
       "short": "Electronics",
-      "icon": "\ud83d\udcbb"
+      "icon": "💻"
     },
     {
       "slug": "home-kitchen",
       "name": "Home & Kitchen",
       "short": "Home",
-      "icon": "\ud83c\udfe0"
+      "icon": "🏠"
     },
     {
       "slug": "beauty",
       "name": "Beauty & Personal Care",
       "short": "Beauty",
-      "icon": "\ud83d\udc84"
+      "icon": "💄"
     },
     {
       "slug": "health",
       "name": "Health & Wellness",
       "short": "Health",
-      "icon": "\ud83d\udc8a"
+      "icon": "💊"
     },
     {
       "slug": "travel",
       "name": "Travel",
       "short": "Travel",
-      "icon": "\u2708\ufe0f"
+      "icon": "✈️"
     }
   ],
   "brands": [
@@ -612,7 +612,7 @@
         },
         {
           "code": null,
-          "title": "Member Prices \u2014 save 10%+ on hotels",
+          "title": "Member Prices — save 10%+ on hotels",
           "type": "deal",
           "expires": "2026-12-31"
         }
