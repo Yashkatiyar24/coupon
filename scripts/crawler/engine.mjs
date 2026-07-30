@@ -92,7 +92,7 @@ export async function run(env = process.env) {
     const slug = m.slug || slugify(m.name);
     const category = slugify(m.category);
     const offers = cleanOffers(m.offers, log, slug);
-    const affiliateUrl = await buildAffiliateUrl(slug, m.homepage, env);
+    const affiliateUrl = await buildAffiliateUrl(slug, m.homepage, env, m.aff);
 
     if (!catSlugs.has(category)) { // auto-add unknown category to the taxonomy
       const name = m.categoryName || m.category;

@@ -46,11 +46,13 @@ export async function affiliateMap() {
   return mapCache;
 }
 
-// Build OUR affiliate URL for a merchant. Falls back to the merchant's clean
-// homepage (no tracking) if no mapping/credentials — never a source's link.
-export async function buildAffiliateUrl(slug, homepage, env = process.env) {
+// Build OUR affiliate URL for a merchant. `aff` is an optional mapping supplied
+// by the source feed itself (e.g. CJ's advertiser-id) used when the merchant
+// has no affiliates.json entry — the tracked URL is still built from OUR env
+// IDs, never taken from the feed. Falls back to the merchant's clean homepage.
+export async function buildAffiliateUrl(slug, homepage, env = process.env, aff = null) {
   const map = await affiliateMap();
-  const m = map[slug];
+  const m = map[slug] ?? aff;
   const clean = stripTracking(homepage);
   if (!m || !NETWORKS[m.network]) return clean;
   return NETWORKS[m.network](m, m.deeplink || clean, env) ?? clean;

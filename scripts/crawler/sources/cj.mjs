@@ -1,11 +1,13 @@
 // CJ (Commission Junction) link-search API → normalized merchants.
 // Env: CJ_API_TOKEN (personal access token), CJ_WEBSITE_ID (your PID).
+// advertiser-ids=joined: only programs that approved us — links from
+// unjoined advertisers pay nothing, so they never reach the site.
 export const name = 'cj';
 export const enabled = (env) => !!(env.CJ_API_TOKEN && env.CJ_WEBSITE_ID);
 
 export async function crawl(env, { fetchRetry, slugify }) {
   const res = await fetchRetry(
-    `https://link-search.api.cj.com/v2/link-search?website-id=${env.CJ_WEBSITE_ID}&link-type=Text%20Link&promotion-type=coupon&records-per-page=1000`,
+    `https://link-search.api.cj.com/v2/link-search?website-id=${env.CJ_WEBSITE_ID}&advertiser-ids=joined&link-type=Text%20Link&promotion-type=coupon&records-per-page=1000`,
     { headers: { Authorization: `Bearer ${env.CJ_API_TOKEN}` } },
   );
   const xml = await res.text();
@@ -15,6 +17,8 @@ export async function crawl(env, { fetchRetry, slugify }) {
     const g = (tag) => block.match(new RegExp(`<${tag}>([\\s\\S]*?)</${tag}>`))?.[1]?.trim() ?? '';
     return {
       advertiser: g('advertiser-name'),
+      aid: g('advertiser-id'),
+      language: g('language'),
       category: g('category'),
       code: g('coupon-code'),
       title: g('link-name'),
@@ -26,12 +30,15 @@ export async function crawl(env, { fetchRetry, slugify }) {
   const byMerchant = new Map();
   for (const l of links) {
     if (!l.advertiser) continue;
+    // US/English site: skip non-English creatives when the feed labels them
+    if (l.language && !/^en/i.test(l.language)) continue;
     if (!byMerchant.has(l.advertiser)) {
       byMerchant.set(l.advertiser, {
         name: l.advertiser,
         slug: slugify(l.advertiser),
         category: l.category || 'other',
         homepage: l.dest?.match(/^https:\/\/[^/]+/)?.[0] ?? `https://${slugify(l.advertiser)}.com`,
+        aff: l.aid ? { network: 'cj', aid: l.aid } : undefined,
         offers: [],
       });
     }

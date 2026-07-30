@@ -27,6 +27,11 @@ await writeFile(FIXTURE, JSON.stringify([
     homepage: 'https://www.chewy.com/', description: 'Pet food and supplies delivered.',
     offers: [{ code: 'PETS20', title: '20% off first Autoship', expires: future }],
   },
+  { // new merchant with feed-supplied mapping (CJ advertiser-id) → tracked via OUR PID
+    name: 'Acme Tools', category: 'Tools', homepage: 'https://www.acmetools.com/',
+    aff: { network: 'cj', aid: '111' },
+    offers: [{ code: 'ACME5', title: '5% off sitewide', expires: future }],
+  },
   { name: '', category: 'x', homepage: 'https://x.com', offers: [] },    // invalid → skipped
 ]));
 
@@ -34,6 +39,7 @@ await copyFile(DEALS, BAK);
 try {
   process.env.CRAWLER_FIXTURE = FIXTURE.pathname;
   process.env.AWIN_AFF_ID = '999001'; // pretend we're enrolled: chewy via awin below
+  process.env.CJ_PID = '7777';        // acme-tools via feed-supplied cj advertiser-id
   const { run } = await import('./engine.mjs');
 
   // temporarily map chewy → awin so the affiliate engine has a complete mapping
@@ -58,7 +64,11 @@ try {
     assert.ok(chewy.affiliateUrl.startsWith('https://www.awin1.com/cread.php?awinmid=12345&awinaffid=999001'),
       'affiliate URL is OURS via awin mapping');
 
-    assert.equal(updated, 1); assert.equal(added, 1);
+    const acme = data.brands.find((b) => b.slug === 'acme-tools');
+    assert.ok(acme.affiliateUrl.startsWith('https://www.anrdoezrs.net/click-7777-111?url='),
+      'feed-supplied cj mapping builds OUR tracked link');
+
+    assert.equal(updated, 1); assert.equal(added, 2);
     console.log('✓ crawler pipeline test passed (merge, auto-add, dedupe, expiry, affiliate rewrite)');
   } finally {
     await writeFile(AFF, affBak);
