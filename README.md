@@ -1,4 +1,4 @@
-# CouponsAndDeals — programmatic-SEO coupon site
+# CouponAndDeals — programmatic-SEO coupon site
 
 Static Astro site, multi-category (fashion, electronics, home, beauty, health,
 travel — add your own). One committed `deals.json` is the CMS; Cloudflare Pages

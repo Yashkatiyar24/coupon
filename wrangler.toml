@@ -2,7 +2,7 @@
 #   Build command:       npm run build
 #   Build output dir:    dist
 #   Node version:        20
-name = "couponsanddeals"
+name = "couponanddeals"
 pages_build_output_dir = "dist"
 
 # Click analytics for the /go/[slug] redirect function (free tier).

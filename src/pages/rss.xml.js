@@ -17,7 +17,7 @@ export function GET(context) {
     `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
 <channel>
-  <title>CouponsAndDeals — Latest Coupons &amp; Deals</title>
+  <title>CouponAndDeals — Latest Coupons &amp; Deals</title>
   <link>${site}/</link>
   <description>Verified coupon codes and deals across fashion, electronics, home, beauty, health, and travel.</description>
 ${items.join('\n')}
