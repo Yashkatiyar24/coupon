@@ -5,37 +5,37 @@
       "slug": "fashion",
       "name": "Fashion & Apparel",
       "short": "Fashion",
-      "icon": "👗"
+      "icon": "\ud83d\udc57"
     },
     {
       "slug": "electronics",
       "name": "Electronics & Tech",
       "short": "Electronics",
-      "icon": "💻"
+      "icon": "\ud83d\udcbb"
     },
     {
       "slug": "home-kitchen",
       "name": "Home & Kitchen",
       "short": "Home",
-      "icon": "🏠"
+      "icon": "\ud83c\udfe0"
     },
     {
       "slug": "beauty",
       "name": "Beauty & Personal Care",
       "short": "Beauty",
-      "icon": "💄"
+      "icon": "\ud83d\udc84"
     },
     {
       "slug": "health",
       "name": "Health & Wellness",
       "short": "Health",
-      "icon": "💊"
+      "icon": "\ud83d\udc8a"
     },
     {
       "slug": "travel",
       "name": "Travel",
       "short": "Travel",
-      "icon": "✈️"
+      "icon": "\u2708\ufe0f"
     }
   ],
   "brands": [
@@ -43,7 +43,7 @@
       "brand": "Nike",
       "slug": "nike",
       "category": "fashion",
-      "affiliateUrl": "https://www.nike.com/?aff_id=TODO",
+      "affiliateUrl": "https://www.nike.com/",
       "description": "Athletic footwear, apparel, and gear for every sport and lifestyle.",
       "offers": [
         {
@@ -65,7 +65,7 @@
       "brand": "Adidas",
       "slug": "adidas",
       "category": "fashion",
-      "affiliateUrl": "https://www.adidas.com/us/?aff_id=TODO",
+      "affiliateUrl": "https://www.adidas.com/us/",
       "description": "Sportswear, sneakers, and activewear from the three-stripes brand.",
       "offers": [
         {
@@ -81,7 +81,7 @@
       "brand": "Nordstrom",
       "slug": "nordstrom",
       "category": "fashion",
-      "affiliateUrl": "https://www.nordstrom.com/?aff_id=TODO",
+      "affiliateUrl": "https://www.nordstrom.com/",
       "description": "Designer and contemporary fashion, shoes, and beauty with free returns.",
       "offers": [
         {
@@ -103,7 +103,7 @@
       "brand": "Gap",
       "slug": "gap",
       "category": "fashion",
-      "affiliateUrl": "https://www.gap.com/?aff_id=TODO",
+      "affiliateUrl": "https://www.gap.com/",
       "description": "Casual American wardrobe staples for the whole family.",
       "offers": [
         {
@@ -125,7 +125,7 @@
       "brand": "Levi's",
       "slug": "levis",
       "category": "fashion",
-      "affiliateUrl": "https://www.levi.com/US/en_US/?aff_id=TODO",
+      "affiliateUrl": "https://www.levi.com/US/en_US/",
       "description": "Iconic denim jeans, jackets, and apparel since 1853.",
       "offers": [
         {
@@ -141,7 +141,7 @@
       "brand": "Lululemon",
       "slug": "lululemon",
       "category": "fashion",
-      "affiliateUrl": "https://shop.lululemon.com/?aff_id=TODO",
+      "affiliateUrl": "https://shop.lululemon.com/",
       "description": "Technical athletic apparel for yoga, running, and training.",
       "offers": [
         {
@@ -157,7 +157,7 @@
       "brand": "Best Buy",
       "slug": "best-buy",
       "category": "electronics",
-      "affiliateUrl": "https://www.bestbuy.com/?aff_id=TODO",
+      "affiliateUrl": "https://www.bestbuy.com/",
       "description": "Electronics superstore for laptops, TVs, phones, and appliances.",
       "offers": [
         {
@@ -179,7 +179,7 @@
       "brand": "Dell",
       "slug": "dell",
       "category": "electronics",
-      "affiliateUrl": "https://www.dell.com/en-us/?aff_id=TODO",
+      "affiliateUrl": "https://www.dell.com/en-us/",
       "description": "PCs, laptops, monitors, and accessories for home and business.",
       "offers": [
         {
@@ -201,7 +201,7 @@
       "brand": "HP",
       "slug": "hp",
       "category": "electronics",
-      "affiliateUrl": "https://www.hp.com/us-en/?aff_id=TODO",
+      "affiliateUrl": "https://www.hp.com/us-en/",
       "description": "Laptops, desktops, printers, and ink direct from HP.",
       "offers": [
         {
@@ -217,7 +217,7 @@
       "brand": "Lenovo",
       "slug": "lenovo",
       "category": "electronics",
-      "affiliateUrl": "https://www.lenovo.com/us/en/?aff_id=TODO",
+      "affiliateUrl": "https://www.lenovo.com/us/en/",
       "description": "ThinkPad, Yoga, and Legion laptops plus desktops and accessories.",
       "offers": [
         {
@@ -239,7 +239,7 @@
       "brand": "Samsung",
       "slug": "samsung",
       "category": "electronics",
-      "affiliateUrl": "https://www.samsung.com/us/?aff_id=TODO",
+      "affiliateUrl": "https://www.samsung.com/us/",
       "description": "Galaxy phones, TVs, appliances, and smart home tech.",
       "offers": [
         {
@@ -255,7 +255,7 @@
       "brand": "Logitech",
       "slug": "logitech",
       "category": "electronics",
-      "affiliateUrl": "https://www.logitech.com/en-us/?aff_id=TODO",
+      "affiliateUrl": "https://www.logitech.com/en-us/",
       "description": "Keyboards, mice, webcams, and peripherals for work and play.",
       "offers": [
         {
@@ -271,7 +271,7 @@
       "brand": "Wayfair",
       "slug": "wayfair",
       "category": "home-kitchen",
-      "affiliateUrl": "https://www.wayfair.com/?aff_id=TODO",
+      "affiliateUrl": "https://www.wayfair.com/",
       "description": "Furniture, decor, and kitchenware for every room and budget.",
       "offers": [
         {
@@ -293,7 +293,7 @@
       "brand": "Williams Sonoma",
       "slug": "williams-sonoma",
       "category": "home-kitchen",
-      "affiliateUrl": "https://www.williams-sonoma.com/?aff_id=TODO",
+      "affiliateUrl": "https://www.williams-sonoma.com/",
       "description": "Premium cookware, kitchen tools, and gourmet foods.",
       "offers": [
         {
@@ -309,7 +309,7 @@
       "brand": "Crate & Barrel",
       "slug": "crate-and-barrel",
       "category": "home-kitchen",
-      "affiliateUrl": "https://www.crateandbarrel.com/?aff_id=TODO",
+      "affiliateUrl": "https://www.crateandbarrel.com/",
       "description": "Modern furniture, dinnerware, and home decor.",
       "offers": [
         {
@@ -331,7 +331,7 @@
       "brand": "The Home Depot",
       "slug": "home-depot",
       "category": "home-kitchen",
-      "affiliateUrl": "https://www.homedepot.com/?aff_id=TODO",
+      "affiliateUrl": "https://www.homedepot.com/",
       "description": "Home improvement, tools, appliances, and garden supplies.",
       "offers": [
         {
@@ -347,7 +347,7 @@
       "brand": "Lowe's",
       "slug": "lowes",
       "category": "home-kitchen",
-      "affiliateUrl": "https://www.lowes.com/?aff_id=TODO",
+      "affiliateUrl": "https://www.lowes.com/",
       "description": "Appliances, tools, and home improvement essentials.",
       "offers": [
         {
@@ -363,7 +363,7 @@
       "brand": "Ninja Kitchen",
       "slug": "ninja-kitchen",
       "category": "home-kitchen",
-      "affiliateUrl": "https://www.ninjakitchen.com/?aff_id=TODO",
+      "affiliateUrl": "https://www.ninjakitchen.com/",
       "description": "Blenders, air fryers, and kitchen appliances by Ninja.",
       "offers": [
         {
@@ -385,7 +385,7 @@
       "brand": "Sephora",
       "slug": "sephora",
       "category": "beauty",
-      "affiliateUrl": "https://www.sephora.com/?aff_id=TODO",
+      "affiliateUrl": "https://www.sephora.com/",
       "description": "Beauty retailer carrying thousands of makeup, skincare, and fragrance brands.",
       "offers": [
         {
@@ -407,7 +407,7 @@
       "brand": "Ulta Beauty",
       "slug": "ulta-beauty",
       "category": "beauty",
-      "affiliateUrl": "https://www.ulta.com/?aff_id=TODO",
+      "affiliateUrl": "https://www.ulta.com/",
       "description": "Beauty superstore with prestige and drugstore makeup, skincare, and hair.",
       "offers": [
         {
@@ -423,7 +423,7 @@
       "brand": "Glossier",
       "slug": "glossier",
       "category": "beauty",
-      "affiliateUrl": "https://www.glossier.com/?aff_id=TODO",
+      "affiliateUrl": "https://www.glossier.com/",
       "description": "Minimalist skincare and makeup built on a skin-first philosophy.",
       "offers": [
         {
@@ -445,7 +445,7 @@
       "brand": "The Ordinary",
       "slug": "the-ordinary",
       "category": "beauty",
-      "affiliateUrl": "https://theordinary.com/?aff_id=TODO",
+      "affiliateUrl": "https://theordinary.com/",
       "description": "Affordable, ingredient-focused serums and treatments from Deciem.",
       "offers": [
         {
@@ -461,7 +461,7 @@
       "brand": "CeraVe",
       "slug": "cerave",
       "category": "beauty",
-      "affiliateUrl": "https://www.cerave.com/?aff_id=TODO",
+      "affiliateUrl": "https://www.cerave.com/",
       "description": "Dermatologist-developed skincare with ceramides and hyaluronic acid.",
       "offers": [
         {
@@ -477,7 +477,7 @@
       "brand": "Charlotte Tilbury",
       "slug": "charlotte-tilbury",
       "category": "beauty",
-      "affiliateUrl": "https://www.charlottetilbury.com/us/?aff_id=TODO",
+      "affiliateUrl": "https://www.charlottetilbury.com/us/",
       "description": "Luxury makeup and skincare from celebrity makeup artist Charlotte Tilbury.",
       "offers": [
         {
@@ -499,7 +499,7 @@
       "brand": "iHerb",
       "slug": "iherb",
       "category": "health",
-      "affiliateUrl": "https://www.iherb.com/?aff_id=TODO",
+      "affiliateUrl": "https://www.iherb.com/",
       "description": "Vitamins, supplements, and natural health products shipped worldwide.",
       "offers": [
         {
@@ -521,7 +521,7 @@
       "brand": "Vitacost",
       "slug": "vitacost",
       "category": "health",
-      "affiliateUrl": "https://www.vitacost.com/?aff_id=TODO",
+      "affiliateUrl": "https://www.vitacost.com/",
       "description": "Discount vitamins, supplements, and healthy groceries.",
       "offers": [
         {
@@ -537,7 +537,7 @@
       "brand": "GNC",
       "slug": "gnc",
       "category": "health",
-      "affiliateUrl": "https://www.gnc.com/?aff_id=TODO",
+      "affiliateUrl": "https://www.gnc.com/",
       "description": "Protein, supplements, and wellness products for active lifestyles.",
       "offers": [
         {
@@ -553,7 +553,7 @@
       "brand": "Ritual",
       "slug": "ritual",
       "category": "health",
-      "affiliateUrl": "https://ritual.com/?aff_id=TODO",
+      "affiliateUrl": "https://ritual.com/",
       "description": "Traceable multivitamins and protein with a clean-label promise.",
       "offers": [
         {
@@ -569,7 +569,7 @@
       "brand": "Vital Proteins",
       "slug": "vital-proteins",
       "category": "health",
-      "affiliateUrl": "https://www.vitalproteins.com/?aff_id=TODO",
+      "affiliateUrl": "https://www.vitalproteins.com/",
       "description": "Collagen peptides, powders, and wellness supplements.",
       "offers": [
         {
@@ -585,7 +585,7 @@
       "brand": "Thorne",
       "slug": "thorne",
       "category": "health",
-      "affiliateUrl": "https://www.thorne.com/?aff_id=TODO",
+      "affiliateUrl": "https://www.thorne.com/",
       "description": "Science-backed supplements trusted by practitioners and athletes.",
       "offers": [
         {
@@ -601,7 +601,7 @@
       "brand": "Expedia",
       "slug": "expedia",
       "category": "travel",
-      "affiliateUrl": "https://www.expedia.com/?aff_id=TODO",
+      "affiliateUrl": "https://www.expedia.com/",
       "description": "Book flights, hotels, cars, and vacation packages in one place.",
       "offers": [
         {
@@ -612,7 +612,7 @@
         },
         {
           "code": null,
-          "title": "Member Prices — save 10%+ on hotels",
+          "title": "Member Prices \u2014 save 10%+ on hotels",
           "type": "deal",
           "expires": "2026-12-31"
         }
@@ -623,7 +623,7 @@
       "brand": "Booking.com",
       "slug": "booking",
       "category": "travel",
-      "affiliateUrl": "https://www.booking.com/?aff_id=TODO",
+      "affiliateUrl": "https://www.booking.com/",
       "description": "Hotels, homes, and stays with free cancellation on many bookings.",
       "offers": [
         {
@@ -639,7 +639,7 @@
       "brand": "Hotels.com",
       "slug": "hotels-com",
       "category": "travel",
-      "affiliateUrl": "https://www.hotels.com/?aff_id=TODO",
+      "affiliateUrl": "https://www.hotels.com/",
       "description": "Hotel bookings with member deals and reward nights.",
       "offers": [
         {
@@ -655,7 +655,7 @@
       "brand": "Priceline",
       "slug": "priceline",
       "category": "travel",
-      "affiliateUrl": "https://www.priceline.com/?aff_id=TODO",
+      "affiliateUrl": "https://www.priceline.com/",
       "description": "Discount hotels, flights, and rental cars with Express Deals.",
       "offers": [
         {
@@ -671,7 +671,7 @@
       "brand": "Viator",
       "slug": "viator",
       "category": "travel",
-      "affiliateUrl": "https://www.viator.com/?aff_id=TODO",
+      "affiliateUrl": "https://www.viator.com/",
       "description": "Tours, activities, and experiences in destinations worldwide.",
       "offers": [
         {
@@ -687,7 +687,7 @@
       "brand": "Tripadvisor",
       "slug": "tripadvisor",
       "category": "travel",
-      "affiliateUrl": "https://www.tripadvisor.com/?aff_id=TODO",
+      "affiliateUrl": "https://www.tripadvisor.com/",
       "description": "Compare prices on hotels, flights, and things to do.",
       "offers": [
         {
