@@ -35,5 +35,15 @@
   "hotels-com": { "network": "cj", "aid": null },
   "priceline": { "network": "cj", "aid": null },
   "viator": { "network": "cj", "aid": null },
-  "tripadvisor": { "network": "cj", "aid": null }
+  "tripadvisor": { "network": "cj", "aid": null },
+  "amazon": { "network": "amazon", "deeplink": "https://www.amazon.com/deals" },
+  "canva": { "network": "impact", "subdomain": null, "programId": null },
+  "grammarly": { "network": "cj", "aid": null },
+  "nordvpn": { "network": "cj", "aid": null },
+  "adobe": { "network": "cj", "aid": null },
+  "allbirds": { "network": "cj", "aid": null },
+  "grove-collaborative": { "network": "cj", "aid": null },
+  "blueland": { "network": "shareasale", "mid": null },
+  "doordash": { "network": "impact", "subdomain": null, "programId": null },
+  "instacart": { "network": "impact", "subdomain": null, "programId": null }
 }

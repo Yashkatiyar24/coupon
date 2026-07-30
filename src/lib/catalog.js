@@ -30,6 +30,7 @@ const CAT_KEYWORD = {
   fashion: 'fashion,clothing', electronics: 'technology,gadgets',
   'home-kitchen': 'kitchen,interior', beauty: 'cosmetics,skincare',
   health: 'vitamins,fitness', travel: 'travel,landmark',
+  software: 'laptop,software', sustainable: 'nature,plants', delivery: 'food,groceries',
 };
 export function dealImage(brand, w = 640, h = 360) {
   let n = 0;

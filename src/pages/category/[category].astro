@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import StoreLogo from '../../components/StoreLogo.astro';
 import { categories, catBrands, catName, initial } from '../../lib/catalog.js';
+import { NOW } from '../../lib/content.js';
 
 export function getStaticPaths() {
   return categories.map((c) => ({
@@ -16,8 +17,8 @@ const list = [...catBrands(slug)].sort((a, b) => a.brand.localeCompare(b.brand))
 const totalOffers = list.reduce((n, b) => n + b.offers.length, 0);
 ---
 <Base
-  title={`${label} Coupon Codes & Deals (July 2026) — CouponAndDeals`}
-  description={`The best ${label.toLowerCase()} coupon codes and discounts for July 2026 from ${list.length} top stores. Save before you check out.`}
+  title={`${label} Coupon Codes & Deals (${NOW}) — CouponAndDeals`}
+  description={`The best ${label.toLowerCase()} coupon codes and discounts for ${NOW} from ${list.length} top stores. Save before you check out.`}
 >
   <div class="storehead">
     <div class="wrap">
@@ -34,7 +35,7 @@ const totalOffers = list.reduce((n, b) => n + b.offers.length, 0);
   <div class="wrap">
     <div class="layout">
       <main>
-        <p class="intro">Verified {label.toLowerCase()} promo codes and discounts for July 2026. Pick a store to see today's offers.</p>
+        <p class="intro">Verified {label.toLowerCase()} promo codes and discounts for {NOW}. Pick a store to see today's offers.</p>
         <ul class="storegrid">
           {list.map((b) => (
             <li>

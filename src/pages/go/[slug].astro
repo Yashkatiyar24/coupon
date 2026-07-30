@@ -6,10 +6,12 @@
 import { brands } from '../../lib/catalog.js';
 
 export function getStaticPaths() {
-  return brands.map((b) => ({
-    params: { slug: b.slug },
-    props: { url: b.affiliateUrl, brand: b.brand },
-  }));
+  return brands.flatMap((b) => [
+    { params: { slug: b.slug }, props: { url: b.affiliateUrl, brand: b.brand } },
+    ...b.offers
+      .filter((o) => o.id && o.url)
+      .map((o) => ({ params: { slug: o.id }, props: { url: o.url, brand: b.brand } })),
+  ]);
 }
 const { url, brand } = Astro.props;
 ---

@@ -2,9 +2,14 @@
 import Base from '../layouts/Base.astro';
 import StoreLogo from '../components/StoreLogo.astro';
 import { brands, categories, catBrands, initial, totalOffers, dealImage } from '../lib/catalog.js';
-import { discountBadge } from '../lib/content.js';
+import { discountBadge, TAGS, NOW } from '../lib/content.js';
 
 const cap = (s) => s.toLowerCase().replace(/^./, (c) => c.toUpperCase());
+// Tag pages that actually built (same filter as /tag/[tag].astro) → trending row
+const trending = Object.entries(TAGS)
+  .map(([slug, def]) => ({ slug, def, n: brands.reduce((n, b) => n + b.offers.filter(def.test).length, 0) }))
+  .filter((t) => t.n)
+  .sort((a, b) => b.n - a.n);
 // Top offers = popularity proxy (offer count desc) until click data exists
 const top = [...brands].filter((b) => b.offers.length)
   .sort((a, b) => b.offers.length - a.offers.length || a.brand.localeCompare(b.brand))
@@ -14,8 +19,8 @@ const popular = [...brands].sort((a, b) => b.offers.length - a.offers.length).sl
 const catName = (slug) => categories.find((c) => c.slug === slug)?.name ?? slug;
 ---
 <Base
-  title="Coupon Codes, Promo Codes & Deals (July 2026) — CouponAndDeals"
-  description="Verified coupon codes, promo codes, and discounts across fashion, electronics, home, beauty, health, and travel. Save at 30+ top US stores, updated for July 2026."
+  title={`Coupon Codes, Promo Codes & Deals (${NOW}) — CouponAndDeals`}
+  description={`Verified coupon codes, promo codes, and discounts across fashion, electronics, home, beauty, health, travel, software, and delivery. Updated for ${NOW}.`}
 >
   <section class="slider" aria-label="Featured deals" aria-roledescription="carousel">
     <div class="slides" id="slides">
@@ -44,6 +49,13 @@ const catName = (slug) => categories.find((c) => c.slug === slug)?.name ?? slug;
   </section>
 
   <div class="wrap">
+    <div class="shead"><h2>Trending Searches</h2></div>
+    <nav class="chiprow" aria-label="Trending deal topics" style="padding-top:0">
+      {trending.map((t) => (
+        <a class="chip" href={`/tag/${t.slug}`}><span aria-hidden="true">{t.def.emoji}</span> {t.def.name} <span class="chipcount">{t.n}</span></a>
+      ))}
+    </nav>
+
     <div class="shead"><h2>Today's Top Offers</h2></div>
     <div class="offergrid">
       {top.map((b) => {

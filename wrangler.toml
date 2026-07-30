@@ -10,3 +10,10 @@ pages_build_output_dir = "dist"
 [[analytics_engine_datasets]]
 binding = "CLICKS"
 dataset = "coupon_clicks"
+
+# Email capture for the newsletter form (functions/api/subscribe.js).
+# To activate: dashboard → Storage & Databases → KV → Create namespace
+# (e.g. "coupon-subscribers"), then uncomment and paste its id:
+# [[kv_namespaces]]
+# binding = "SUBSCRIBERS"
+# id = "<paste-namespace-id>"

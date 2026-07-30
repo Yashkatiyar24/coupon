@@ -36,6 +36,24 @@
       "name": "Travel",
       "short": "Travel",
       "icon": "✈️"
+    },
+    {
+      "slug": "software",
+      "name": "AI & Software",
+      "short": "Software",
+      "icon": "🤖"
+    },
+    {
+      "slug": "sustainable",
+      "name": "Sustainable Living",
+      "short": "Eco",
+      "icon": "🌱"
+    },
+    {
+      "slug": "delivery",
+      "name": "Food & Grocery Delivery",
+      "short": "Delivery",
+      "icon": "🛵"
     }
   ],
   "brands": [
@@ -698,6 +716,525 @@
         }
       ],
       "domain": "tripadvisor.com"
+    },
+    {
+      "brand": "Amazon",
+      "slug": "amazon",
+      "category": "electronics",
+      "affiliateUrl": "https://www.amazon.com/deals?tag=couponandde0d-20",
+      "description": "Daily deals, lightning offers, and outlet savings across every category on Amazon.",
+      "offers": [
+        {
+          "code": null,
+          "title": "Today's Deals — up to 70% off across categories",
+          "type": "deal",
+          "expires": null
+        },
+        {
+          "code": null,
+          "title": "Back to School: backpacks, school supplies & dorm essentials up to 60% off",
+          "type": "deal",
+          "expires": null,
+          "id": "amazon-back-to-school",
+          "url": "https://www.amazon.com/s?k=back+to+school+essentials&tag=couponandde0d-20"
+        },
+        {
+          "code": null,
+          "title": "TV deals: 4K & OLED smart TVs up to 45% off",
+          "type": "deal",
+          "expires": null,
+          "id": "amazon-tv-deals",
+          "url": "https://www.amazon.com/s?k=4k+smart+tv+deals&tag=couponandde0d-20"
+        },
+        {
+          "code": null,
+          "title": "iPhone deals: latest models plus Renewed & trade-in savings",
+          "type": "deal",
+          "expires": null,
+          "id": "amazon-iphone-deals",
+          "url": "https://www.amazon.com/s?k=iphone+deals&tag=couponandde0d-20"
+        },
+        {
+          "code": null,
+          "title": "Laptop deals for school & work — up to 40% off top brands",
+          "type": "deal",
+          "expires": null,
+          "id": "amazon-laptop-deals",
+          "url": "https://www.amazon.com/s?k=laptop+deals&tag=couponandde0d-20"
+        },
+        {
+          "code": null,
+          "title": "Air conditioner deals: window, portable & split ACs",
+          "type": "deal",
+          "expires": null,
+          "id": "amazon-ac-deals",
+          "url": "https://www.amazon.com/s?k=air+conditioner+deals&tag=couponandde0d-20"
+        },
+        {
+          "code": null,
+          "title": "Kitchen deals: air fryers, stand mixers & espresso machines",
+          "type": "deal",
+          "expires": null,
+          "id": "amazon-kitchen-deals",
+          "url": "https://www.amazon.com/s?k=kitchen+appliance+deals&tag=couponandde0d-20"
+        },
+        {
+          "code": null,
+          "title": "Amazon Outlet: overstock and clearance savings",
+          "type": "deal",
+          "expires": null,
+          "id": "amazon-outlet",
+          "url": "https://www.amazon.com/outlet?tag=couponandde0d-20"
+        }
+      ],
+      "domain": "amazon.com"
+    },
+    {
+      "brand": "Amazon India",
+      "slug": "amazon-india",
+      "category": "electronics",
+      "region": "IN",
+      "affiliateUrl": "https://www.amazon.in/deals",
+      "description": "Amazon.in deals for shoppers in India — festive sales, no-cost EMI, bank offers, and daily discounts.",
+      "offers": [
+        {
+          "code": null,
+          "title": "Today's Deals on Amazon India — up to 70% off",
+          "type": "deal",
+          "expires": null
+        },
+        {
+          "code": null,
+          "title": "Great Indian Festival & Diwali deals — festive savings on everything",
+          "type": "deal",
+          "expires": null,
+          "id": "amazon-india-diwali",
+          "url": "https://www.amazon.in/s?k=diwali+offers"
+        },
+        {
+          "code": null,
+          "title": "iPhone deals in India: bank discounts & exchange offers",
+          "type": "deal",
+          "expires": null,
+          "id": "amazon-india-iphone",
+          "url": "https://www.amazon.in/s?k=iphone"
+        },
+        {
+          "code": null,
+          "title": "Air conditioner deals: split & window ACs with no-cost EMI",
+          "type": "deal",
+          "expires": null,
+          "id": "amazon-india-ac",
+          "url": "https://www.amazon.in/s?k=air+conditioner"
+        },
+        {
+          "code": null,
+          "title": "TV deals: 4K smart TVs from Samsung, LG & Sony",
+          "type": "deal",
+          "expires": null,
+          "id": "amazon-india-tv",
+          "url": "https://www.amazon.in/s?k=smart+tv"
+        },
+        {
+          "code": null,
+          "title": "Kitchen & home appliance deals for the Indian kitchen",
+          "type": "deal",
+          "expires": null,
+          "id": "amazon-india-kitchen",
+          "url": "https://www.amazon.in/s?k=kitchen+appliances"
+        },
+        {
+          "code": null,
+          "title": "Back to school: school bags, stationery & student laptops",
+          "type": "deal",
+          "expires": null,
+          "id": "amazon-india-school",
+          "url": "https://www.amazon.in/s?k=school+supplies"
+        }
+      ],
+      "domain": "amazon.in"
+    },
+    {
+      "brand": "Amazon UK",
+      "slug": "amazon-uk",
+      "category": "electronics",
+      "region": "UK",
+      "affiliateUrl": "https://www.amazon.co.uk/deals",
+      "description": "Amazon.co.uk deals for the UK and Europe — daily discounts, seasonal sales, and fast delivery.",
+      "offers": [
+        {
+          "code": null,
+          "title": "Today's Deals on Amazon UK — up to 60% off",
+          "type": "deal",
+          "expires": null
+        },
+        {
+          "code": null,
+          "title": "Back to school deals: laptops, stationery & uniforms",
+          "type": "deal",
+          "expires": null,
+          "id": "amazon-uk-school",
+          "url": "https://www.amazon.co.uk/s?k=back+to+school"
+        },
+        {
+          "code": null,
+          "title": "TV deals: 4K & OLED televisions up to 40% off",
+          "type": "deal",
+          "expires": null,
+          "id": "amazon-uk-tv",
+          "url": "https://www.amazon.co.uk/s?k=tv+deals"
+        },
+        {
+          "code": null,
+          "title": "Kitchen deals: air fryers, kettles & coffee machines",
+          "type": "deal",
+          "expires": null,
+          "id": "amazon-uk-kitchen",
+          "url": "https://www.amazon.co.uk/s?k=kitchen+appliances"
+        },
+        {
+          "code": null,
+          "title": "iPhone & smartphone deals with fast European delivery",
+          "type": "deal",
+          "expires": null,
+          "id": "amazon-uk-iphone",
+          "url": "https://www.amazon.co.uk/s?k=iphone"
+        }
+      ],
+      "domain": "amazon.co.uk"
+    },
+    {
+      "brand": "Canva",
+      "slug": "canva",
+      "category": "software",
+      "affiliateUrl": "https://www.canva.com/",
+      "domain": "canva.com",
+      "description": "Design tool for social graphics, presentations, and video — Canva Pro adds AI tools, brand kits, and premium assets.",
+      "offers": [
+        {
+          "code": null,
+          "title": "Canva Pro free for 30 days — full premium trial",
+          "type": "deal",
+          "expires": null
+        },
+        {
+          "code": null,
+          "title": "Canva for Education: free for students & teachers",
+          "type": "deal",
+          "expires": null
+        }
+      ]
+    },
+    {
+      "brand": "Grammarly",
+      "slug": "grammarly",
+      "category": "software",
+      "affiliateUrl": "https://www.grammarly.com/",
+      "domain": "grammarly.com",
+      "description": "AI writing assistant for grammar, tone, and clarity across email, docs, and the browser.",
+      "offers": [
+        {
+          "code": null,
+          "title": "Grammarly Premium annual plan: save up to 60% vs monthly billing",
+          "type": "deal",
+          "expires": null
+        },
+        {
+          "code": null,
+          "title": "Free plan with core writing suggestions — no card needed",
+          "type": "deal",
+          "expires": null
+        }
+      ]
+    },
+    {
+      "brand": "NordVPN",
+      "slug": "nordvpn",
+      "category": "software",
+      "affiliateUrl": "https://nordvpn.com/",
+      "domain": "nordvpn.com",
+      "description": "VPN service for private browsing, streaming, and public-wifi security across all devices.",
+      "offers": [
+        {
+          "code": null,
+          "title": "Up to 72% off 2-year VPN plans",
+          "type": "deal",
+          "expires": null
+        },
+        {
+          "code": null,
+          "title": "30-day money-back guarantee on every plan",
+          "type": "deal",
+          "expires": null
+        }
+      ]
+    },
+    {
+      "brand": "Adobe Creative Cloud",
+      "slug": "adobe",
+      "category": "software",
+      "affiliateUrl": "https://www.adobe.com/creativecloud.html",
+      "domain": "adobe.com",
+      "description": "Photoshop, Illustrator, Premiere Pro, and the full Adobe creative suite with Firefly AI built in.",
+      "offers": [
+        {
+          "code": null,
+          "title": "Students & teachers save over 60% on Creative Cloud All Apps",
+          "type": "deal",
+          "expires": null
+        },
+        {
+          "code": null,
+          "title": "Free trials on Photoshop, Illustrator & Premiere Pro",
+          "type": "deal",
+          "expires": null
+        }
+      ]
+    },
+    {
+      "brand": "Notion",
+      "slug": "notion",
+      "category": "software",
+      "affiliateUrl": "https://www.notion.com/",
+      "domain": "notion.com",
+      "description": "All-in-one workspace for notes, docs, projects, and wikis — with Notion AI for writing and search.",
+      "offers": [
+        {
+          "code": null,
+          "title": "Notion Plus free for students & educators",
+          "type": "deal",
+          "expires": null
+        },
+        {
+          "code": null,
+          "title": "Notion AI trial included on new workspaces",
+          "type": "deal",
+          "expires": null
+        }
+      ]
+    },
+    {
+      "brand": "Allbirds",
+      "slug": "allbirds",
+      "category": "sustainable",
+      "affiliateUrl": "https://www.allbirds.com/",
+      "domain": "allbirds.com",
+      "description": "Carbon-neutral sneakers and apparel made from merino wool, eucalyptus, and sugarcane.",
+      "offers": [
+        {
+          "code": null,
+          "title": "Sale: sustainable sneakers up to 50% off",
+          "type": "deal",
+          "expires": null
+        },
+        {
+          "code": null,
+          "title": "Free shipping on orders over $75",
+          "type": "deal",
+          "expires": null
+        }
+      ]
+    },
+    {
+      "brand": "Grove Collaborative",
+      "slug": "grove-collaborative",
+      "category": "sustainable",
+      "affiliateUrl": "https://www.grove.co/",
+      "domain": "grove.co",
+      "description": "Plastic-neutral home essentials — natural cleaning, personal care, and pantry staples delivered.",
+      "offers": [
+        {
+          "code": null,
+          "title": "Free gift set with your first order",
+          "type": "deal",
+          "expires": null
+        },
+        {
+          "code": null,
+          "title": "Subscribe & save on refills and home essentials",
+          "type": "deal",
+          "expires": null
+        }
+      ]
+    },
+    {
+      "brand": "Pact",
+      "slug": "pact",
+      "category": "sustainable",
+      "affiliateUrl": "https://wearpact.com/",
+      "domain": "wearpact.com",
+      "description": "Fair-trade, organic-cotton basics for the whole family with carbon-offset shipping.",
+      "offers": [
+        {
+          "code": null,
+          "title": "Organic cotton basics: bundle & save up to 30%",
+          "type": "deal",
+          "expires": null
+        },
+        {
+          "code": null,
+          "title": "Free shipping on orders over $99",
+          "type": "deal",
+          "expires": null
+        }
+      ]
+    },
+    {
+      "brand": "Blueland",
+      "slug": "blueland",
+      "category": "sustainable",
+      "affiliateUrl": "https://www.blueland.com/",
+      "domain": "blueland.com",
+      "description": "Refillable, plastic-free cleaning products — buy the bottle once, refill with tablets forever.",
+      "offers": [
+        {
+          "code": null,
+          "title": "Starter sets: save on plastic-free cleaning bundles",
+          "type": "deal",
+          "expires": null
+        },
+        {
+          "code": null,
+          "title": "Free shipping on orders over $45",
+          "type": "deal",
+          "expires": null
+        }
+      ]
+    },
+    {
+      "brand": "DoorDash",
+      "slug": "doordash",
+      "category": "delivery",
+      "affiliateUrl": "https://www.doordash.com/",
+      "domain": "doordash.com",
+      "description": "Restaurant, grocery, and convenience delivery across the US and Canada.",
+      "offers": [
+        {
+          "code": null,
+          "title": "$0 delivery fees with DashPass — free 30-day trial",
+          "type": "deal",
+          "expires": null
+        },
+        {
+          "code": null,
+          "title": "First order: promo savings at select restaurants",
+          "type": "deal",
+          "expires": null
+        }
+      ]
+    },
+    {
+      "brand": "Instacart",
+      "slug": "instacart",
+      "category": "delivery",
+      "affiliateUrl": "https://www.instacart.com/",
+      "domain": "instacart.com",
+      "description": "Same-day grocery delivery from local stores — Costco, Kroger, Safeway, and more.",
+      "offers": [
+        {
+          "code": null,
+          "title": "Free delivery on your first order over $35",
+          "type": "deal",
+          "expires": null
+        },
+        {
+          "code": null,
+          "title": "Instacart+ trial: unlimited free delivery over $10",
+          "type": "deal",
+          "expires": null
+        }
+      ]
+    },
+    {
+      "brand": "Uber Eats",
+      "slug": "uber-eats",
+      "category": "delivery",
+      "affiliateUrl": "https://www.ubereats.com/",
+      "domain": "ubereats.com",
+      "description": "Food and grocery delivery from the Uber app, live order tracking included.",
+      "offers": [
+        {
+          "code": null,
+          "title": "First order promo for new users",
+          "type": "deal",
+          "expires": null
+        },
+        {
+          "code": null,
+          "title": "Uber One: $0 delivery fee on eligible orders",
+          "type": "deal",
+          "expires": null
+        }
+      ]
+    },
+    {
+      "brand": "Swiggy",
+      "slug": "swiggy",
+      "category": "delivery",
+      "region": "IN",
+      "affiliateUrl": "https://www.swiggy.com/",
+      "domain": "swiggy.com",
+      "description": "India’s food delivery, Instamart quick-commerce groceries, and Dineout offers in one app.",
+      "offers": [
+        {
+          "code": null,
+          "title": "Up to 60% off at popular restaurants",
+          "type": "deal",
+          "expires": null
+        },
+        {
+          "code": null,
+          "title": "Free delivery with Swiggy One on orders over ₹149",
+          "type": "deal",
+          "expires": null
+        }
+      ]
+    },
+    {
+      "brand": "Zepto",
+      "slug": "zepto",
+      "category": "delivery",
+      "region": "IN",
+      "affiliateUrl": "https://www.zeptonow.com/",
+      "domain": "zeptonow.com",
+      "description": "10-minute grocery delivery across major Indian metros.",
+      "offers": [
+        {
+          "code": null,
+          "title": "10-minute groceries: flat discounts on your first order",
+          "type": "deal",
+          "expires": null
+        },
+        {
+          "code": null,
+          "title": "Zepto Pass: free delivery & extra savings on every order",
+          "type": "deal",
+          "expires": null
+        }
+      ]
+    },
+    {
+      "brand": "Blinkit",
+      "slug": "blinkit",
+      "category": "delivery",
+      "region": "IN",
+      "affiliateUrl": "https://blinkit.com/",
+      "domain": "blinkit.com",
+      "description": "Groceries, essentials, and electronics delivered in minutes across India.",
+      "offers": [
+        {
+          "code": null,
+          "title": "New-user offers on your first order",
+          "type": "deal",
+          "expires": null
+        },
+        {
+          "code": null,
+          "title": "Minute-delivery deals on daily essentials",
+          "type": "deal",
+          "expires": null
+        }
+      ]
     }
   ]
 }

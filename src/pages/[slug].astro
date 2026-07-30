@@ -4,7 +4,7 @@ import StoreLogo from '../components/StoreLogo.astro';
 import { brands, categories, catName, initial, logoUrl } from '../lib/catalog.js';
 import {
   PATTERNS, pageUrl, title, metaDescription, h1, intro, faqs, related,
-  discountBadge, prettyDate, TAGS, brandTags,
+  discountBadge, prettyDate, TAGS, brandTags, NOW,
 } from '../lib/content.js';
 
 export function getStaticPaths() {
@@ -40,7 +40,7 @@ const jsonld = {
         ...(o.code ? { priceSpecification: { '@type': 'PriceSpecification' } } : {}),
         category: brand.category,
         seller: { '@type': 'Organization', name: brand.brand },
-        url: brand.affiliateUrl,
+        url: o.url ?? brand.affiliateUrl,
         ...(o.expires ? { validThrough: o.expires } : {}),
       })),
     },
@@ -69,7 +69,7 @@ const jsonld = {
         <div>
           <p class="crumb"><a href="/">Home</a> / <a href={`/category/${brand.category}`}>{catLabel}</a> / {brand.brand}</p>
           <h1>{h1(brand, pattern)}</h1>
-          <span class="vbadge">✔ {brand.offers.length} verified offer{brand.offers.length === 1 ? '' : 's'} · July 2026</span>
+          <span class="vbadge">✔ {brand.offers.length} verified offer{brand.offers.length === 1 ? '' : 's'} · {NOW}</span>
         </div>
       </div>
     </div>
@@ -84,7 +84,7 @@ const jsonld = {
           {brand.offers.map((o) => (
             <article class="orow">
               <div>
-                <span class={`typetag ${o.code ? 'code' : 'deal'}`}>{o.code ? 'Code' : 'Deal'} · {discountBadge(o)}</span>
+                <span class={`typetag ${o.code ? 'code' : 'deal'}`}>{['DEAL', 'CODE'].includes(discountBadge(o)) ? (o.code ? 'Code' : 'Deal') : `${o.code ? 'Code' : 'Deal'} · ${discountBadge(o)}`}</span>
                 <h3 class="headline" style="margin-top:.5rem">{o.title}</h3>
                 <p class="meta">
                   <span class="ok">✔ Verified</span>
@@ -93,8 +93,8 @@ const jsonld = {
               </div>
               <div class="act">
                 {o.code
-                  ? <a class="peel" data-aff data-code={o.code} data-peek={mask(o.code)} href={`/go/${brand.slug}`} target="_blank" rel="nofollow sponsored">Show Code</a>
-                  : <a class="pillbtn" data-aff href={`/go/${brand.slug}`} target="_blank" rel="nofollow sponsored">Get Deal</a>}
+                  ? <a class="peel" data-aff data-code={o.code} data-peek={mask(o.code)} href={`/go/${o.id && o.url ? o.id : brand.slug}`} target="_blank" rel="nofollow sponsored">Show Code</a>
+                  : <a class="pillbtn" data-aff href={`/go/${o.id && o.url ? o.id : brand.slug}`} target="_blank" rel="nofollow sponsored">Get Deal</a>}
               </div>
             </article>
           ))}
