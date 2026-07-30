@@ -37,6 +37,7 @@ try {
 }
 
 for (const file of files) {
+  if (/[\\/]google[0-9a-f]+\.html$/.test(file)) continue; // search-engine verification files aren't pages
   const html = await readFile(file, 'utf8');
 
   // 1. non-empty <title>
