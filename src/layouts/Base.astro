@@ -262,13 +262,17 @@ const favicon = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' vi
     </footer>
 
     <script>
-      // Peel button: click reveals full code + copies it (anchor still opens the store).
+      // Peel button: first click reveals + copies the code (no redirect);
+      // clicking the revealed code opens the store (affiliate click-through).
       document.addEventListener('click', (e) => {
         const p = e.target.closest('.peel[data-code]');
         if (!p) return;
-        p.setAttribute('data-peek', p.dataset.code);
-        p.classList.add('shown');
-        navigator.clipboard?.writeText(p.dataset.code);
+        if (!p.classList.contains('shown')) {
+          e.preventDefault();
+          p.setAttribute('data-peek', `${p.dataset.code} · copied`);
+          p.classList.add('shown');
+          navigator.clipboard?.writeText(p.dataset.code);
+        }
       });
     </script>
   </body>
