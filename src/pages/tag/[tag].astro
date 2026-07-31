@@ -101,14 +101,16 @@ const jsonld = {
             <h3 class="headline">{discountBadge(o).toLowerCase().replace(/^./, (c) => c.toUpperCase())} at {brand.brand}</h3>
             <p class="desc">{o.title}</p>
             <p class="meta"><span class="ok">✔ Verified</span> · {catName(brand.category)}</p>
-            {o.id && o.url ? (
-              <div class="cardact">
-                <a class="pillbtn" data-aff href={`/go/${o.id}`} target="_blank" rel="nofollow sponsored">Get Deal</a>
-                <a class="morelink" href={`/${brand.slug}-coupon-code`}>All {brand.brand} offers →</a>
-              </div>
-            ) : (
-              <a class="pillbtn" href={`/${brand.slug}-coupon-code`}>See offer</a>
-            )}
+            <div class="tear">
+              {o.id && o.url ? (
+                <>
+                  <a class="pillbtn" data-aff href={`/go/${o.id}`} target="_blank" rel="nofollow sponsored">Get Deal</a>
+                  <a class="morelink" href={`/${brand.slug}-coupon-code`}>All {brand.brand} offers →</a>
+                </>
+              ) : (
+                <a class="pillbtn" href={`/${brand.slug}-coupon-code`}>See offer</a>
+              )}
+            </div>
           </article>
         ))
       )}

@@ -71,7 +71,7 @@ const catName = (slug) => categories.find((c) => c.slug === slug)?.name ?? slug;
               <h3 class="headline">{cap(discountBadge(o))} at {b.brand}</h3>
               <p class="desc">{o.title}</p>
               <p class="meta"><span class="ok">✔ Verified</span> · {catName(b.category)}</p>
-              <a class="pillbtn" href={`/${b.slug}-coupon-code`}>See offer</a>
+              <div class="tear"><a class="pillbtn" href={`/${b.slug}-coupon-code`}>See offer</a></div>
             </div>
           </article>
         );
