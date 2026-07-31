@@ -47,33 +47,10 @@ jobs:
           git commit -m "chore: crawler sync" || echo "no changes"
           git push || echo "nothing to push"
 
+      # Validation only — hosting is Vercel (git-connected): the data commit
+      # above triggers the production deploy automatically.
       - run: npm run build
-      - run: npm run check    # broken page/link → run fails, nothing deploys
-
-      # Deploy only once Cloudflare secrets exist — until then the run stays
-      # green (build + check passed) instead of failing on a missing token.
-      - name: Check Cloudflare secrets
-        id: cf
-        run: echo "ready=${{ secrets.CLOUDFLARE_API_TOKEN != '' && secrets.CLOUDFLARE_ACCOUNT_ID != '' }}" >> "$GITHUB_OUTPUT"
-
-      - name: Ensure Pages project exists
-        if: steps.cf.outputs.ready == 'true'
-        run: npx wrangler pages project create couponanddeals --production-branch=main || true
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-
-      - name: Deploy to Cloudflare Pages
-        if: steps.cf.outputs.ready == 'true'
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy dist --project-name=couponanddeals
-
-      - name: Deploy skipped
-        if: steps.cf.outputs.ready != 'true'
-        run: echo "::notice::Cloudflare secrets not set — build & check passed, deploy skipped. Add CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID to enable."
+      - run: npm run check    # broken page/link → run fails before Vercel picks it up
 
   link-audit:
     if: github.event.schedule == '30 5 * * 1'

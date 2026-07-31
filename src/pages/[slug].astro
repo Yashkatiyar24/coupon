@@ -21,6 +21,14 @@ export function getStaticPaths() {
 }
 
 const { brand, pattern } = Astro.props;
+// Amazon Operating Agreement forbids cloaked/redirected links — Amazon
+// destinations link direct; everything else goes through /go/ for tracking.
+const amzn = (u) => { try { return /(^|\.)amazon\./.test(new URL(u).hostname); } catch { return false; } };
+const dest = (o) => {
+  const url = o.id && o.url ? o.url : brand.affiliateUrl;
+  if (amzn(url)) return url;
+  return `/go/${o.id && o.url ? o.id : brand.slug}`;
+};
 const rel = related(brand, brands);
 const questions = faqs(brand, pattern);
 const catLabel = catName(brand.category);
@@ -93,8 +101,8 @@ const jsonld = {
               </div>
               <div class="act">
                 {o.code
-                  ? <a class="peel" data-aff data-code={o.code} data-peek={mask(o.code)} href={`/go/${o.id && o.url ? o.id : brand.slug}`} target="_blank" rel="nofollow sponsored">Show Code</a>
-                  : <a class="pillbtn" data-aff href={`/go/${o.id && o.url ? o.id : brand.slug}`} target="_blank" rel="nofollow sponsored">Get Deal</a>}
+                  ? <a class="peel" data-aff data-code={o.code} data-peek={mask(o.code)} href={dest(o)} target="_blank" rel="nofollow sponsored">Show Code</a>
+                  : <a class="pillbtn" data-aff href={dest(o)} target="_blank" rel="nofollow sponsored">Get Deal</a>}
               </div>
             </article>
           ))}

@@ -16,6 +16,8 @@ export function getStaticPaths() {
 }
 
 const { tag, def, matches } = Astro.props;
+// Amazon links go direct (their Operating Agreement forbids cloaked redirects)
+const amzn = (u) => { try { return /(^|\.)amazon\./.test(new URL(u).hostname); } catch { return false; } };
 const total = matches.reduce((n, m) => n + m.offers.length, 0);
 const regions = [...new Set(matches.map((m) => m.brand.region).filter(Boolean))];
 const questions = tagFaqs(def, matches, total);
@@ -104,7 +106,7 @@ const jsonld = {
             <div class="tear">
               {o.id && o.url ? (
                 <>
-                  <a class="pillbtn" data-aff href={`/go/${o.id}`} target="_blank" rel="nofollow sponsored">Get Deal</a>
+                  <a class="pillbtn" data-aff href={amzn(o.url) ? o.url : `/go/${o.id}`} target="_blank" rel="nofollow sponsored">Get Deal</a>
                   <a class="morelink" href={`/${brand.slug}-coupon-code`}>All {brand.brand} offers →</a>
                 </>
               ) : (
