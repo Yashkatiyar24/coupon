@@ -34,7 +34,7 @@ const totalOffers = list.reduce((n, b) => n + b.offers.length, 0);
 
   <div class="wrap">
     <div class="layout">
-      <main>
+      <div class="maincol">
         <p class="intro">Verified {label.toLowerCase()} promo codes and discounts for {NOW}. Pick a store to see today's offers.</p>
         <ul class="storegrid">
           {list.map((b) => (
@@ -47,7 +47,7 @@ const totalOffers = list.reduce((n, b) => n + b.offers.length, 0);
             </li>
           ))}
         </ul>
-      </main>
+      </div>
 
       <aside class="side">
         <div class="panel">

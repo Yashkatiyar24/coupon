@@ -19,8 +19,11 @@ const trending = Object.entries(TAGS)
 
 // Amazon-style collection cards: curated Unsplash photo tiles (stable IDs,
 // verified 200s), every tile an internal link. Tint fallback if one ever 404s.
-const tileImg = (id) => `https://images.unsplash.com/photo-${id}?w=400&h=300&fit=crop&q=60&auto=format`;
-const heroImg = (id) => `https://images.unsplash.com/photo-${id}?w=900&h=700&fit=crop&q=70&auto=format`;
+const uns = (id, w, h, q = 60) => `https://images.unsplash.com/photo-${id}?w=${w}&h=${h}&fit=crop&q=${q}&auto=format`;
+const tileImg = (id) => uns(id, 320, 240, 45);
+const tileSet = (id) => `${uns(id, 200, 150, 45)} 200w, ${uns(id, 320, 240, 45)} 320w, ${uns(id, 440, 330, 45)} 440w`;
+const heroSet = (id) => `${uns(id, 420, 326, 62)} 420w, ${uns(id, 760, 590, 68)} 760w, ${uns(id, 1100, 854, 68)} 1100w`;
+const heroImg = (id) => `https://images.unsplash.com/photo-${id}?w=760&h=590&fit=crop&q=68&auto=format`;
 const HERO_IMG = {
   'amazon': '1593359677879-a4bb92f829d1', 'amazon-india': '1524492412937-b28074a5d7da',
   'amazon-uk': '1513635269975-59663e0ac1ad', 'adobe': '1561070791-2526d30994b5',
@@ -37,7 +40,7 @@ const collections = [
   { title: 'Home & kitchen savings', save: 'up to 45% off', link: '/category/home-kitchen', tiles: [
     { img: '1556911220-bff31c812dba', b: 'DEALS', l: 'Kitchen deals', href: '/tag/kitchen-deals' },
     { img: '1593359677879-a4bb92f829d1', b: '-45%', l: 'TV deals', href: '/tag/tv-deals' },
-    { url: 'https://loremflickr.com/400/300/air,conditioner?lock=4', b: 'NO-COST EMI', l: 'AC deals', href: '/tag/ac-deals' },
+    { img: '1614633833026-0820552978b6', b: 'NO-COST EMI', l: 'AC deals', href: '/tag/ac-deals' },
     { img: '1513694203232-719a280e022f', b: 'DEALS', l: 'All home offers', href: '/category/home-kitchen' },
   ] },
   { title: 'Smart software savings', save: 'up to 72% off', link: '/category/software', tiles: [
@@ -49,7 +52,7 @@ const collections = [
   { title: 'Shop by region', save: 'up to 70% off', link: '/tag/diwali-sale', tiles: [
     { img: '1524492412937-b28074a5d7da', b: '-70%', l: 'Amazon India', href: '/amazon-india-coupon-code' },
     { img: '1513635269975-59663e0ac1ad', b: '-60%', l: 'Amazon UK', href: '/amazon-uk-coupon-code' },
-    { url: 'https://loremflickr.com/400/300/diwali,diya?lock=2', b: 'FESTIVE', l: 'Diwali sale', href: '/tag/diwali-sale' },
+    { img: '1477764250597-dffe9f601ae8', b: 'FESTIVE', l: 'Diwali sale', href: '/tag/diwali-sale' },
     { img: '1526367790999-0150786686a2', b: '$0 FEES', l: 'Quick delivery', href: '/category/delivery' },
   ] },
 ];
@@ -78,7 +81,7 @@ const catName = (slug) => categories.find((c) => c.slug === slug)?.name ?? slug;
 >
   <section class="slider" aria-label="Featured deals" aria-roledescription="carousel">
     <div class="slides" id="slides">
-      <a class="slide" href="/tag/back-to-school" data-slide aria-label="Back to School deals up to 60% off">
+      <a class="slide" href="/tag/back-to-school" data-slide>
         <div class="slide-card">
           <span class="slide-photo slide-brand" style="background:#060a1c">
             <b class="sb-big">60% OFF</b>
@@ -90,13 +93,13 @@ const catName = (slug) => categories.find((c) => c.slug === slug)?.name ?? slug;
             <p class="slide-data"><span class="ok">✔ Verified</span> · 3 stores · backpacks, laptops &amp; supplies</p>
             <span class="slide-shop">Shop the sale</span>
           </div>
-          <span class="slide-photo2"><img src={heroImg('1456735190827-d1262f71b8a3')} alt="" width="900" height="700" loading="eager" decoding="async" onerror="this.remove()" /></span>
+          <span class="slide-photo2"><img src={heroImg('1456735190827-d1262f71b8a3')} srcset={heroSet('1456735190827-d1262f71b8a3')} sizes="(max-width: 860px) 1px, 37vw" alt="" width="760" height="590" loading="eager" fetchpriority="high" decoding="async" onerror="this.remove()" /></span>
         </div>
       </a>
       {featured.map((b, i) => {
         const o = b.offers[0];
         return (
-          <a class="slide" href={`/${b.slug}-coupon-code`} data-slide aria-label={`${cap(discountBadge(o))} at ${b.brand}`}>
+          <a class="slide" href={`/${b.slug}-coupon-code`} data-slide>
             <div class="slide-card">
               <span class="slide-photo slide-brand" style={`background:${b.color ?? 'var(--ink)'}`}>
                 <img class="bh-ico" src={`https://www.google.com/s2/favicons?domain=${b.domain}&sz=128`} alt="" width="76" height="76" loading="lazy" decoding="async" onerror="this.remove()" />
@@ -108,7 +111,7 @@ const catName = (slug) => categories.find((c) => c.slug === slug)?.name ?? slug;
                 <p class="slide-data"><span class="ok">✔ Verified</span> · {b.offers.length} offer{b.offers.length === 1 ? '' : 's'} · {catName(b.category)}</p>
                 <span class="slide-shop">Shop now</span>
               </div>
-              <span class="slide-photo2"><img src={heroImg(HERO_IMG[b.slug] ?? HERO_IMG[b.category] ?? '1513694203232-719a280e022f')} alt="" width="900" height="700" loading="lazy" decoding="async" onerror="this.remove()" /></span>
+              <span class="slide-photo2"><img src={heroImg(HERO_IMG[b.slug] ?? HERO_IMG[b.category] ?? '1513694203232-719a280e022f')} srcset={heroSet(HERO_IMG[b.slug] ?? HERO_IMG[b.category] ?? '1513694203232-719a280e022f')} sizes="(max-width: 860px) 1px, 37vw" alt="" width="760" height="590" loading="lazy" decoding="async" onerror="this.remove()" /></span>
             </div>
           </a>
         );
@@ -139,7 +142,7 @@ const catName = (slug) => categories.find((c) => c.slug === slug)?.name ?? slug;
             {c.tiles.map((t) => (
               <a href={t.href}>
                 <span class="qimg">
-                  <img src={t.url ?? tileImg(t.img)} alt="" width="400" height="300" loading="lazy" decoding="async" onerror="this.remove()" />
+                  <img src={tileImg(t.img)} srcset={tileSet(t.img)} sizes="(max-width: 620px) 45vw, (max-width: 1100px) 22vw, 130px" alt="" width="320" height="240" loading="lazy" decoding="async" onerror="this.remove()" />
                   {t.b && (
                     <span class="qoff">
                       {/^-\d+%$/.test(t.b)
