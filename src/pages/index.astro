@@ -5,11 +5,64 @@ import { brands, categories, catBrands, initial, totalOffers, dealImage } from '
 import { discountBadge, TAGS, NOW } from '../lib/content.js';
 
 const cap = (s) => s.toLowerCase().replace(/^./, (c) => c.toUpperCase());
+// ink text on light brand tiles, white on dark ones
+const heroText = (hex) => {
+  if (!hex) return '#fff';
+  const [r, g, bl] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
+  return (0.299 * r + 0.587 * g + 0.114 * bl) / 255 > 0.6 ? 'var(--ink)' : '#fff';
+};
 // Tag pages that actually built (same filter as /tag/[tag].astro) → trending row
 const trending = Object.entries(TAGS)
   .map(([slug, def]) => ({ slug, def, n: brands.reduce((n, b) => n + b.offers.filter(def.test).length, 0) }))
   .filter((t) => t.n)
   .sort((a, b) => b.n - a.n);
+
+// Amazon-style collection cards: curated Unsplash photo tiles (stable IDs,
+// verified 200s), every tile an internal link. Tint fallback if one ever 404s.
+const tileImg = (id) => `https://images.unsplash.com/photo-${id}?w=400&h=300&fit=crop&q=60&auto=format`;
+const heroImg = (id) => `https://images.unsplash.com/photo-${id}?w=900&h=700&fit=crop&q=70&auto=format`;
+const HERO_IMG = {
+  'amazon': '1593359677879-a4bb92f829d1', 'amazon-india': '1524492412937-b28074a5d7da',
+  'amazon-uk': '1513635269975-59663e0ac1ad', 'adobe': '1561070791-2526d30994b5',
+  'allbirds': '1553062407-98eeb64c6a62', electronics: '1496181133206-80ce9b88a853',
+  software: '1555949963-aa79dcee981c', 'home-kitchen': '1556911220-bff31c812dba', delivery: '1526367790999-0150786686a2',
+};
+const collections = [
+  { title: 'Back to School picks', save: 'up to 60% off', link: '/tag/back-to-school', tiles: [
+    { img: '1553062407-98eeb64c6a62', b: '-60%', l: 'Backpacks & gear', href: '/tag/back-to-school' },
+    { img: '1496181133206-80ce9b88a853', b: '-40%', l: 'Student laptops', href: '/tag/laptop-deals' },
+    { img: '1503676260728-1c00da094a0b', b: '-60%', l: 'Student discounts', href: '/tag/student-discount' },
+    { img: '1456735190827-d1262f71b8a3', b: 'DEALS', l: 'School supplies', href: '/amazon-coupon-code' },
+  ] },
+  { title: 'Home & kitchen savings', save: 'up to 45% off', link: '/category/home-kitchen', tiles: [
+    { img: '1556911220-bff31c812dba', b: 'DEALS', l: 'Kitchen deals', href: '/tag/kitchen-deals' },
+    { img: '1593359677879-a4bb92f829d1', b: '-45%', l: 'TV deals', href: '/tag/tv-deals' },
+    { url: 'https://loremflickr.com/400/300/air,conditioner?lock=4', b: 'NO-COST EMI', l: 'AC deals', href: '/tag/ac-deals' },
+    { img: '1513694203232-719a280e022f', b: 'DEALS', l: 'All home offers', href: '/category/home-kitchen' },
+  ] },
+  { title: 'Smart software savings', save: 'up to 72% off', link: '/category/software', tiles: [
+    { img: '1555949963-aa79dcee981c', b: 'FREE TRIAL', l: 'AI tool deals', href: '/category/software' },
+    { img: '1561070791-2526d30994b5', b: '-60%', l: 'Creative apps', href: '/adobe-coupon-code' },
+    { img: '1563013544-824ae1b704d3', b: '-72%', l: 'VPN plans', href: '/nordvpn-coupon-code' },
+    { img: '1499750310107-5fef28a66643', b: 'FREE', l: 'Productivity', href: '/notion-coupon-code' },
+  ] },
+  { title: 'Shop by region', save: 'up to 70% off', link: '/tag/diwali-sale', tiles: [
+    { img: '1524492412937-b28074a5d7da', b: '-70%', l: 'Amazon India', href: '/amazon-india-coupon-code' },
+    { img: '1513635269975-59663e0ac1ad', b: '-60%', l: 'Amazon UK', href: '/amazon-uk-coupon-code' },
+    { url: 'https://loremflickr.com/400/300/diwali,diya?lock=2', b: 'FESTIVE', l: 'Diwali sale', href: '/tag/diwali-sale' },
+    { img: '1526367790999-0150786686a2', b: '$0 FEES', l: 'Quick delivery', href: '/category/delivery' },
+  ] },
+];
+
+const siteUrl = Astro.site?.href.replace(/\/$/, '') ?? '';
+const jsonld = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    { '@type': 'WebSite', name: 'CouponAndDeals', url: siteUrl,
+      potentialAction: { '@type': 'SearchAction', target: `${siteUrl}/?q={search_term_string}`, 'query-input': 'required name=search_term_string' } },
+    { '@type': 'Organization', name: 'CouponAndDeals', url: siteUrl, logo: `${siteUrl}/icon-512.png` },
+  ],
+};
 // Top offers = popularity proxy (offer count desc) until click data exists
 const top = [...brands].filter((b) => b.offers.length)
   .sort((a, b) => b.offers.length - a.offers.length || a.brand.localeCompare(b.brand))
@@ -21,19 +74,41 @@ const catName = (slug) => categories.find((c) => c.slug === slug)?.name ?? slug;
 <Base
   title={`Coupon Codes, Promo Codes & Deals (${NOW}) — CouponAndDeals`}
   description={`Verified coupon codes, promo codes, and discounts across fashion, electronics, home, beauty, health, travel, software, and delivery. Updated for ${NOW}.`}
+  jsonld={jsonld}
 >
   <section class="slider" aria-label="Featured deals" aria-roledescription="carousel">
     <div class="slides" id="slides">
+      <a class="slide" href="/tag/back-to-school" data-slide aria-label="Back to School deals up to 60% off">
+        <div class="slide-card">
+          <span class="slide-photo slide-brand" style="background:#060a1c">
+            <b class="sb-big">60% OFF</b>
+            <span class="sb-sub">Back to School</span>
+          </span>
+          <div class="slide-copy">
+            <h2>Up to <em>60% Off</em> Back to School Essentials this Week</h2>
+            <p class="slide-at">SEASON SPOTLIGHT · US, UK &amp; INDIA</p>
+            <p class="slide-data"><span class="ok">✔ Verified</span> · 3 stores · backpacks, laptops &amp; supplies</p>
+            <span class="slide-shop">Shop the sale</span>
+          </div>
+          <span class="slide-photo2"><img src={heroImg('1456735190827-d1262f71b8a3')} alt="" width="900" height="700" loading="eager" decoding="async" onerror="this.remove()" /></span>
+        </div>
+      </a>
       {featured.map((b, i) => {
         const o = b.offers[0];
         return (
-          <a class="slide" href={`/${b.slug}-coupon-code`} data-slide style={`background-image:url(${dealImage(b, 1200, 500)})`} aria-label={`${cap(discountBadge(o))} at ${b.brand}`}>
-            <span class="slide-logo">{b.brand}</span>
-            <div class="slide-in">
-              <span class="slide-eyebrow">{catName(b.category)}</span>
-              <h2>{cap(discountBadge(o))} at {b.brand}</h2>
-              <p>{o.title}{o.code ? ` — use code ${o.code}` : ''}</p>
-              <span class="slide-cta">See offer →</span>
+          <a class="slide" href={`/${b.slug}-coupon-code`} data-slide aria-label={`${cap(discountBadge(o))} at ${b.brand}`}>
+            <div class="slide-card">
+              <span class="slide-photo slide-brand" style={`background:${b.color ?? 'var(--ink)'}`}>
+                <img class="bh-ico" src={`https://www.google.com/s2/favicons?domain=${b.domain}&sz=128`} alt="" width="76" height="76" loading="lazy" decoding="async" onerror="this.remove()" />
+                <span class="bh-name" style={`color:${heroText(b.color)};font-size:1.7rem`}>{b.brand}</span>
+              </span>
+              <div class="slide-copy">
+                <h2 set:html={o.title.replace(/(\d+%( off)?|\$\d+( off)?)/i, '<em>$1</em>')} />
+                <p class="slide-at">at {b.brand.toUpperCase()}</p>
+                <p class="slide-data"><span class="ok">✔ Verified</span> · {b.offers.length} offer{b.offers.length === 1 ? '' : 's'} · {catName(b.category)}</p>
+                <span class="slide-shop">Shop now</span>
+              </div>
+              <span class="slide-photo2"><img src={heroImg(HERO_IMG[b.slug] ?? HERO_IMG[b.category] ?? '1513694203232-719a280e022f')} alt="" width="900" height="700" loading="lazy" decoding="async" onerror="this.remove()" /></span>
             </div>
           </a>
         );
@@ -42,7 +117,7 @@ const catName = (slug) => categories.find((c) => c.slug === slug)?.name ?? slug;
     <button class="snav prev" type="button" aria-label="Previous">‹</button>
     <button class="snav next" type="button" aria-label="Next">›</button>
     <div class="dots" id="dots" role="tablist">
-      {featured.map((_, i) => (
+      {[...Array(featured.length + 1)].map((_, i) => (
         <button type="button" role="tab" aria-label={`Slide ${i + 1}`} aria-current={i === 0 ? 'true' : 'false'} data-dot={i}></button>
       ))}
     </div>
@@ -52,9 +127,35 @@ const catName = (slug) => categories.find((c) => c.slug === slug)?.name ?? slug;
     <div class="shead"><h2>Trending Searches</h2></div>
     <nav class="chiprow" aria-label="Trending deal topics" style="padding-top:0">
       {trending.map((t) => (
-        <a class="chip" href={`/tag/${t.slug}`}><span aria-hidden="true">{t.def.emoji}</span> {t.def.name} <span class="chipcount">{t.n}</span></a>
+        <a class="tagpill" href={`/tag/${t.slug}`}>{t.def.name} <span class="chipcount">{t.n}</span></a>
       ))}
     </nav>
+
+    <div class="quadrow">
+      {collections.map((c) => (
+        <section class="quad">
+          <div class="qhead"><h3>{c.title}</h3><span class="qsave">{c.save}</span></div>
+          <div class="qgrid">
+            {c.tiles.map((t) => (
+              <a href={t.href}>
+                <span class="qimg">
+                  <img src={t.url ?? tileImg(t.img)} alt="" width="400" height="300" loading="lazy" decoding="async" onerror="this.remove()" />
+                  {t.b && (
+                    <span class="qoff">
+                      {/^-\d+%$/.test(t.b)
+                        ? <><b>{t.b.slice(1)}</b><i>OFF</i></>
+                        : <b class="txt">{t.b}</b>}
+                    </span>
+                  )}
+                </span>
+                <span class="ql">{t.l}</span>
+              </a>
+            ))}
+          </div>
+          <a class="qmore" href={c.link}>Shop now →</a>
+        </section>
+      ))}
+    </div>
 
     <div class="shead"><h2>Today's Top Offers</h2></div>
     <div class="offergrid">
@@ -62,14 +163,17 @@ const catName = (slug) => categories.find((c) => c.slug === slug)?.name ?? slug;
         const o = b.offers[0];
         return (
           <article class="ocard img-card">
-            <div class="ocard-img">
-              <img src={dealImage(b)} alt="" width="640" height="360" loading="lazy" decoding="async" onerror="this.remove()" />
-              <span class={`typetag ${o.code ? 'code' : 'deal'}`}>{o.code ? 'Code' : 'Deal'}</span>
+            <div class="brandhero" style={`background:${b.color ?? 'var(--ink)'}`}>
+              <img class="bh-ico" src={`https://www.google.com/s2/favicons?domain=${b.domain}&sz=128`} alt="" width="44" height="44" loading="lazy" decoding="async" onerror="this.remove()" />
+              <span class="bh-name" style={`color:${heroText(b.color)}`}>{b.brand}</span>
+              <span class="bh-chip">🔥 {discountBadge(o)}</span>
             </div>
             <div class="ocard-body">
-              <StoreLogo brand={b} />
-              <h3 class="headline">{cap(discountBadge(o))} at {b.brand}</h3>
-              <p class="desc">{o.title}</p>
+              <p class="storename">{b.brand}</p>
+              {(() => { const bg = discountBadge(o); const m = bg.match(/^(\d+%|\$\d+) OFF$/);
+                if (m) return <><p class="dealbig"><b>{m[1]}</b><i>OFF</i></p><p class="desc">{o.title}</p></>;
+                if (!['DEAL', 'CODE'].includes(bg)) return <><p class="dealbig"><b class="tx">{bg}</b></p><p class="desc">{o.title}</p></>;
+                return <h3 class="headline" style="margin:0">{o.title}</h3>; })()}
               <p class="meta"><span class="ok">✔ Verified</span> · {catName(b.category)}</p>
               <div class="tear"><a class="pillbtn" href={`/${b.slug}-coupon-code`}>See offer</a></div>
             </div>
@@ -110,6 +214,12 @@ const catName = (slug) => categories.find((c) => c.slug === slug)?.name ?? slug;
         </ul>
       </>
     ))}
+
+    <section class="seoblurb">
+      <h2>Verified coupon codes &amp; deals, updated daily</h2>
+      <p>CouponAndDeals tracks working promo codes, coupon codes, and discounts from {brands.length}+ stores across fashion, electronics, home &amp; kitchen, beauty, health, travel, AI &amp; software, sustainable brands, and food delivery — for shoppers in the United States, United Kingdom, and India. Expired offers are pruned automatically, so what you see is what works today, {NOW}.</p>
+      <p>Popular right now: <a href="/tag/back-to-school">back to school deals</a>, <a href="/tag/tv-deals">TV deals</a>, <a href="/tag/iphone-deals">iPhone deals</a>, <a href="/amazon-coupon-code">Amazon coupon codes</a>, and <a href="/tag/free-shipping">free shipping offers</a>.</p>
+    </section>
   </div>
 
   <script>
@@ -130,11 +240,17 @@ const catName = (slug) => categories.find((c) => c.slug === slug)?.name ?? slug;
       const slides = [...track.querySelectorAll('[data-slide]')];
       const dots = [...document.querySelectorAll('[data-dot]')];
       let idx = 0, timer;
-      const go = (i) => { idx = (i + slides.length) % slides.length; track.scrollTo({ left: idx * track.clientWidth, behavior: 'smooth' }); };
+      const go = (i) => {
+        idx = (i + slides.length) % slides.length;
+        const el = slides[idx];
+        track.scrollTo({ left: el.offsetLeft - (track.clientWidth - el.clientWidth) / 2, behavior: 'smooth' });
+      };
       const sync = () => {
-        const i = Math.round(track.scrollLeft / track.clientWidth);
-        dots.forEach((d, n) => d.setAttribute('aria-current', n === i ? 'true' : 'false'));
-        idx = i;
+        const c = track.scrollLeft + track.clientWidth / 2;
+        let best = 0, bd = Infinity;
+        slides.forEach((el, n) => { const d = Math.abs(el.offsetLeft + el.clientWidth / 2 - c); if (d < bd) { bd = d; best = n; } });
+        dots.forEach((d, n) => d.setAttribute('aria-current', n === best ? 'true' : 'false'));
+        idx = best;
       };
       track.addEventListener('scroll', () => window.requestAnimationFrame(sync), { passive: true });
       dots.forEach((d, n) => d.addEventListener('click', () => go(n)));

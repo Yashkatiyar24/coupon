@@ -1,7 +1,7 @@
 // Network-first for pages (deals must be fresh), cache-first for static assets,
 // branded offline fallback. Cache version bumps on deploy via the build stamp
 // query param in the registration URL — old caches are purged on activate.
-const CACHE = 'cad-v1';
+const CACHE = 'cad-v2';
 const OFFLINE = '/offline.html';
 const PRECACHE = [OFFLINE, '/manifest.webmanifest', '/icon-192.png'];
 

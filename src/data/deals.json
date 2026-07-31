@@ -77,7 +77,8 @@
           "expires": "2026-12-31"
         }
       ],
-      "domain": "nike.com"
+      "domain": "nike.com",
+      "color": "#111111"
     },
     {
       "brand": "Adidas",
@@ -191,7 +192,8 @@
           "expires": "2026-12-31"
         }
       ],
-      "domain": "bestbuy.com"
+      "domain": "bestbuy.com",
+      "color": "#0046be"
     },
     {
       "brand": "Dell",
@@ -787,7 +789,8 @@
           "url": "https://www.amazon.com/outlet?tag=couponandde0d-20"
         }
       ],
-      "domain": "amazon.com"
+      "domain": "amazon.com",
+      "color": "#ff9900"
     },
     {
       "brand": "Amazon India",
@@ -852,7 +855,8 @@
           "url": "https://www.amazon.in/s?k=school+supplies"
         }
       ],
-      "domain": "amazon.in"
+      "domain": "amazon.in",
+      "color": "#ff9900"
     },
     {
       "brand": "Amazon UK",
@@ -901,7 +905,8 @@
           "url": "https://www.amazon.co.uk/s?k=iphone"
         }
       ],
-      "domain": "amazon.co.uk"
+      "domain": "amazon.co.uk",
+      "color": "#ff9900"
     },
     {
       "brand": "Canva",
@@ -923,7 +928,8 @@
           "type": "deal",
           "expires": null
         }
-      ]
+      ],
+      "color": "#00879b"
     },
     {
       "brand": "Grammarly",
@@ -945,7 +951,8 @@
           "type": "deal",
           "expires": null
         }
-      ]
+      ],
+      "color": "#0e101a"
     },
     {
       "brand": "NordVPN",
@@ -967,7 +974,8 @@
           "type": "deal",
           "expires": null
         }
-      ]
+      ],
+      "color": "#4687ff"
     },
     {
       "brand": "Adobe Creative Cloud",
@@ -989,7 +997,8 @@
           "type": "deal",
           "expires": null
         }
-      ]
+      ],
+      "color": "#eb1000"
     },
     {
       "brand": "Notion",
@@ -1011,7 +1020,8 @@
           "type": "deal",
           "expires": null
         }
-      ]
+      ],
+      "color": "#191919"
     },
     {
       "brand": "Allbirds",
@@ -1033,7 +1043,8 @@
           "type": "deal",
           "expires": null
         }
-      ]
+      ],
+      "color": "#212a2f"
     },
     {
       "brand": "Grove Collaborative",
@@ -1099,7 +1110,8 @@
           "type": "deal",
           "expires": null
         }
-      ]
+      ],
+      "color": "#1e50a0"
     },
     {
       "brand": "DoorDash",
@@ -1121,7 +1133,8 @@
           "type": "deal",
           "expires": null
         }
-      ]
+      ],
+      "color": "#eb1700"
     },
     {
       "brand": "Instacart",
@@ -1143,7 +1156,8 @@
           "type": "deal",
           "expires": null
         }
-      ]
+      ],
+      "color": "#0a5c35"
     },
     {
       "brand": "Uber Eats",
@@ -1165,7 +1179,8 @@
           "type": "deal",
           "expires": null
         }
-      ]
+      ],
+      "color": "#06c167"
     },
     {
       "brand": "Swiggy",
@@ -1188,7 +1203,8 @@
           "type": "deal",
           "expires": null
         }
-      ]
+      ],
+      "color": "#fc8019"
     },
     {
       "brand": "Zepto",
@@ -1211,7 +1227,8 @@
           "type": "deal",
           "expires": null
         }
-      ]
+      ],
+      "color": "#3a0ca3"
     },
     {
       "brand": "Blinkit",
@@ -1234,7 +1251,8 @@
           "type": "deal",
           "expires": null
         }
-      ]
+      ],
+      "color": "#f8cb46"
     }
   ]
 }

@@ -33,6 +33,9 @@ const rel = related(brand, brands);
 const questions = faqs(brand, pattern);
 const catLabel = catName(brand.category);
 const mask = (code) => code.slice(0, 2) + '••••';
+// white text on dark ticket bodies, ink on light ones
+const tkFg = (hex) => { if (!hex) return '#fff'; const [r,g,b2] = [1,3,5].map((i) => parseInt(hex.slice(i,i+2),16));
+  return (0.299*r + 0.587*g + 0.114*b2)/255 > 0.6 ? '#0d1730' : '#fff'; };
 const tags = brandTags(brand);
 
 const jsonld = {
@@ -90,19 +93,25 @@ const jsonld = {
 
         <div class="offerrows">
           {brand.offers.map((o) => (
-            <article class="orow">
-              <div>
-                <span class={`typetag ${o.code ? 'code' : 'deal'}`}>{['DEAL', 'CODE'].includes(discountBadge(o)) ? (o.code ? 'Code' : 'Deal') : `${o.code ? 'Code' : 'Deal'} · ${discountBadge(o)}`}</span>
-                <h3 class="headline" style="margin-top:.5rem">{o.title}</h3>
-                <p class="meta">
-                  <span class="ok">✔ Verified</span>
-                  {o.expires && <>· Valid till {prettyDate(o.expires)}</>}
-                </p>
+            <article class={`orow${tkFg(brand.color) === '#0d1730' ? ' lightbody' : ''}`} style={`--tk:${brand.color ?? '#141b3d'};--tkfg:${tkFg(brand.color)}`}>
+              <div class="tk-stub">
+                <span class="tk-side">Shopping Coupon</span>
+                {(() => { const t = discountBadge(o).replace(/ OFF$/, '');
+                   return <span class={/^\d+%|^\$/.test(t) ? 'tk-off' : 'tk-off txt'}>{t}</span>; })()}
               </div>
-              <div class="act">
-                {o.code
-                  ? <a class="peel" data-aff data-code={o.code} data-peek={mask(o.code)} href={dest(o)} target="_blank" rel="nofollow sponsored">Show Code</a>
-                  : <a class="pillbtn" data-aff href={dest(o)} target="_blank" rel="nofollow sponsored">Get Deal</a>}
+              <div class="tk-body">
+                <div class="tk-text">
+                  <p class="tk-eyebrow">{brand.brand}</p>
+                  <h3 class="tk-title">{o.title}</h3>
+                  <p class="tk-valid">
+                    ✔ Verified{o.expires && <> · Valid until {prettyDate(o.expires)}</>}
+                  </p>
+                </div>
+                <div class="act">
+                  {o.code
+                    ? <a class="peel" data-aff data-code={o.code} data-peek={mask(o.code)} href={dest(o)} target="_blank" rel="nofollow sponsored">Show Code</a>
+                    : <a class="pillbtn" data-aff href={dest(o)} target="_blank" rel="nofollow sponsored">Get Deal</a>}
+                </div>
               </div>
             </article>
           ))}

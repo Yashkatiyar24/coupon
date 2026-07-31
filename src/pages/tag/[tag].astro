@@ -100,15 +100,19 @@ const jsonld = {
                 <span class={`typetag ${o.code ? 'code' : 'deal'}`}>{o.code ? 'Code' : 'Deal'}</span>
               </div>
             </div>
-            <h3 class="headline">{discountBadge(o).toLowerCase().replace(/^./, (c) => c.toUpperCase())} at {brand.brand}</h3>
+            {(() => { const bg = discountBadge(o); const m = bg.match(/^(\d+%|\$\d+) OFF$/);
+              const generic = ['DEAL', 'CODE'].includes(bg);
+              return <>
+                {!generic && <p class="dealbig">{m ? <><b>{m[1]}</b><i>OFF</i></> : <b class="tx">{bg}</b>}</p>}
+                <h3 class={generic ? 'headline' : 'headline atline'}>
+                  <a class="brandlink" href={`/${brand.slug}-coupon-code`}>{generic ? brand.brand : `at ${brand.brand}`}</a>
+                </h3>
+              </>; })()}
             <p class="desc">{o.title}</p>
             <p class="meta"><span class="ok">✔ Verified</span> · {catName(brand.category)}</p>
             <div class="tear">
               {o.id && o.url ? (
-                <>
-                  <a class="pillbtn" data-aff href={amzn(o.url) ? o.url : `/go/${o.id}`} target="_blank" rel="nofollow sponsored">Get Deal</a>
-                  <a class="morelink" href={`/${brand.slug}-coupon-code`}>All {brand.brand} offers →</a>
-                </>
+                <a class="pillbtn" data-aff href={amzn(o.url) ? o.url : `/go/${o.id}`} target="_blank" rel="nofollow sponsored">Get Deal</a>
               ) : (
                 <a class="pillbtn" href={`/${brand.slug}-coupon-code`}>See offer</a>
               )}
