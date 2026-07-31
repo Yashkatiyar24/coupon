@@ -3,7 +3,7 @@ import { categories } from '../lib/catalog.js';
 const { title, description, canonical, jsonld, noindex, image } = Astro.props;
 const site = Astro.site?.href.replace(/\/$/, '') ?? '';
 const canonicalUrl = canonical ? site + canonical : site + Astro.url.pathname;
-const favicon = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23dc2626'/%3E%3Ctext x='16' y='23' font-family='Arial,sans-serif' font-weight='bold' font-size='19' fill='%23fff' text-anchor='middle'%3E%C2%A2%3C/text%3E%3C/svg%3E";
+const favicon = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23059669'/%3E%3Ctext x='16' y='23' font-family='Arial,sans-serif' font-weight='bold' font-size='19' fill='%23fff' text-anchor='middle'%3E%C2%A2%3C/text%3E%3C/svg%3E";
 ---
 <!doctype html>
 <html lang="en">
@@ -29,25 +29,28 @@ const favicon = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' vi
     {jsonld && <script type="application/ld+json" set:html={JSON.stringify(jsonld)} />}
     <style is:global>
       :root {
-        --accent: #dc2626;      /* red CTA */
-        --accent-dk: #b91c1c;
-        --tint: #fef2f2;        /* light red tint */
-        --tint-2: #fee2e2;
-        --ink: #1f1517;         /* warm near-black */
-        --muted: #6b5b5d;
-        --faint: #7d6e71;   /* AA: ≥4.5:1 on white for small meta text */
-        --bg: #f8f6f6;
+        /* ui-ux-pro-max e-commerce palette: savings green brand + urgency orange CTA */
+        --accent: #059669;      /* brand green — links, logo, focus, highlights */
+        --accent-dk: #047857;
+        --tint: #ecfdf5;        /* light green tint */
+        --tint-2: #d1fae5;
+        --cta: #c2410c;         /* urgency orange — action buttons only (AA on white text) */
+        --cta-dk: #9a3412;
+        --ink: #0f172a;         /* slate near-black */
+        --muted: #475569;
+        --faint: #64748b;   /* AA: ≥4.5:1 on white for small meta text */
+        --bg: #f8fafc;
         --surface: #ffffff;
-        --line: #eee6e6;
-        --green: #0e8a4c;
-        --green-bg: #e6f6ee;
-        --warm: #b45309;        /* amber deal accent */
-        --warm-bg: #fdf3e3;
+        --line: #e2e8f0;
+        --green: #047857;
+        --green-bg: #ecfdf5;
+        --warm: #c2410c;        /* deal accent aligns with CTA orange */
+        --warm-bg: #fff7ed;
         --sans: "Nunito Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
         --head: "Rubik", var(--sans);
         --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-        --shadow: 0 1px 2px rgba(31,21,23,.04), 0 8px 24px -10px rgba(31,21,23,.14);
-        --shadow-lift: 0 2px 4px rgba(31,21,23,.06), 0 18px 40px -14px rgba(31,21,23,.22);
+        --shadow: 0 1px 2px rgba(15,23,42,.04), 0 8px 24px -10px rgba(15,23,42,.14);
+        --shadow-lift: 0 2px 4px rgba(15,23,42,.06), 0 18px 40px -14px rgba(15,23,42,.22);
         --r: 16px;
       }
       * { box-sizing: border-box; }
@@ -58,7 +61,7 @@ const favicon = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' vi
       a, button { touch-action: manipulation; }
       button { cursor: pointer; }
       :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
-      .skip { position: absolute; left: -9999px; top: 0; z-index: 100; background: var(--accent); color: #fff; font-weight: 700; padding: .7rem 1.2rem; border-radius: 0 0 12px 0; }
+      .skip { position: absolute; left: -9999px; top: 0; z-index: 100; background: var(--accent-dk); color: #fff; font-weight: 700; padding: .7rem 1.2rem; border-radius: 0 0 12px 0; }
       .skip:focus { left: 0; }
       @media (prefers-reduced-motion: reduce) {
         *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
@@ -78,8 +81,8 @@ const favicon = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' vi
       .hsearch { flex: 1; max-width: 460px; display: flex; align-items: center; background: var(--bg); border: 1.5px solid var(--line); border-radius: 999px; padding: 0 .4rem 0 1.1rem; transition: border-color .15s, background .15s; }
       .hsearch:focus-within { border-color: var(--accent); background: #fff; }
       .hsearch input { flex: 1; border: 0; background: none; padding: .6rem 0; font-size: .95rem; color: var(--ink); outline: none; min-width: 0; }
-      .hsearch button { border: 0; background: var(--accent); color: #fff; font-weight: 700; font-size: .82rem; padding: .45rem 1rem; border-radius: 999px; cursor: pointer; }
-      .hsearch button:hover { background: var(--accent-dk); }
+      .hsearch button { border: 0; background: var(--cta); color: #fff; font-weight: 700; font-size: .82rem; padding: .45rem 1rem; border-radius: 999px; cursor: pointer; }
+      .hsearch button:hover { background: var(--cta-dk); }
       .mainnav { display: flex; gap: 1.3rem; margin-left: auto; font-size: .9rem; font-weight: 600; }
       .mainnav a { color: var(--ink); text-decoration: none; }
       .mainnav a:hover { color: var(--accent); }
@@ -94,15 +97,15 @@ const favicon = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' vi
       .chipcount { font-size: .72rem; font-weight: 800; color: var(--faint); background: var(--bg); border-radius: 999px; padding: .05rem .45rem; }
 
       /* ---------- hero slider ---------- */
-      .slider { position: relative; border-bottom: 1px solid var(--line); background: #1f1517; }
+      .slider { position: relative; border-bottom: 1px solid var(--line); background: #0f172a; }
       .slides { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-width: none; }
       .slides::-webkit-scrollbar { display: none; }
-      .slide { flex: 0 0 100%; scroll-snap-align: start; position: relative; min-height: 360px; display: flex; align-items: flex-end; text-decoration: none; background-size: cover; background-position: center; background-color: #2a1e20; }
-      .slide::before { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(20,12,14,.82) 0%, rgba(20,12,14,.55) 45%, rgba(20,12,14,.15) 100%); }
+      .slide { flex: 0 0 100%; scroll-snap-align: start; position: relative; min-height: 360px; display: flex; align-items: flex-end; text-decoration: none; background-size: cover; background-position: center; background-color: #1e293b; }
+      .slide::before { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(15,23,42,.82) 0%, rgba(15,23,42,.55) 45%, rgba(15,23,42,.15) 100%); }
       .slide-in { position: relative; max-width: 1140px; width: 100%; margin: 0 auto; padding: 2.2rem 1.2rem 2.6rem; color: #fff; }
-      .slide-eyebrow { display: inline-flex; align-items: center; gap: .4rem; font-size: .72rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; background: var(--accent); color: #fff; padding: .3rem .7rem; border-radius: 999px; }
+      .slide-eyebrow { display: inline-flex; align-items: center; gap: .4rem; font-size: .72rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; background: var(--accent-dk); color: #fff; padding: .3rem .7rem; border-radius: 999px; }
       .slide-in h2 { font-size: clamp(1.8rem, 4.5vw, 3rem); margin: .8rem 0 .4rem; color: #fff; max-width: 620px; }
-      .slide-in p { font-size: 1.05rem; color: #f1e5e6; margin: 0 0 1.2rem; max-width: 520px; }
+      .slide-in p { font-size: 1.05rem; color: #e2e8f0; margin: 0 0 1.2rem; max-width: 520px; }
       .slide-cta { display: inline-flex; align-items: center; gap: .5rem; background: #fff; color: var(--ink); font-weight: 800; font-size: .95rem; padding: .7rem 1.5rem; border-radius: 999px; }
       .slide-logo { position: absolute; top: 1.4rem; right: 1.4rem; z-index: 1; background: #fff; border-radius: 12px; padding: .5rem .8rem; font-weight: 800; color: var(--ink); box-shadow: var(--shadow); }
       .snav { position: absolute; top: 50%; transform: translateY(-50%); z-index: 2; width: 42px; height: 42px; border-radius: 50%; border: 0; background: rgba(255,255,255,.9); color: var(--ink); font-size: 1.4rem; cursor: pointer; display: grid; place-items: center; box-shadow: var(--shadow); }
@@ -122,7 +125,7 @@ const favicon = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' vi
       .ocard-body .circle { margin-top: -30px; border: 3px solid #fff; background: #fff; position: relative; z-index: 1; box-shadow: var(--shadow); }
 
       /* ---------- hero ---------- */
-      .hero { background: linear-gradient(160deg, var(--tint) 0%, #fff7f6 55%, var(--bg) 100%); border-bottom: 1px solid var(--line); }
+      .hero { background: linear-gradient(160deg, var(--tint) 0%, #f0fdfa 55%, var(--bg) 100%); border-bottom: 1px solid var(--line); }
       .hero .wrap { padding: 2.8rem 1.2rem 2.4rem; text-align: center; }
       .hero h1 { font-size: clamp(1.9rem, 4.5vw, 3rem); margin: 0 auto .6rem; max-width: 720px; }
       .hero h1 em { font-style: normal; color: var(--accent); }
@@ -140,7 +143,7 @@ const favicon = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' vi
       .ocard .top { display: flex; align-items: center; justify-content: space-between; gap: .6rem; }
       .circle { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; background: var(--tint); border: 1px solid var(--tint-2); color: var(--accent); font-weight: 800; font-size: 1.25rem; flex: 0 0 auto; }
       .typetag { font-size: .66rem; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; padding: .18rem .55rem; border-radius: 999px; }
-      .typetag.code { background: var(--tint); color: var(--accent); }
+      .typetag.code { background: var(--tint); color: var(--accent-dk); }
       .typetag.deal { background: var(--warm-bg); color: var(--warm); }
       .ocard .headline { font-size: 1.18rem; font-weight: 800; margin: 0; line-height: 1.25; }
       .ocard .desc { font-size: .88rem; color: var(--muted); margin: 0; flex: 1; }
@@ -148,10 +151,10 @@ const favicon = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' vi
       .ocard .meta .ok { color: var(--green); font-weight: 700; }
 
       /* ---------- pill CTA + peeled "Show Code" ---------- */
-      .pillbtn { display: inline-flex; align-items: center; justify-content: center; background: var(--accent); color: #fff; text-decoration: none; font-weight: 700; font-size: .92rem; padding: .68rem 1.5rem; border-radius: 999px; white-space: nowrap; transition: background .15s, transform .15s; border: 0; cursor: pointer; }
-      .pillbtn:hover { background: var(--accent-dk); color: #fff; transform: translateY(-1px); }
-      .peel { position: relative; display: inline-flex; align-items: center; justify-content: center; background: var(--accent); color: #fff; text-decoration: none; font-weight: 700; font-size: .92rem; padding: .68rem 1.5rem; border-radius: 999px; white-space: nowrap; overflow: hidden; transition: background .15s; }
-      .peel:hover { background: var(--accent-dk); color: #fff; }
+      .pillbtn { display: inline-flex; align-items: center; justify-content: center; background: var(--cta); color: #fff; text-decoration: none; font-weight: 700; font-size: .92rem; padding: .68rem 1.5rem; border-radius: 999px; white-space: nowrap; transition: background .15s, transform .15s; border: 0; cursor: pointer; }
+      .pillbtn:hover { background: var(--cta-dk); color: #fff; transform: translateY(-1px); }
+      .peel { position: relative; display: inline-flex; align-items: center; justify-content: center; background: var(--cta); color: #fff; text-decoration: none; font-weight: 700; font-size: .92rem; padding: .68rem 1.5rem; border-radius: 999px; white-space: nowrap; overflow: hidden; transition: background .15s; }
+      .peel:hover { background: var(--cta-dk); color: #fff; }
       .peel::after { /* folded corner reveals code peek */
         content: attr(data-peek);
         position: absolute; top: 0; right: 0; bottom: 0;
@@ -161,7 +164,7 @@ const favicon = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' vi
         font-family: var(--mono); font-size: .74rem; font-weight: 700; letter-spacing: .04em;
         border: 1.5px dashed var(--tint-2); border-radius: 0 999px 999px 0;
         clip-path: polygon(14px 0, 100% 0, 100% 100%, 0 100%, 0 14px);
-        box-shadow: -6px 0 10px -6px rgba(31,21,23,.35);
+        box-shadow: -6px 0 10px -6px rgba(15,23,42,.35);
       }
       .peel.shown::after { color: var(--green); width: 100%; min-width: 0; clip-path: none; border-radius: 999px; font-size: .88rem; }
 
