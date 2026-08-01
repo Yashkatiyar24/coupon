@@ -24,11 +24,19 @@ const favicon = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' vi
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     {image && <meta property="og:image" content={image} />}
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="preload" href="/fonts/hanken-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
+    <link rel="preconnect" href="https://www.google.com" crossorigin />
     {jsonld && <script type="application/ld+json" set:html={JSON.stringify(jsonld)} />}
     <style is:global>
+      /* self-hosted variable font: no third-party round-trips, no render block */
+      @font-face {
+        font-family: "Hanken Grotesk";
+        src: url("/fonts/hanken-grotesk-latin.woff2") format("woff2");
+        font-weight: 100 900;
+        font-style: normal;
+        font-display: optional;
+      }
       :root {
         /* ── BRAND PALETTE — swap these 12 values to re-theme the whole site ──
            Final "Steel Blue Minimal": Nike/RMN philosophy — white canvas,
@@ -43,7 +51,7 @@ const favicon = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' vi
         --bg: #f4f6f9;          /* whisper grey canvas so white cards + notches read */
         --surface: #ffffff;
         --line: #e9eaf1;
-        --green: #0e8a4c;
+        --green: #0a7a43;
         --green-bg: #e6f6ee;
         --warm: #8a6d00;        /* gold for text (AA-dark); fills use --gold */
         --warm-bg: #ffe98a;     /* vivid gold badge fill, ink text on top */
@@ -95,7 +103,7 @@ const favicon = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' vi
       .hsearch button { border: 0; background: linear-gradient(180deg, #ffd54a, var(--gold)); color: var(--ink); font-weight: 700; font-size: .82rem; padding: .45rem 1rem; border-radius: 999px; cursor: pointer; }
       .hsearch button:hover { background: linear-gradient(180deg, #ffdf6b, #ffcd1f); }
       .mainnav { display: flex; gap: 1.7rem; margin-left: auto; font-size: 1.04rem; font-weight: 700; }
-      .mainnav a { color: var(--ink); text-decoration: none; position: relative; padding-bottom: .15rem; }
+      .mainnav a { color: var(--ink); text-decoration: none; position: relative; padding-bottom: .15rem; white-space: nowrap; }
       .mainnav a::after { content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: 2px; background: var(--gold); border-radius: 2px; transform: scaleX(0); transform-origin: left; transition: transform .2s ease; }
       .mainnav a:hover { color: var(--warm); }
       .mainnav a:hover::after { transform: scaleX(1); }
@@ -103,7 +111,9 @@ const favicon = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' vi
       @media (max-width: 560px) { .hsearch button { display: none; } }
 
       /* category chip row under header */
-      .chiprow { display: flex; overflow-x: auto; padding: .1rem 0 .5rem; scrollbar-width: none; }
+      .chiprow { display: flex; overflow-x: auto; padding: .1rem 0 .5rem; scrollbar-width: none;
+        -webkit-mask: linear-gradient(90deg, #000 calc(100% - 56px), transparent);
+        mask: linear-gradient(90deg, #000 calc(100% - 56px), transparent); }
       .chiprow::-webkit-scrollbar { display: none; }
       .chip { flex: 0 0 auto; position: relative; display: inline-flex; align-items: center; min-height: 36px; color: var(--muted); text-decoration: none; font-size: .86rem; font-weight: 600; padding: .3rem .1rem; transition: color .15s; }
       .chip + .chip { margin-left: 1.5rem; }
@@ -156,8 +166,8 @@ const favicon = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' vi
       .snav:hover { background: #000; }
       .snav.prev { left: 1rem; } .snav.next { right: 1rem; }
       .dots { position: absolute; bottom: .9rem; left: 50%; transform: translateX(-50%); z-index: 2; display: flex; gap: .5rem; }
-      .dots button { width: 9px; height: 9px; border-radius: 50%; border: 0; background: #d8d8d8; cursor: pointer; padding: 0; }
-      .dots button[aria-current="true"] { background: #111417; width: 22px; border-radius: 999px; }
+      .dots button { width: 24px; height: 24px; border-radius: 50%; border: 0; background: #d8d8d8; cursor: pointer; padding: 7px; background-clip: content-box; box-sizing: border-box; }
+      .dots button[aria-current="true"] { background: #111417; width: 36px; padding: 7px 13px; border-radius: 999px; background-clip: content-box; }
       @media (max-width: 640px) { .slide { min-height: 300px; } .snav { display: none; } }
 
       /* brand hero on offer cards (RMN-style: brand color + typeset wordmark) */
@@ -385,7 +395,7 @@ const favicon = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' vi
       .installchip { display: none; align-items: center; gap: .4rem; background: var(--ink); color: #fff; border: 0; font-weight: 700; font-size: .8rem; padding: .5rem 1rem; border-radius: 999px; cursor: pointer; white-space: nowrap; }
       .installchip.on { display: inline-flex; }
       .installchip:hover { background: #000; }
-      @media (max-width: 560px) { .installchip { display: none !important; } }
+      @media (max-width: 1360px) { .installchip { display: none !important; } }
 
       /* ---------- newsletter band ---------- */
       .nl { background: var(--ink); color: #fff; margin-top: 3rem; }
@@ -444,9 +454,9 @@ const favicon = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' vi
       </div>
     </header>
 
-    <div id="content">
+    <main id="content">
       <slot />
-    </div>
+    </main>
 
     <section class="nl" aria-label="Deal alerts signup">
       <div class="wrap">
@@ -496,17 +506,15 @@ const favicon = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' vi
 
       // Coupon notches: cut the bite exactly on each card's tear line / row divider.
       const placeNotches = () => {
+        const reads = [];
         document.querySelectorAll('.ocard').forEach((card) => {
           const tear = card.querySelector('.tear');
-          if (!tear) return;
-          card.style.setProperty('--tearY', (tear.offsetTop - 1) + 'px');
+          if (tear) reads.push([card, tear.offsetTop - 1]);
+        });
+        for (const [card, y] of reads) {
+          card.style.setProperty('--tearY', y + 'px');
           card.classList.add('notched');
-        });
-        document.querySelectorAll('.orow').forEach((row) => {
-          const big = row.querySelector('.obig');
-          if (!big) return;
-          row.style.setProperty('--notchX', (big.offsetLeft + big.offsetWidth) + 'px');
-        });
+        }
       };
       placeNotches();
       addEventListener('resize', placeNotches);

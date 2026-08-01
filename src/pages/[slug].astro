@@ -88,7 +88,7 @@ const jsonld = {
 
   <div class="wrap">
     <div class="layout">
-      <main>
+      <div class="maincol">
         <p class="intro">{intro(brand, pattern)}</p>
 
         <div class="offerrows">
@@ -130,7 +130,7 @@ const jsonld = {
         <p class="also">More ways to save at {brand.brand}: {PATTERNS.map((p, i) => (
           <>{i > 0 && ' · '}<a href={pageUrl(brand, p)}>{p.label.toLowerCase()}</a></>
         ))}</p>
-      </main>
+      </div>
 
       <aside class="side">
         <div class="panel">
