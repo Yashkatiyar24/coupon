@@ -1253,6 +1253,43 @@
         }
       ],
       "color": "#f8cb46"
+    },
+    {
+      "brand": "Walmart",
+      "slug": "walmart",
+      "category": "home-kitchen",
+      "color": "#0071ce",
+      "affiliateUrl": "https://www.walmart.com/deals",
+      "description": "Everyday low prices on groceries, home, electronics, and more — with Rollbacks and clearance year-round.",
+      "offers": [
+        {
+          "code": null,
+          "title": "Rollbacks: extra price cuts across every department",
+          "type": "deal",
+          "expires": null
+        },
+        {
+          "code": null,
+          "title": "Walmart+ free 30-day trial — free delivery from your store",
+          "type": "deal",
+          "expires": null
+        },
+        {
+          "code": null,
+          "title": "Clearance deals up to 65% off",
+          "type": "deal",
+          "expires": null
+        },
+        {
+          "code": null,
+          "title": "Back to school supplies from $0.25",
+          "type": "deal",
+          "expires": null,
+          "id": "walmart-school",
+          "url": "https://www.walmart.com/cp/school-supplies/1086045"
+        }
+      ],
+      "domain": "walmart.com"
     }
   ]
 }

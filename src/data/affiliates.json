@@ -1,49 +1,206 @@
 {
   "_note": "Merchant → affiliate-network mapping. Fill merchant-side IDs as you enroll in each program (network dashboards show them). OUR account IDs come from env (IMPACT_PARTNER_ID, CJ_PID, AWIN_AFF_ID, RAKUTEN_SITE_ID, SHAREASALE_AFF_ID, AMAZON_TAG). Merchants missing here, or with incomplete IDs, link to their clean homepage until enrolled — never to a source feed's tracking link.",
-  "nike": { "network": "cj", "aid": null },
-  "adidas": { "network": "awin", "mid": null },
-  "nordstrom": { "network": "rakuten", "mid": null },
-  "gap": { "network": "cj", "aid": null },
-  "levis": { "network": "cj", "aid": null },
-  "lululemon": { "network": "impact", "subdomain": null, "programId": null },
-  "best-buy": { "network": "impact", "subdomain": null, "programId": null },
-  "dell": { "network": "cj", "aid": null },
-  "hp": { "network": "cj", "aid": null },
-  "lenovo": { "network": "cj", "aid": null },
-  "samsung": { "network": "cj", "aid": null },
-  "logitech": { "network": "impact", "subdomain": null, "programId": null },
-  "wayfair": { "network": "cj", "aid": null },
-  "williams-sonoma": { "network": "cj", "aid": null },
-  "crate-and-barrel": { "network": "impact", "subdomain": null, "programId": null },
-  "home-depot": { "network": "impact", "subdomain": null, "programId": null },
-  "lowes": { "network": "cj", "aid": null },
-  "ninja-kitchen": { "network": "impact", "subdomain": null, "programId": null },
-  "sephora": { "network": "rakuten", "mid": null },
-  "ulta-beauty": { "network": "impact", "subdomain": null, "programId": null },
-  "glossier": { "network": "impact", "subdomain": null, "programId": null },
-  "the-ordinary": { "network": "rakuten", "mid": null },
-  "cerave": { "network": "cj", "aid": null },
-  "charlotte-tilbury": { "network": "awin", "mid": null },
-  "iherb": { "network": "cj", "aid": null },
-  "vitacost": { "network": "cj", "aid": null },
-  "gnc": { "network": "cj", "aid": null },
-  "ritual": { "network": "impact", "subdomain": null, "programId": null },
-  "vital-proteins": { "network": "impact", "subdomain": null, "programId": null },
-  "thorne": { "network": "impact", "subdomain": null, "programId": null },
-  "expedia": { "network": "cj", "aid": null },
-  "booking": { "network": "cj", "aid": null },
-  "hotels-com": { "network": "cj", "aid": null },
-  "priceline": { "network": "cj", "aid": null },
-  "viator": { "network": "cj", "aid": null },
-  "tripadvisor": { "network": "cj", "aid": null },
-  "amazon": { "network": "amazon", "deeplink": "https://www.amazon.com/deals" },
-  "canva": { "network": "impact", "subdomain": null, "programId": null },
-  "grammarly": { "network": "cj", "aid": null },
-  "nordvpn": { "network": "cj", "aid": null },
-  "adobe": { "network": "cj", "aid": null },
-  "allbirds": { "network": "cj", "aid": null },
-  "grove-collaborative": { "network": "cj", "aid": null },
-  "blueland": { "network": "shareasale", "mid": null },
-  "doordash": { "network": "impact", "subdomain": null, "programId": null },
-  "instacart": { "network": "impact", "subdomain": null, "programId": null }
+  "nike": {
+    "network": "cj",
+    "aid": null
+  },
+  "adidas": {
+    "network": "awin",
+    "mid": null
+  },
+  "nordstrom": {
+    "network": "rakuten",
+    "mid": null
+  },
+  "gap": {
+    "network": "cj",
+    "aid": null
+  },
+  "levis": {
+    "network": "cj",
+    "aid": null
+  },
+  "lululemon": {
+    "network": "impact",
+    "subdomain": null,
+    "programId": null
+  },
+  "best-buy": {
+    "network": "impact",
+    "subdomain": null,
+    "programId": null
+  },
+  "dell": {
+    "network": "cj",
+    "aid": null
+  },
+  "hp": {
+    "network": "cj",
+    "aid": null
+  },
+  "lenovo": {
+    "network": "cj",
+    "aid": null
+  },
+  "samsung": {
+    "network": "cj",
+    "aid": null
+  },
+  "logitech": {
+    "network": "impact",
+    "subdomain": null,
+    "programId": null
+  },
+  "wayfair": {
+    "network": "cj",
+    "aid": null
+  },
+  "williams-sonoma": {
+    "network": "cj",
+    "aid": null
+  },
+  "crate-and-barrel": {
+    "network": "impact",
+    "subdomain": null,
+    "programId": null
+  },
+  "home-depot": {
+    "network": "impact",
+    "subdomain": null,
+    "programId": null
+  },
+  "lowes": {
+    "network": "cj",
+    "aid": null
+  },
+  "ninja-kitchen": {
+    "network": "impact",
+    "subdomain": null,
+    "programId": null
+  },
+  "sephora": {
+    "network": "rakuten",
+    "mid": null
+  },
+  "ulta-beauty": {
+    "network": "impact",
+    "subdomain": null,
+    "programId": null
+  },
+  "glossier": {
+    "network": "impact",
+    "subdomain": null,
+    "programId": null
+  },
+  "the-ordinary": {
+    "network": "rakuten",
+    "mid": null
+  },
+  "cerave": {
+    "network": "cj",
+    "aid": null
+  },
+  "charlotte-tilbury": {
+    "network": "awin",
+    "mid": null
+  },
+  "iherb": {
+    "network": "cj",
+    "aid": null
+  },
+  "vitacost": {
+    "network": "cj",
+    "aid": null
+  },
+  "gnc": {
+    "network": "cj",
+    "aid": null
+  },
+  "ritual": {
+    "network": "impact",
+    "subdomain": null,
+    "programId": null
+  },
+  "vital-proteins": {
+    "network": "impact",
+    "subdomain": null,
+    "programId": null
+  },
+  "thorne": {
+    "network": "impact",
+    "subdomain": null,
+    "programId": null
+  },
+  "expedia": {
+    "network": "cj",
+    "aid": null
+  },
+  "booking": {
+    "network": "cj",
+    "aid": null
+  },
+  "hotels-com": {
+    "network": "cj",
+    "aid": null
+  },
+  "priceline": {
+    "network": "cj",
+    "aid": null
+  },
+  "viator": {
+    "network": "cj",
+    "aid": null
+  },
+  "tripadvisor": {
+    "network": "cj",
+    "aid": null
+  },
+  "amazon": {
+    "network": "amazon",
+    "deeplink": "https://www.amazon.com/deals"
+  },
+  "canva": {
+    "network": "impact",
+    "subdomain": null,
+    "programId": null
+  },
+  "grammarly": {
+    "network": "cj",
+    "aid": null
+  },
+  "nordvpn": {
+    "network": "cj",
+    "aid": null
+  },
+  "adobe": {
+    "network": "cj",
+    "aid": null
+  },
+  "allbirds": {
+    "network": "cj",
+    "aid": null
+  },
+  "grove-collaborative": {
+    "network": "cj",
+    "aid": null
+  },
+  "blueland": {
+    "network": "shareasale",
+    "mid": null
+  },
+  "doordash": {
+    "network": "impact",
+    "subdomain": null,
+    "programId": null
+  },
+  "instacart": {
+    "network": "impact",
+    "subdomain": null,
+    "programId": null
+  },
+  "walmart": {
+    "network": "impact",
+    "subdomain": null,
+    "programId": null
+  }
 }
