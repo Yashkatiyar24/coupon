@@ -36,6 +36,7 @@ jobs:
           AWIN_PUBLISHER_ID: ${{ secrets.AWIN_PUBLISHER_ID }}
           AWIN_AFF_ID: ${{ secrets.AWIN_AFF_ID }}
           RAKUTEN_SITE_ID: ${{ secrets.RAKUTEN_SITE_ID }}
+          RAKUTEN_API_TOKEN: ${{ secrets.RAKUTEN_API_TOKEN }}
           SHAREASALE_AFF_ID: ${{ secrets.SHAREASALE_AFF_ID }}
           AMAZON_TAG: ${{ secrets.AMAZON_TAG }}
 
