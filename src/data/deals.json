@@ -1303,20 +1303,7 @@
       "domain": "checkout.abbyy.com",
       "affiliateUrl": "https://www.anrdoezrs.net/click-101846058-4136885?url=https%3A%2F%2Fcheckout.abbyy.com%2F",
       "description": "Deals and coupon codes for ABBYY USA.",
-      "offers": [
-        {
-          "code": "BACK2WORK2026",
-          "title": "FineReader Back 2 Work Sale 2026 CA-EN - COUPON 30%",
-          "type": "code",
-          "expires": "2026-09-15"
-        },
-        {
-          "code": "BACK2WORK2026",
-          "title": "FineReader Back 2 Work Sale 2026 US - COUPON 30%",
-          "type": "code",
-          "expires": "2026-09-15"
-        }
-      ]
+      "offers": []
     }
   ]
 }
