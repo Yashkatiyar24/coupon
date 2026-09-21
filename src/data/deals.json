@@ -59,6 +59,11 @@
       "slug": "computer-sw",
       "name": "Computer SW",
       "short": "Computer SW"
+    },
+    {
+      "slug": "books",
+      "name": "Books",
+      "short": "Books"
     }
   ],
   "brands": [
@@ -1304,6 +1309,22 @@
       "affiliateUrl": "https://www.anrdoezrs.net/click-101846058-4136885?url=https%3A%2F%2Fcheckout.abbyy.com%2F",
       "description": "Deals and coupon codes for ABBYY USA.",
       "offers": []
+    },
+    {
+      "brand": "ANSI",
+      "slug": "ansi",
+      "category": "books",
+      "domain": "ansi.com",
+      "affiliateUrl": "https://www.anrdoezrs.net/click-101846058-2190096?url=https%3A%2F%2Fansi.com%2F",
+      "description": "Deals and coupon codes for ANSI.",
+      "offers": [
+        {
+          "code": "2026",
+          "title": "Save 5% On ISO and IEC Standards",
+          "type": "code",
+          "expires": "2026-12-31"
+        }
+      ]
     }
   ]
 }
